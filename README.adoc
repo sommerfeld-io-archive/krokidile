@@ -7,7 +7,7 @@ Sebastian Sommerfeld <sebastian@sommerfeld.io>
 :job: pipeline.yml
 :badge: badge.svg
 
-krokidile is a web-based Live-Editor for Diagrams to use with link:https://kroki.io[Kroki.io].
+Krokidile is a web-based Live-Editor for Diagrams to use with link:https://kroki.io[Kroki.io].
 
 image:{github-actions-url}/{job}/{badge}[Github Badge, link={github-actions-url}/{job}]
 
@@ -15,9 +15,9 @@ image:{github-actions-url}/{job}/{badge}[Github Badge, link={github-actions-url}
 * DockerHub -> https://hub.docker.com/r/sommerfeldio/{project-name}
 * Where to file issues -> {url-project}/issues
 
-Kroki.io is a tool that renders diagrams from code allowing developers to write diagrams as code.
-
 This project is a web-based live editor for diagrams, enabling developers to see a real-time preview of their diagrams as they write the diagram code. This immediate feedback loop makes it easier to create and modify diagrams, as developers can instantly see the impact of their changes.
+
+Diagrams are rendered with Kroki. Kroki is a tool that renders diagrams from code allowing developers to write diagrams as code.
 
 The main advantage of using diagrams as code is that it allows for version control, collaboration, and automation, just like any other piece of code in your repository
 
@@ -32,7 +32,26 @@ krokidile provides a web-based live editor for diagrams, enabling developers to 
 == How to use this project
 [source, bash]
 ----
-docker run --rm -p 3000:3000 sommerfeldio/krokidile:latest --kroki-url=https://kroki.io
+docker run --rm -p 3000:3000 -e KROKI_URL=https://kroki.io sommerfeldio/krokidile:latest
+----
+
+[source, yml]
+----
+services:
+  kroki:
+    container_name: kroki
+    image: yuzutech/kroki:0.25.0
+    ports:
+      - 3001:8000
+  krokidile:
+    container_name: krokidile
+    image: sommerfeldio/krokidile:latest
+    environment:
+      - KROKI_URL=http://kroki:8000
+    ports:
+      - 3000:3000
+    depends_on:
+      - kroki
 ----
 
 == Risks and Technical Debts
