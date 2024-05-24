@@ -1,0 +1,186 @@
+= ChatGPT
+
+== Building a Live Editor Web App for PlantUML with Kroki
+This AsciiDoc document encapsulates the entire plan for building a live editor web app for PlantUML with Kroki, including the step-by-step plan, Docker Compose configuration, suggested toolstack, and detailed instructions for setting up and coding the live editor.
+
+== Step-by-Step Plan
+
+=== Set Up the Development Environment
+
+Create a Docker Compose configuration to set up the necessary services.
+
+=== Create the Docker Compose Configuration
+
+Define services for Kroki and the web app.
+
+=== Choose the Technology Stack
+
+Select the frontend and backend technologies.
+
+=== Build the Backend (Optional)
+
+If you need a backend to manage users, store diagrams, etc., set this up.
+
+=== Build the Frontend
+
+Create the live editor interface.
+
+=== Integrate with Kroki
+
+Set up communication between your editor and the Kroki server.
+
+=== Add Features
+
+Implement features like syntax highlighting, real-time preview, saving/loading diagrams, etc.
+
+=== Testing and Deployment
+
+Test the application thoroughly and prepare it for deployment.
+
+== Docker Compose Configuration
+
+.Create a file `docker-compose.yml`
+[source,yaml]
+----
+version: '3.8'
+services:
+  kroki:
+    image: yuzutech/kroki
+    ports:
+      - "8000:8000"
+  editor-app:
+    build: ./editor-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - kroki
+----
+
+== Suggested Toolstack
+
+=== Frontend
+
+* React for building the user interface.
+* Monaco Editor (the editor that powers Visual Studio Code) for the code editing experience, providing syntax highlighting and other features.
+* Axios for making HTTP requests to the Kroki server.
+
+=== Backend (if needed)
+
+* Node.js with Express for a simple backend to manage any server-side logic.
+* MongoDB or PostgreSQL for data storage if needed.
+
+=== Styling
+
+* CSS-in-JS (e.g., styled-components) for component-level styling.
+* Tailwind CSS for utility-first CSS framework.
+
+== Building the Live Editor Frontend
+
+=== Set Up React Application
+
+.Create a React application
+[source,shell]
+----
+npx create-react-app editor-app
+cd editor-app
+----
+
+=== Install Dependencies
+
+.Install necessary packages
+[source,shell]
+----
+npm install monaco-editor axios styled-components
+----
+
+=== Set Up Monaco Editor
+
+Create a component for the editor. Integrate Monaco Editor with basic configuration.
+
+=== Integrate Kroki for Real-Time Rendering
+
+Set up a function to send the PlantUML code to the Kroki server and retrieve the rendered image. Use Axios to make HTTP requests to `http://localhost:8000` (or the appropriate URL if different).
+
+=== Implement Real-Time Preview
+
+Add state management to handle the PlantUML code and the rendered image. Use hooks (e.g., `useEffect`) to update the preview whenever the code changes.
+
+== Example Code Snippet
+
+.Create a file `src/LiveEditor.js`
+[source,jsx]
+----
+import React, { useState, useEffect } from 'react';
+import Editor from '@monaco-editor/react';
+import axios from 'axios';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  height: 100vh;
+`;
+
+const EditorContainer = styled.div`
+  flex: 1;
+`;
+
+const PreviewContainer = styled.div`
+  flex: 1;
+  padding: 20px;
+  background-color: #f5f5f5;
+`;
+
+const LiveEditor = () => {
+  const [code, setCode] = useState('@startuml\nAlice -> Bob: Hello\n@enduml');
+  const [image, setImage] = useState('');
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const response = await axios.post('http://localhost:8000', {
+          diagram_source: code,
+          diagram_type: 'plantuml'
+        });
+        setImage(response.data);
+      } catch (error) {
+        console.error('Error fetching image', error);
+      }
+    };
+
+    fetchImage();
+  }, [code]);
+
+  return (
+    <Container>
+      <EditorContainer>
+        <Editor
+          height="100%"
+          defaultLanguage="plaintext"
+          value={code}
+          onChange={setCode}
+        />
+      </EditorContainer>
+      <PreviewContainer>
+        <img src={image} alt="Diagram Preview" />
+      </PreviewContainer>
+    </Container>
+  );
+};
+
+export default LiveEditor;
+----
+
+== Testing and Deployment
+
+=== Test the Application
+
+Ensure that the editor updates the preview in real-time. Check for any performance issues or bugs.
+
+=== Deployment
+
+Use Docker to build and deploy your application. Consider using platforms like AWS, Heroku, or DigitalOcean for hosting.
+
+== Final Notes
+
+* This is a basic example to get you started. You can expand the functionality with features like user authentication, saving/loading diagrams, collaborative editing, etc.
+* Ensure to handle errors gracefully and provide user feedback for a better user experience.

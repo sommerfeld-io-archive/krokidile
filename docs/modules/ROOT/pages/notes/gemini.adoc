@@ -1,0 +1,50 @@
+= Google Gemini
+
+== Building a Live Editor for PlantUML with Kroki Integration
+This document explores building a live editor web application for PlantUML that utilizes Kroki.io for diagram rendering. It covers suggested toolstacks, proposes steps for development, and explores potential names for the project.
+
+Here's a breakdown of the recommended tools for building this live editor:
+
+== Frontend:
+. React.js or Vue.js: Popular choices for interactive web applications, offering component-based structures and efficient updates.
+
+== Backend:
+. Node.js with Express.js or Python with Flask: Suitable options for handling server-side communication and potentially acting as a proxy for Kroki requests.
+
+== Live-editing:
+. Monaco Editor or CodeMirror: Established libraries offering code editing functionalities with PlantUML syntax highlighting integration.
+
+== Communication:
+. WebSockets: Enable real-time, two-way communication between the editor and the backend for live diagram updates.
+
+== Building the App
+Here's a roadmap for building the live editor application:
+
+. Frontend Setup:
+.. Choose your preferred framework (React or Vue).
+.. Set up the project structure with components for the editor and diagram display.
+.. Integrate the chosen code editor component for PlantUML editing.
+
+. Backend Setup:
+.. Choose your preferred framework (Node or Python).
+.. Develop an API endpoint to receive PlantUML code from the editor.
+.. Implement logic to communicate with the Kroki server in a separate container.
+.. Proxy the Kroki request with your PlantUML code and receive the generated diagram image.
+
+. Live Editing:
+.. Establish a WebSocket connection between the editor and the backend.
+.. Send PlantUML code updates to the backend on every keystroke or code change.
+.. Upon receiving updated code, the backend sends a request to Kroki and retrieves the updated diagram.
+.. Update the diagram display component in the frontend with the newly generated image.
+
+== Additional Considerations:
+. Implement syntax highlighting and error checking for PlantUML code.
+. Add features like zooming, panning, and exporting the diagram in different formats.
+. Design a user-friendly interface for a smooth user experience.
+
+== Docker Compose Setup
+. Define separate services in your docker-compose.yml file:
+.. One service for the Kroki server.
+.. Another service for your editor application.
+. Configure the editor service to expose the port used for the WebSocket connection.
+. Define network settings to allow the editor service to access the Kroki server service.

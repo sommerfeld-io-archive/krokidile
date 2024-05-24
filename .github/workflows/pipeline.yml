@@ -135,3 +135,212 @@ jobs:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
           message: "[Actions Bot] generate docs"
+
+  # ----- Build stage ---------------------------
+
+  build-image:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.image-name }}:${{ github.sha }}
+    needs: [
+      'docs',
+    ]
+    permissions:
+      contents: read
+      pull-requests: write
+      security-events: write
+    strategy:
+      matrix:
+        include:
+          - registry: docker.io
+            image-name: krokidile
+            context: .
+            dockerfile: Dockerfile.app
+          - registry: docker.io
+            image-name: krokidile-docs
+            context: .
+            dockerfile: Dockerfile.docs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ${{ matrix.context }}/${{ matrix.dockerfile }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Container Registry ${{ matrix.registry }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ matrix.registry }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5.5.1
+        with:
+          images: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}
+          labels: |
+            org.opencontainers.image.revision=${{ github.sha }}
+      - name: Build the Docker image and push to ${{ matrix.registry }}
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/${{ matrix.dockerfile }}
+          build-args: |
+            VERSION=${{ github.sha }}
+            COMMIT_SHA=${{ github.sha }}
+          platforms: linux/amd64
+          push: true
+          tags: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ github.sha }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # cache-from: type=gha
+          # cache-to: type=gha,mode=max
+          provenance: true
+          sbom: true
+      - name: Docker Scout CVEs for ${{ matrix.image-name }}:${{ github.sha }}
+        uses: docker/scout-action@v1.8.0
+        with:
+          command: cves
+          image: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ github.sha }}
+          exit-code: false
+          write-comment: ${{ github.event_name == 'pull_request' }}
+      - name: Docker Scout Compare :${{ github.sha }} to :${{ env.IMAGE_TAG_RC }}"
+        uses: docker/scout-action@v1.8.0
+        with:
+          command: compare
+          image: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ github.sha }}
+          to: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_RC }}
+          exit-code: false
+          write-comment: ${{ github.event_name == 'pull_request' }}
+
+  test-image:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.image-name }}
+    needs: ['build-image']
+    permissions:
+      contents: read
+    strategy: # see build-image (duplicated because github actions does not support anchors)
+      matrix:
+        include:
+          - registry: docker.io
+            image-name: krokidile
+          - registry: docker.io
+            image-name: krokidile-docs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Dummy for ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ github.sha }}
+        run: |
+          echo "CHANGE ME"
+        shell: bash
+
+  # ----- Deploy :rc stage ----------------------
+
+  publish-rc:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.image-name }} as release candidate
+    needs: ['test-image']
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    permissions: # see build-image (duplicated because github actions does not support anchors)
+      contents: read
+      pull-requests: write
+      security-events: write
+    strategy: # see build-image (duplicated because github actions does not support anchors)
+      matrix:
+        include:
+          - registry: docker.io
+            image-name: krokidile
+          - registry: docker.io
+            image-name: krokidile-docs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Login to Container Registry ${{ matrix.registry }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ matrix.registry }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Re-tag image as release candicate (:${{ env.IMAGE_TAG_RC }}) and deploy to ${{ matrix.registry }}
+        run: |
+          SRC_IMAGE="${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ github.sha }}"
+          TARGET_IMAGE="${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_RC }}"
+          docker pull "$SRC_IMAGE"
+          docker tag "$SRC_IMAGE" "$TARGET_IMAGE"
+          docker push "$TARGET_IMAGE"
+        shell: bash
+      # - name: Docker Scout Compare :${{ env.IMAGE_TAG_RC }}" to :${{ env.IMAGE_TAG_LATEST }}
+      #   uses: docker/scout-action@v1.8.0
+      #   with:
+      #     command: compare
+      #     image: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_RC }}
+      #     to: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_LATEST }}
+      #     exit-code: false
+      #     write-comment: ${{ github.event_name == 'pull_request' }}
+
+  # ----- Deploy :latest :0.1.0 stage -----------
+  
+  publish-release:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.image-name }} as release candidate
+    needs: ['publish-rc']
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    permissions: # see build-image (duplicated because github actions does not support anchors)
+      contents: read
+      pull-requests: write
+      security-events: write
+    strategy: # see build-image (duplicated because github actions does not support anchors)
+      matrix:
+        include:
+          - registry: docker.io
+            image-name: krokidile
+          - registry: docker.io
+            image-name: krokidile-docs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Dummy ... implement me sometime
+        run: echo "Dummy ... implement me sometime"
+        shell: bash
+
+  # ----- Deploy html website via ftp -----------
+  
+  publish-html-webste:
+    runs-on: ubuntu-latest
+    name: Upload HTML (via FTP)
+    needs: ['publish-rc']
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    permissions: # see build-image (duplicated because github actions does not support anchors)
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Dummy ... implement me sometime
+        run: echo "Dummy ... implement me sometime"
+        shell: bash
+
+  # ----- Cleanup -------------------------------
+
+  cleanup:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.image-name }}
+    # needs: ['test-rc']
+    needs: ['publish-rc']
+    if: always()
+    permissions:
+      contents: read
+    strategy: # see build-image (duplicated because github actions does not support anchors)
+      matrix:
+        include:
+          - registry: docker.io
+            image-name: krokidile
+          - registry: docker.io
+            image-name: krokidile-docs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Remove (:${{ github.sha }}) from ${{ matrix.registry }}
+        run: |
+          TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${{ secrets.DOCKERHUB_USER }}'", "password": "'${{ secrets.DOCKERHUB_TOKEN }}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
+          curl -X DELETE -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}/tags/${{ github.sha }}/
+        shell: bash

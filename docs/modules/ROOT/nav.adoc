@@ -4,3 +4,6 @@
 * xref:license.adoc[]
 * xref:security.adoc[]
 * xref:architecture-decisions/index.adoc[]
+* Notes and AI Conversations
+** xref:notes/chatgpt.adoc[]
+** xref:notes/gemini.adoc[]
