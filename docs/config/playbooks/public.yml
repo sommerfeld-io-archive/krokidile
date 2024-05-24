@@ -10,7 +10,8 @@ content:
   branches: ['main']
   tags: [v*]
   sources:
-    - url: https://github.com/sommerfeld-io/krokidile.git
+    #- url: https://github.com/sommerfeld-io/krokidile.git
+    - url: /workspaces/krokidile
       start_path: docs
 
 asciidoc:

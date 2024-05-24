@@ -22,12 +22,15 @@ RUN yarn global add @asciidoctor/core@~3.0.2 \
     && yarn global add @antora/lunr-extension@~1.0.0-alpha.8 \
     && yarn global add gulp-cli@3.0.0
 
+COPY . /workspaces/krokidile
+
 # COPY docs/ui-bundle /antora-ui
 # WORKDIR /antora-ui
 # RUN yarn install && gulp bundle
 
-COPY docs/config /antora
-WORKDIR /antora
+#COPY docs/config /antora
+#WORKDIR /antora
+WORKDIR /workspaces/krokidile/docs/config
 RUN antora playbooks/public.yml --stacktrace --clean --fetch
 
 # sleep for a moment ... otherwise the search-index.js is not built correctly
