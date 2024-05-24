@@ -1,0 +1,27 @@
+---
+## This `ops` compose stack runs all components needed to allow the monitoring and management of
+## all Docker containers inside the DevContainer.
+##
+## [options="header"]
+## |===
+## |Component |Port |URL
+## |Portainer |3990 |http://localhost:3990
+## |===
+
+services:
+
+  portainer:
+    image: portainer/portainer-ce:alpine
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock --admin-password-file /tmp/portainer_passwords
+    restart: always
+    ports:
+      - 3990:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+      - ./assets/portainer.passwd:/tmp/portainer_passwords
+      - /etc/timezone:/etc/timezone:ro
+
+volumes:
+  portainer_data:

@@ -1,0 +1,22 @@
+---
+## TODO ... Docs
+
+
+services:
+
+  lint-yaml:
+    container_name: ${COMPOSE_PROJECT_NAME}-lint-yaml
+    image: cytopia/yamllint:latest
+    volumes:
+      - .:/data
+    working_dir: /data
+    command: .
+    tty: true
+  
+  kroki:
+    container_name: ${COMPOSE_PROJECT_NAME}-kroki
+    image: yuzutech/kroki:0.25.0
+    ports:
+      - 3010:8000
+    depends_on:
+      - lint-yaml

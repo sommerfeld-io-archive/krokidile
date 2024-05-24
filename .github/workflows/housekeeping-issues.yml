@@ -1,0 +1,83 @@
+---
+# @file housekeeping-issues.yml
+# @brief Github Actions workflow handles the automatic assignment of newly created issues and pull requests.
+#
+# @description The workflow, that is called this way, handles the automatic assignment of newly
+# created issues and pull requests to specific projects and users. By leveraging this workflow,
+# tasks and contributions are efficiently tracked and assigned, ensuring clear ownership and
+# streamlined collaboration within your development projects. It is designed to automatically
+# trigger whenever new issues or Pull Requests are created.
+
+
+name: "Housekeeping: Issues + PRs"
+
+on:
+  issues:
+    types:
+      - opened
+  pull_request:
+    types:
+      - opened
+      - assigned
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  repository-projects: write
+
+jobs:
+  add-issue-to-project:
+    name: Add to project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Add to project sommerfeld-io (issues and PRs)
+        uses: actions/add-to-project@main
+        with:
+          project-url: https://github.com/orgs/sommerfeld-io/projects/1/views/1
+          github-token: ${{ secrets.GH_TOKEN_REPO_AND_PROJECT }}
+
+  assign-issue-to-user:
+    name: Assign to user
+    runs-on: ubuntu-latest
+    if: "${{ github.actor != 'dependabot[bot]' }}"
+    steps:
+      - name: Assign issue to user when moved into column
+        uses: pozil/auto-assign-issue@v2
+        # https://github.com/marketplace/actions/auto-assign-issue
+        with:
+          assignees: ${{ github.actor }}
+          numOfAssignee: 1
+          allowSelfAssign: true
+          abortIfPreviousAssignees: true
+
+  set-issue-labels:
+    name: Set label for issues (if not user-story)
+    runs-on: ubuntu-latest
+    if: "${{ github.event.issue && !contains(github.event.issue.labels.*.name, 'user-story') }}"
+    steps:
+      - name: Set label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['task']
+            })
+
+  on-failure:
+    runs-on: ubuntu-latest
+    needs: ['add-issue-to-project', 'assign-issue-to-user', 'set-issue-labels']
+    if: failure()
+    steps:
+      - name: Send Pipeline Status to Google Chat
+        if: always()
+        uses: Co-qn/google-chat-notification@releases/v1
+        with:
+          name: ${{ github.workflow }}
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: failure
