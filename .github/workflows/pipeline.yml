@@ -98,7 +98,7 @@ jobs:
         shell: bash
       - name: Add do-not-edit remark to adoc files in project root
         run: |
-          for file in *.adoc; do
+          for file in *.adoc LICENSE; do
 
             {
               echo
@@ -114,13 +114,15 @@ jobs:
 
           done
         shell: bash
-      - name: Replace Captions in adoc files in project root
+      - name: Replace Caption in README.adoc
         run: |
           file=README.adoc
           content=$(cat "$file")
           content="${content//= Introduction/= source2adoc}"
           echo "$content" > "$file"
-
+        shell: bash
+      - name: Replace Caption in LICENSE
+        run: |
           file=LICENSE
           content=$(cat "$file")
           content="${content//= MIT License/= MIT License}"
