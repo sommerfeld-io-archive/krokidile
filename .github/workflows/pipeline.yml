@@ -92,13 +92,13 @@ jobs:
       - name: Copy adoc files to project root
         run: |
           cp docs/modules/ROOT/pages/index.adoc README.adoc
-          cp docs/modules/ROOT/pages/license.adoc LICENSE
+          cp docs/modules/ROOT/pages/license.adoc LICENSE.adoc
           cp docs/modules/ROOT/pages/contribute.adoc CONTRIBUTING.adoc
           cp docs/modules/ROOT/pages/security.adoc SECURITY.adoc
         shell: bash
       - name: Add do-not-edit remark to adoc files in project root
         run: |
-          for file in *.adoc LICENSE; do
+          for file in *.adoc; do
 
             {
               echo
@@ -119,13 +119,6 @@ jobs:
           file=README.adoc
           content=$(cat "$file")
           content="${content//= Introduction/= source2adoc}"
-          echo "$content" > "$file"
-        shell: bash
-      - name: Replace Caption in LICENSE
-        run: |
-          file=LICENSE
-          content=$(cat "$file")
-          content="${content//= MIT License/= MIT License}"
           echo "$content" > "$file"
         shell: bash
       - name: Replace xref with links to GitHub in adoc files in project root
