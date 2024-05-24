@@ -26,6 +26,7 @@
 		"ghcr.io/devcontainers/features/docker-in-docker:2.10.2": {}
 	},
 
+	"postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/post-create-command.sh",
 	"postStartCommand": "docker compose --file ${containerWorkspaceFolder}/.devcontainer/ops/docker-compose.yml --env-file ${containerWorkspaceFolder}/.devcontainer/ops/.env up -d",
 
 	"forwardPorts": [3990]
