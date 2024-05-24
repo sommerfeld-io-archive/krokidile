@@ -1,0 +1,121 @@
+= Development Guide
+Sebastian Sommerfeld <sebastian@sommerfeld.io>
+
+This section outlines the way we develop the krokidile project, focusing on development, tooling, deployment, and support considerations. It outlines the practices and principles we value.
+
+== Everything as Code
+We embrace treating as much as possible as code, incorporating best practices from software development in every aspect of our work. We prioritize utilizing technologies and tools that allow us to leverage version control and adhere to established development practices like branching and code reviews. This applies to source code, infrastructure code, utility scripts and basically everything that can be depicted as some sort of code.
+
+When it comes to configuration management, we opt for approaches that align with software development principles. If there are multiple ways to apply a configuration, such as through a web UI or an API, we prioritize the API method. This preference is due to its reproducibility, (hopefully) idempotence and potential for automation, ensuring consistency and facilitating efficient management of configurations.
+
+By treating various aspects of our work as code, we can leverage the benefits of version control, automation, and reproducibility.
+
+== Test Driven Development
+We follow Test-Driven Development (TDD) principles, using TDD to design our systems.
+
+== Version Control
+We make all changes to code, test, infrastructure, configuration, and ultimately production via version control.
+
+Version control extends beyond just managing code repositories like Git. It encompasses a broader scope that includes controlling the versions of tools and third-party software utilized within our environments. By actively managing these dependencies, we ensure that our software remains stable, consistent, and immune to uncontrolled changes originating from external sources.
+
+We employ version control to manage and track changes made to our production systems, ensuring that modifications are controlled, traceable, and reversible.
+
+By extending version control to encompass the management of tools, third-party software and production environment, we maintain a firm grip on the external factors that can impact our software development and our runtime environments. This approach allows us to minimize the risk of uncontrolled changes.
+
+== Commit Messages
+Read something about link:https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html[Git commit messages].
+
+== Trunk-Based Development
+We follow a trunk-based development approach, which means that we primarily focus our development efforts on the main branch of our repository. This approach encourages frequent and continuous integration of code changes directly into the main branch, allowing us to avoid long-lived feature branches and promote a fast-paced development cycle. We still rely on branching and Pull Requests, but our branches do not live for longer than one day (more on that in the coming sections).
+
+The `main` branch represents the releasable state of the software. It serves as the mainline branch from which stable releases are made.
+
+Any branch other than main is considered a short-lived branch. These branches are used for feature development, bug fixing, and any other updates. There are no specific naming conventions for these branches. These branches do not live for longer than one day.
+
+Git tags are always created from the main branch, ensuring that they represent stable and release-worthy versions of the software. The creation of tags is done exclusively through our deployment pipeline, ensuring consistent and reproducible release processes.
+
+Each developer is streaming small commits either directly into the main branch with a pre-integration step of running the build first (which must pass) or commits into short-lived branches and flows through Pull-Request style code-review and build automation before merging into main.
+
+Basically we follow most recommendations from link:https://trunkbaseddevelopment.com[trunkbaseddevelopment.com].
+
+== Continuous Integration
+We integrate code changes from all developers at least once per day. This frequent integration ensures that our software is thoroughly tested and checked with everyone's changes on a daily basis.
+
+We work with short lived (feature) branches. But we won't hide work on separate branches for longer than a working day before integrating them together.
+
+We don't merge the `main` branch into our feature branches to make them live longer! This is not a way to integrate everyone's changes into a single source of truth and prevents us from determining the releasability of our software.
+
+We grow our code incrementally, making frequent small changes to our code - leaving our code in a working state after each small change.
+
+We get feedback on the quality of our work after every small change through the use of automated tests in pipelines.
+
+== Automated tests determine the releasability
+We automate almost everything in our pipeline, and have enough automated testing to in place to validate and release our changes without dependence on manual regression testing, or approval QA and approval processes.
+
+Manual tests are not forbidden. But since they only make us feel better and more save instead of providing a real judgement on the releasability of our software, the make-it-or-break-it desicion always comes from our pipeline.
+
+When we identify manual tests that are performed repeatedly, we actively work on transforming them into automated tests and integrate them into our pipelines.
+
+== Keep the software always in a releasable state
+While we may not release our software daily, our goal is to have the capability to release changes every day if required. That means we aim to ship a release-candidate at least once per day. To achieve this goal we have to keep our software in a releaseable state all the time!
+
+== Releases and Deployments always are done through a pipeline
+We deploy our changes into production, or any test environment, "at the touch of a button" at most. The goal is to trigger everything from a push to the `main` branch (either directly or through a Pull Request).
+
+This means that all deployments to any test environment, whether it's a software version to some test environment or to production or a Docker image to DockerHub or any other kind of deployment, are carried out automatically via our deployment pipeline.
+
+This pipeline includes all steps and tests that are sufficient to determine the releasability of our software. When a change has completed its transit through the pipeline, there is no more work to do for the software to be released into production other than (at most) triggering the release itself. Deployments are never done manually!
+
+== Semantic Versioning for our Releases
+At our organization, we adhere to link:https://semver.org[Semantic Versioning (SemVer)] principles when releasing artifacts. This means that we follow a structured versioning format, consisting of major, minor, and patch numbers, to indicate changes and updates in our software. Unstable versions are marked as Alpha or Beta version.
+
+Key definitions of Semantic Versioning:
+
+* A normal version number must take the form `major.minor.bugfix` in non-negative integers, and must not contain leading zeroes. Each element must increase numerically. For instance: `1.9.0` -> `1.10.0` -> `1.11.0`.
+* Once a versioned package has been released, the contents of that version must not be modified. Any modifications must be released as a new version.
+* Major version zero (`0.x.x`)` is for initial development. Anything MAYmay change at any time. The public API should not be considered stable.
+* Version `1.0.0` defines the initial public API.
+* Patch version (`x.x.patch`) must be incremented if only backward compatible bug fixes are introduced. A bug fix is defined as an internal change that fixes incorrect behavior.
+* Minor version (`x.minor.x`) must be incremented if new, backward compatible functionality is introduced to the public API. It must be incremented if any public API functionality is marked as deprecated. It may be incremented if substantial new functionality or improvements are introduced within the private code. It may include patch level changes. Patch version must be reset to 0 when minor version is incremented.
+* Major version (`major.x.x`) must be incremented if any backward incompatible changes are introduced to the public API. It may also include minor and patch level changes. Patch and minor versions must be reset to 0 when major version is incremented.
+* A pre-release version may be denoted by appending a hyphen and a series of dot separated identifiers immediately following the patch version. Pre-release versions have a lower precedence than the associated normal version. A pre-release version indicates that the version is unstable and might not satisfy the intended compatibility requirements as denoted by its associated normal version. Examples: `1.0.0-alpha.0`, `1.0.0-beta.0`.
+
+Our Git tags always include a leading "v" before the version number.
+
+== Docker Tag Strategy
+The Docker tag strategy follows Semantic Versioning for our Releases.
+
+== Artifacts are immutable
+We are validating the delivered artifact with the pipeline. It is built once and deployed to all environments. A common anti-pattern is building an artifact for each environment. Each build is a possibility to introduce unintended changes. By promoting a single artifact through the stages we ensure that the deployed artifact is exactly the one that was tested.
+
+== User Stories
+We want requirements to define small focused needs rather than vast vague projects. We use user stories to describe our requirements. We try to finish a user story within a couple of days at most. We need to keep in mind, that we integrate our changes daily, so we must design our user stories accordingly.
+
+If we can't think of user need in terms of a story, we don't understand what our software is meant to achieve yet. If we can't think of an example, that would demonstrate that the need is fullfilled, we don't really understand the problem (domain) yet.
+
+== Application Language and Build Tool
+The application will be developed using link:https://go.dev[Go].
+
+== Packaging and Distribution
+The application will be packaged and published solely as a Docker image. No other package format will be supported.
+
+== Development Environment
+Development will primarily occur on Ubuntu workstations.
+
+== Integrated Development Environment (IDE)
+The IDE of choice for development is Visual Studio Code (VSCode). VSCode is preferred due to its support for DevContainers (an essential requirement) and GitHub Copilot.
+
+== Source Code Hosting
+All krokidile projects will be hosted on GitHub.
+
+== Pipelines and Workflows
+The pipeline and workflow engine of choice is GitHub Actions.
+
+// == Deployment of Documentation Website
+// The deployment strategy for the "krokidile.sommerfeld.io" website is still under consideration. While a container running in a public cloud provider like AWS, Google Cloud, Linode, or BlueOcean is preferred, uploading the website to a classic web hosting solution via FTP might serve as a simpler (initial) solution.
+
+== Development Support
+Development efforts will be supported by GitHub Copilot, with the potential for heavy reliance on this AI-assistant as its usefulness is validated over time.
+
+== Task and Todo Tracking
+All task and todo tracking will be done through a GitHub project.

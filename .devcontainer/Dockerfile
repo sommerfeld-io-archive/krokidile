@@ -1,4 +1,4 @@
-## This Dockerfile is used to build the development container for the source2adoc project.
+## This Dockerfile is used to build the development container for the krokidile project.
 ## It contains the necessary instructions to create an environment with all the dependencies
 ## required for development.
 ##

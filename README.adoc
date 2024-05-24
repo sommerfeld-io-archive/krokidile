@@ -1,4 +1,4 @@
 = krokidile
 Sebastian Sommerfeld <sebastian@sommerfeld.io>
 
-Web-based Live-Editor for Diagrams to use with Kroki.io
+Web-based Live-Editor for Diagrams to use with link:https://kroki.io[Kroki.io].

@@ -1,0 +1,12 @@
+---
+# ignored:
+# * DL3000
+# * SC1010
+
+trustedRegistries:
+  - docker.io
+  - ghcr.io
+  - quay.io
+
+label-schema:
+  maintainer: email

@@ -1,0 +1,3 @@
+= Architecture Desicions
+
+* xref:architecture-decisions/adr-001-use-adr.adoc[]

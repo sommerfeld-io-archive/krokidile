@@ -1,6 +1,18 @@
 ---
-## TODO ... Docs
-
+## This Docker Compose file handles three responsibilities:
+##
+## . Linting the project files to ensure they adhere to coding standards.
+## . Building the krokidile application.
+## . Testing the application.
+##
+## When running docker-compose up, all services are orchestrated to execute sequentially, ensuring
+## the project is linted, built, and tested efficiently within the Docker environment.
+##
+## [source, bash]
+## ....
+## docker compose build
+## docker compose up
+## ....
 
 services:
 
@@ -8,11 +20,18 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-lint-yaml
     image: cytopia/yamllint:latest
     volumes:
-      - .:/data
-    working_dir: /data
+      - .:/workspaces/krokidile
+    working_dir: /workspaces/krokidile
     command: .
     tty: true
-  
+
+  lint-filenames:
+    container_name: ${COMPOSE_PROJECT_NAME}-lint-filenames
+    image: lslintorg/ls-lint:1.11.2
+    volumes:
+      - .:/workspaces/krokidile
+    working_dir: /workspaces/krokidile
+
   kroki:
     container_name: ${COMPOSE_PROJECT_NAME}-kroki
     image: yuzutech/kroki:0.25.0
@@ -20,3 +39,4 @@ services:
       - 3010:8000
     depends_on:
       - lint-yaml
+      - lint-filenames

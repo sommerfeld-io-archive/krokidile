@@ -1,0 +1,47 @@
+---
+ls:
+  .adoc: kebab-case | SCREAMING_SNAKE_CASE | PascalCase
+  .puml: kebab-case
+  .md: kebab-case | SCREAMING_SNAKE_CASE
+
+  .conf: kebab-case
+  .go: snake_case
+  .json: kebab-case
+  .rb: kebab-case
+  .tf: kebab-case
+  .yml: kebab-case
+  .yaml: kebab-case
+  .feature: kebab-case
+
+  .sh: kebab-case
+  .kt: PascalCase
+
+  .css: kebab-case
+  .html: kebab-case
+  .js: kebab-case
+  .hbs: kebab-case
+  .svg: kebab-case
+
+  Dockerfile: PascalCase
+  Vagrantfile: PascalCase
+  Jenkinsfile: PascalCase
+
+  .env: lowercase
+  .folderslintrc: lowercase
+  .shellcheckrc: lowercase
+  .gitignore: lowercase
+  .gitkeep: lowercase
+
+ignore:
+  - .git
+  - .idea
+  - .vscode
+  - node_modules
+  - .gitpod.yml
+  - target
+
+  # linter definitions
+  - .hadolint.yml
+  - .ls-lint.yml
+  - .pre-commit-config.yaml
+  - .yamllint.yml
