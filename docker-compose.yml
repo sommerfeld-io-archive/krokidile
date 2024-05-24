@@ -32,6 +32,28 @@ services:
       - .:/workspaces/krokidile
     working_dir: /workspaces/krokidile
 
+  lint-dockerfile-app:
+    container_name: ${COMPOSE_PROJECT_NAME}-lint-dockerfile-app
+    image: hadolint/hadolint:latest
+    volumes:
+      - .:/workspaces/krokidile
+    working_dir: /workspaces/krokidile
+    entrypoint: hadolint Dockerfile.app
+    depends_on:
+      - lint-filenames
+      - lint-yaml
+
+  lint-dockerfile-docs:
+    container_name: ${COMPOSE_PROJECT_NAME}-lint-dockerfile-docs
+    image: hadolint/hadolint:latest
+    volumes:
+      - .:/workspaces/krokidile
+    working_dir: /workspaces/krokidile
+    entrypoint: hadolint Dockerfile.docs
+    depends_on:
+      - lint-filenames
+      - lint-yaml
+
   kroki:
     container_name: ${COMPOSE_PROJECT_NAME}-kroki
     image: yuzutech/kroki:0.25.0
@@ -40,3 +62,28 @@ services:
     depends_on:
       - lint-yaml
       - lint-filenames
+      - lint-dockerfile-app
+
+  app:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: local/${COMPOSE_PROJECT_NAME}:${DEV_TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - 3000:9000
+    depends_on:
+      - kroki
+
+  docs:
+    container_name: ${COMPOSE_PROJECT_NAME}-docs
+    image: local/${COMPOSE_PROJECT_NAME}-docs:${DEV_TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile.docs
+    ports:
+      - 3080:3080
+    depends_on:
+      - lint-yaml
+      - lint-filenames
+      - lint-dockerfile-docs

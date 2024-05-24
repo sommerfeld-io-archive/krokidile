@@ -118,14 +118,14 @@ jobs:
         run: |
           file=README.adoc
           content=$(cat "$file")
-          content="${content//= Introduction/= source2adoc}"
+          content="${content//= Introduction/= krokidile}"
           echo "$content" > "$file"
         shell: bash
       - name: Replace xref with links to GitHub in adoc files in project root
         run: |
           for file in *.adoc; do
             content=$(cat "$file")
-            content="${content//xref:development-guide:development-guide.adoc[]/link:https://github.com/sommerfeld-io/source2adoc/blob/main/docs/modules/development-guide/pages/development-guide.adoc[Development Guide]}"
+            content="${content//xref:development-guide:development-guide.adoc[]/link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/development-guide/pages/development-guide.adoc[Development Guide]}"
             echo "$content" > "$file"
           done
         shell: bash

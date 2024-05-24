@@ -1,0 +1,8 @@
+.devcontainer
+# .git # do NOT ignore because antora needs the git-repo-tree
+.github
+.vscode
+
+.dockerignore
+.env
+Dockerfile

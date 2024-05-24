@@ -1,0 +1,41 @@
+---
+site:
+  title: krokidile
+  url: /
+  start_page: public::index.adoc
+  robots: allow
+
+content:
+  # branches: ['*', '!dependabot/*']
+  branches: ['main']
+  tags: [v*]
+  sources:
+    - url: https://github.com/sommerfeld-io/krokidile.git
+      start_path: docs
+
+asciidoc:
+  attributes:
+    kroki-fetch-diagram: true
+  extensions:
+    - asciidoctor-kroki
+
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+      enabled: true
+      index_latest_only: true
+      snippet_length: 160
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    # url: /antora-ui/build/ui-bundle.zip
+    snapshot: true
+
+output:
+  clean: true
+  dir: /tmp/antora/krokidile-docs/public
+
+runtime:
+  cache_dir: /tmp/antora/krokidile-docs/cache/antora
+  fetch: true
