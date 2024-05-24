@@ -72,6 +72,8 @@ services:
       dockerfile: Dockerfile.app
     ports:
       - 3000:9000
+    environment:
+      - KROKI_URL=http://kroki:3001
     depends_on:
       - kroki
 
