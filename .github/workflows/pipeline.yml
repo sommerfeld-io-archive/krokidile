@@ -76,7 +76,6 @@ jobs:
 
   validate-metadata:
     runs-on: ubuntu-latest
-    needs: ['cleanup']
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -167,6 +166,7 @@ jobs:
     name: ${{ matrix.image-name }}:${{ github.sha }}
     needs: [
       'docs',
+      'validate-metadata',
     ]
     permissions:
       contents: read
