@@ -278,47 +278,6 @@ jobs:
       #     exit-code: false
       #     write-comment: ${{ github.event_name == 'pull_request' }}
 
-  # ----- Deploy :latest :0.1.0 stage -----------
-  
-  publish-release:
-    runs-on: ubuntu-latest
-    name: ${{ matrix.image-name }} as release
-    needs: ['publish-rc']
-    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
-    permissions: # see build-image (duplicated because github actions does not support anchors)
-      contents: read
-      pull-requests: write
-      security-events: write
-    strategy: # see build-image (duplicated because github actions does not support anchors)
-      matrix:
-        include:
-          - registry: docker.io
-            image-name: krokidile
-          - registry: docker.io
-            image-name: krokidile-docs
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Dummy ... implement me sometime
-        run: echo "Dummy ... implement me sometime"
-        shell: bash
-
-  # ----- Deploy html website via ftp -----------
-  
-  publish-html-webste:
-    runs-on: ubuntu-latest
-    name: Upload HTML (via FTP)
-    needs: ['publish-rc']
-    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
-    permissions: # see build-image (duplicated because github actions does not support anchors)
-      contents: read
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Dummy ... implement me sometime
-        run: echo "Dummy ... implement me sometime"
-        shell: bash
-
   # ----- Cleanup -------------------------------
 
   cleanup:
@@ -343,4 +302,59 @@ jobs:
         run: |
           TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${{ secrets.DOCKERHUB_USER }}'", "password": "'${{ secrets.DOCKERHUB_TOKEN }}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
           curl -X DELETE -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}/tags/${{ github.sha }}/
+        shell: bash
+
+  # ----- Deploy :latest :0.1.0 stage -----------
+
+  is-release:
+    runs-on: ubuntu-latest
+    needs: ['cleanup']
+    outputs:
+      CURRENT_VERSION: ${{ steps.vars.outputs.CURRENT_VERSION }}
+      NEXT_VERSION: ${{ steps.vars.outputs.NEXT_VERSION }}
+      CREATE_RELEASE: ${{ steps.vars.outputs.CREATE_RELEASE }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install YQ
+        run: 
+          sudo apt-get update
+          sudo apt-get install yq -y
+        shell: bash
+      - name: Check if the pipiline-run should create a release
+        id: vars
+        run: |
+          currentVersion=$(yq eval '.version.current' metadata.yml)
+          nextRelease=$(yq eval '.version.next' metadata.yml)
+          createRelease=$(yq eval '.release.create' metadata.yml)
+
+          echo "CURRENT_VERSION=$currentVersion" >> $GITHUB_OUTPUT
+          echo "NEXT_VERSION=$nextVersion" >> $GITHUB_OUTPUT
+          echo "CREATE_RELEASE=$createRelease" >> $GITHUB_OUTPUT
+        shell: bash
+  
+  publish-release:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.image-name }} as release
+    needs: ['is-release']
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    permissions: # see build-image (duplicated because github actions does not support anchors)
+      contents: read
+      pull-requests: write
+      security-events: write
+    strategy: # see build-image (duplicated because github actions does not support anchors)
+      matrix:
+        include:
+          - registry: docker.io
+            image-name: krokidile
+          - registry: docker.io
+            image-name: krokidile-docs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Dummy ... implement me sometime
+        run: |
+          echo "${{ needs.is-release.outputs.CURRENT_VERSION }}"
+          echo "${{ needs.is-release.outputs.NEXT_VERSION }}"
+          echo "${{ needs.is-release.outputs.CREATE_RELEASE }}"
         shell: bash
