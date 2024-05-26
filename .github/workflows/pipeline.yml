@@ -282,7 +282,7 @@ jobs:
   
   publish-release:
     runs-on: ubuntu-latest
-    name: ${{ matrix.image-name }} as release candidate
+    name: ${{ matrix.image-name }} as release
     needs: ['publish-rc']
     if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
     permissions: # see build-image (duplicated because github actions does not support anchors)
