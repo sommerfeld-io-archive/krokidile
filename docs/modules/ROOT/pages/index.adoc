@@ -30,6 +30,7 @@ krokidile provides a web-based live editor for diagrams, enabling developers to 
 * Configure krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
 
 == How to use
+=== krokidile
 The only way to use krokidile is to use the Docker image. The Docker image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile.
 [source, bash]
 ----
@@ -54,6 +55,29 @@ services:
       - 3000:3000
     depends_on:
       - kroki
+----
+
+=== krokidile-docs
+This project also publishes a documentation container. The documentation container is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile-docs.
+
+Start with plain Docker:
+[source, bash]
+----
+docker run --rm -p 3080:3080 sommerfeldio/krokidile-docs:latest
+----
+
+This Docker compose stack starts a krokidile-docs instance. 
+[source, yml]
+----
+services:
+  docs:
+    container_name: krokidile-docs
+    image: sommerfeldio/krokidile-docs:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.docs
+    ports:
+      - 3080:3080
 ----
 
 == Local Development
