@@ -252,7 +252,7 @@ jobs:
         include:
           - registry: docker.io
             image-name: krokidile
-          - r7egistry: docker.io
+          - registry: docker.io
             image-name: krokidile-docs
     steps:
       - name: Checkout code

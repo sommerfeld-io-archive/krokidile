@@ -1,8 +1,8 @@
 ---
 name: public
 title: krokidile
-version: main
-version: main
+#version: main
+version: 0.1.0-alpha.0
 start_page: ROOT:index.adoc
 nav:
   - modules/ROOT/nav.adoc
