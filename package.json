@@ -1,6 +1,6 @@
 {
   "name": "krokidile",
-  "version": "0.1.0-alpha.1",
+  "version": "main",
   "main": "index.js",
   "directories": {
     "doc": "docs"
