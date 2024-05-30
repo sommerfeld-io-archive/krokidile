@@ -23,7 +23,61 @@ We employ version control to manage and track changes made to our production sys
 By extending version control to encompass the management of tools, third-party software and production environment, we maintain a firm grip on the external factors that can impact our software development and our runtime environments. This approach allows us to minimize the risk of uncontrolled changes.
 
 == Commit Messages
-Read something about link:https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html[Git commit messages].
+We use link:https://github.com/semantic-release/semantic-release[semantic-release] to create Git tags and GitHub releases.It uses the latest Git tag to determine the current version of your project. When you run semantic-release, it analyzes your commit messages since the last release to determine the next version number.
+
+Each commit message consists of a header, a body, and a footer (each separated by a blank line). This specification is inspired by the AngularJS commit message format. The `header` is mandatory. The `body` and `footer` are optional.
+
+[source, txt]
+----
+<type>: <short summary>
+  │       │
+  │       +-> Summary in present tense. Not capitalized. No period at the end.
+  │
+  +-> Commit Type: build|ci|docs|feat|fix|perf|refactor|test
+----
+
+The `<type>` and `<summary>` fields are mandatory. The `type` must be one of the following:
+
+* *build*: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+* *ci*: Changes to our CI configuration files and scripts (examples: CircleCi, SauceLabs)
+* *docs*: Documentation only changes
+* *feat*: A new feature
+* *fix*: A bug fix
+* *perf*: A code change that improves performance
+* *refactor*: A code change that neither fixes a bug nor adds a feature
+* *test*: Adding missing tests or correcting existing tests
+
+Use the summary field to provide a succinct description of the change:
+
+* use the imperative, present tense: "change" not "changed" nor "changes"
+* don't capitalize the first letter
+* no dot (.) at the end
+
+Just as in the summary, use the imperative, present tense: "fix" not "fixed" nor "fixes". Explain the motivation for the change in the commit message body. This commit message should explain _why_ you are making the change. You can include a comparison of the previous behavior with the new behavior in order to illustrate the impact of the change.
+
+The footer can contain information about breaking changes and deprecations and is also the place to reference GitHub issues and PRs that this commit closes or is related to.
+
+[source, txt]
+----
+BREAKING CHANGE: <breaking change summary>
+<BLANK LINE>
+<breaking change description + migration instructions>
+<BLANK LINE>
+Fixes #<issue number>
+----
+
+Breaking Change section should start with the phrase "BREAKING CHANGE: " followed by a summary of the breaking change, a blank line, and a detailed description of the breaking change that also includes migration instructions.
+
+[source, txt]
+----
+DEPRECATED: <what is deprecated>
+<BLANK LINE>
+<deprecation description + recommended update path>
+<BLANK LINE>
+Closes #<pr number>
+----
+
+Similarly, a Deprecation section should start with "DEPRECATED: " followed by a short description of what is deprecated, a blank line, and a detailed description of the deprecation that also mentions the recommended update path.
 
 == Trunk-Based Development
 We follow a trunk-based development approach, which means that we primarily focus our development efforts on the main branch of our repository. This approach encourages frequent and continuous integration of code changes directly into the main branch, allowing us to avoid long-lived feature branches and promote a fast-paced development cycle. We still rely on branching and Pull Requests, but our branches do not live for longer than one day (more on that in the coming sections).
