@@ -1,25 +1,21 @@
 ---
-# @file pipeline.yml
-# @brief Deployment pipeline for the source2docs-website.
-#
-# @description The deployment pipeline for the source2docs-website is implemented using GitHub
-# Actions. The primary objective of this pipeline is to assess the releasability of the application
-# for deployment with every push to the ``main`` branch. This is achieved through a series of
-# automated tests and validations (performed on all branches, but the ``main`` branch carries the
-# code thatshould be stable and production-ready). The workflow is designed to build every artifact
-# of the source2docs-website and subject it to various types of tests to verify its functionality
-# and integrity. If all tests are successful, indicating that the project is ready for release, a
-# release candidate is generated and published to DockerHub.
-#
-# The deployment process for the source2docs-website utilizes Docker images. Images are built and
-# unit tested. Each Snapshot image is tagged with the commit-sha, providing a clear reference to
-# the version of the codebase from which it was generated, and subsequently pushed to DockerHub.
-# Following this initial deployment, the Snapshot Docker images undergo further testing (security,
-# performance, acceptance, etc.) to assess their performance and stability. If these additional
-# tests pass successfully (and the workflow is running on the ``main`` branch), indicating that the
-# Snapshot image is robust and reliable, it is then tagged as a release candidate. Notably, release
-# candidates are exclusively published from the ``main`` branch.
-
+## The deployment pipeline for the krokidile app is implemented using GitHub Actions. The primary
+## objective of this pipeline is to assess the releasability of the application for deployment with
+## every push to the `main` branch. This is achieved through a series of automated tests and
+## validations (performed on all branches, but the `main` branch carries the code that should be
+## stable and production-ready). The workflow is designed to build every artifact of the krokidile
+## app and subject it to various types of tests to verify its functionality and integrity. If all
+## tests are successful, indicating that the project is ready for release, a release candidate is
+## generated and published to DockerHub.
+##
+## The deployment process for the krokidile app utilizes Docker images. Images are built and
+## unit tested. Each Snapshot image is tagged with the commit-sha, providing a clear reference to
+## the version of the codebase from which it was generated, and subsequently pushed to DockerHub.
+## Following this initial deployment, the Snapshot Docker images undergo further testing (security,
+## performance, acceptance, etc.) to assess their performance and stability. If these additional
+## tests pass successfully (and the workflow is running on the `main` branch), indicating that the
+## Snapshot image is robust and reliable, it is then tagged as a release candidate. Notably, release
+## candidates are exclusively published from the `main` branch.
 
 name: Build + Deployment Pipeline
 
@@ -100,7 +96,7 @@ jobs:
 
   docs:
     runs-on: ubuntu-latest
-    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    if: ${{ github.actor != 'dependabot[bot]' }}
     permissions:
       contents: write
     steps:
@@ -164,6 +160,7 @@ jobs:
 
   build-image:
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: ${{ matrix.image-name }}:${{ github.sha }}
     needs: [
       'docs',
@@ -239,6 +236,7 @@ jobs:
 
   test-image:
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: ${{ matrix.image-name }}
     needs: ['build-image']
     permissions:
@@ -262,9 +260,9 @@ jobs:
 
   publish-rc:
     runs-on: ubuntu-latest
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
     name: ${{ matrix.image-name }} as release candidate
     needs: ['test-image']
-    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
     permissions: # see build-image (duplicated because github actions does not support anchors)
       contents: read
       pull-requests: write
