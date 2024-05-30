@@ -41,6 +41,64 @@ jobs:
         run: npx semantic-release
         shell: bash
 
+  release-docker-images:
+    runs-on: ubuntu-latest
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    name: ${{ matrix.image-name }}:${{ github.sha }}
+    needs: [
+      'release-code',
+    ]
+    env:
+      DOCS_FILE: README # with path, without extension
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        include:
+          - registry: docker.io
+            image-name: krokidile
+          - registry: docker.io
+            image-name: krokidile-docs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{github.ref}}
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Print Tag
+        run: echo "$(git describe --tags `git rev-list --tags --max-count=1`)"
+        shell: bash
+      - name: Deploy to DockerHub
+        run: |
+          VERSION="$(git describe --tags `git rev-list --tags --max-count=1`)"
+          docker pull "$IMAGE:rc"
+
+          docker tag "$IMAGE:rc" "$IMAGE:latest"
+          docker tag "$IMAGE:rc" "$IMAGE:$VERSION"
+
+          docker push "$IMAGE:latest"
+          docker push "$IMAGE:$VERSION"
+        shell: bash
+      - name: Convert ${{ env.DOCS_FILE }} from Asciidoc to Markdown for DockerHub description
+        run: |
+          sudo apt-get install -y pandoc asciidoc
+          asciidoc -b docbook ${{ env.DOCS_FILE }}.adoc
+          mv ${{ env.DOCS_FILE }}.xml ./UPLOAD.xml
+          pandoc -f docbook -t markdown_strict UPLOAD.xml -o UPLOAD.md
+        shell: bash
+      - name: Update DockerHub description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ matrix.image-name }}
+          short-description: ${{ github.event.repository.description }}
+          readme-filepath: ./UPLOAD.md
+
   # bump versions
   # Github release
 
