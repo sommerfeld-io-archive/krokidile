@@ -50,6 +50,5 @@ ignore:
   # linter definitions etc.
   - .hadolint.yml
   - .ls-lint.yml
-  - .pre-commit-config.yaml
   - .yamllint.yml
-  - .versionrc.json
+  - release.config.js # semantic-release

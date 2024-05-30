@@ -18,33 +18,31 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Info - files to be bumped (see .versionrc.json)
+      - name: Info - package.json
+        run: cat package.json
+        shell: bash
+      - name: Info - docs/antora.yml
         run: cat docs/antora.yml
         shell: bash
       - name: Install Node.js
         uses: actions/setup-node@v4.0.2
         with:
           node-version: 22.2.0
-      - name: standard-version - Install
-        run: npm install standard-version
+      - name: semantic-release - Install
+        run: |
+          npm install --save-dev semantic-release
+          npm install --save-dev @semantic-release/commit-analyzer
+          npm install --save-dev @semantic-release/release-notes-generator
+          npm install --save-dev @semantic-release/github.
         shell: bash
-      - name: standard-version - Run to determine the version and create a tag
-        run: npx standard-version
+      - name: semantic-release - Run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
         shell: bash
-      - name: Info - git tags
-        run: git tag
-        shell: bash
-      - name: Info - bumped files (see .versionrc.json)
-        run: cat docs/antora.yml
-        shell: bash
-      # - name: GitHub release
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN_REPO_AND_PROJECT }}
-      #   run: |
-      #     git push --follow-tags
-      #     VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
-      #     gh release create $VERSION --generate-notes
-      #   shell: bash
-      # TODO revert antora.yml from bash (sed)
 
+  # bump versions
+  # Github release
+    
   # TODO dockerhub in a matrix
+  # TODO revert version in antora.yml? from bash (sed)?

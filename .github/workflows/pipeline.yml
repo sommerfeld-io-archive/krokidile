@@ -154,7 +154,7 @@ jobs:
         with:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
-          message: "[Actions Bot] generate docs"
+          message: "docs:: [Actions Bot] generate docs"
 
   # ----- Build stage ---------------------------
 
