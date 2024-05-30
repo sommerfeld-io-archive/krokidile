@@ -1,0 +1,33 @@
+{
+  "rules": [
+    ".devcontainer",
+    ".devcontainer/ops",
+    ".devcontainer/ops/assets",
+
+    ".github",
+    ".github/workflows",
+
+    ".vscode",
+
+    "docs",
+    "docs/config",
+    "docs/config/playbooks",
+    "docs/modules",
+    "docs/modules/*/assets/attachments/**",
+    "docs/modules/*/assets/images/**",
+    "docs/modules/*/examples/*",
+    "docs/modules/*/examples/**",
+    "docs/modules/*/pages/*",
+    "docs/modules/*/pages/**",
+    "docs/modules/*/partials/*",
+    "docs/modules/*/partials/**",
+    "docs/ui-bundle",
+    "docs/ui-bundle/**",
+
+    "src",
+
+    "node_modules/**",
+
+    "target/**"
+  ]
+}

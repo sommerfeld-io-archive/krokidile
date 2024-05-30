@@ -75,6 +75,15 @@ jobs:
         run: docker compose up lint-filenames --exit-code-from lint-filenames
         shell: bash
 
+  lint-folders:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run folderslint in container
+        run: docker compose up lint-folders --exit-code-from lint-folders
+        shell: bash
+
   shellcheck:
     runs-on: ubuntu-latest
     steps:
