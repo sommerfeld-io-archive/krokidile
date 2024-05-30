@@ -14,7 +14,7 @@ permissions:
 jobs:
   release-code:
     runs-on: ubuntu-latest
-    # TODO if main and not dependabot
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
