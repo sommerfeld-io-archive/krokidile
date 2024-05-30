@@ -9,10 +9,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  release:
+  release-code:
     runs-on: ubuntu-latest
     # TODO if main and not dependabot
     steps:
