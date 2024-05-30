@@ -33,7 +33,7 @@ jobs:
           npm install --save-dev semantic-release
           npm install --save-dev @semantic-release/commit-analyzer
           npm install --save-dev @semantic-release/release-notes-generator
-          npm install --save-dev @semantic-release/github.
+          npm install --save-dev @semantic-release/github
         shell: bash
       - name: semantic-release - Run
         env:
