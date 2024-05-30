@@ -52,7 +52,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run yamllint
-        run: docker-compose up lint-yaml && exit "$?"
+        run: docker-compose up --exit-code-from lint-yaml
         shell: bash
 
   lint-filenames:
@@ -61,7 +61,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run ls-lint in container
-        run: docker-compose up lint-filenames && exit "$?"
+        run: docker-compose up --exit-code-from lint-filenames
         shell: bash
 
   shellcheck:

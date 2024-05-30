@@ -20,7 +20,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-lint-yaml
     image: cytopia/yamllint:latest
     volumes:
-      - .:/workspaces/krokidile
+    - .:/workspaces/krokidile
     working_dir: /workspaces/krokidile
     command: .
     tty: true
