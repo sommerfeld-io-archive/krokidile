@@ -7,6 +7,9 @@ name: Release
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - '*'
 
 permissions:
   contents: write
@@ -14,7 +17,7 @@ permissions:
 jobs:
   release-code:
     runs-on: ubuntu-latest
-    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') && !startsWith(github.ref, 'refs/tags/') }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,21 +36,21 @@ jobs:
           npm install --save-dev semantic-release
           npm install --save-dev @semantic-release/commit-analyzer
           npm install --save-dev @semantic-release/release-notes-generator
+          npm install --save-dev @semantic-release/npm
           npm install --save-dev @semantic-release/github
         shell: bash
+      # TODO bump versions in antora.yml
       - name: semantic-release - Run
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
         shell: bash
+      # TODO revert version in antora.yml? from bash (sed)?
 
   publish-release:
     runs-on: ubuntu-latest
-    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
-    name: ${{ matrix.image-name }}:${{ github.sha }}
-    needs: [
-      'release-code',
-    ]
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref != 'refs/heads/main') && startsWith(github.ref, 'refs/tags/') }}
+    name: ${{ matrix.image-name }}
     env:
       DOCS_FILE: README # with path, without extension
     permissions:
@@ -74,14 +77,16 @@ jobs:
         shell: bash
       - name: Deploy to DockerHub
         run: |
-          VERSION="$(git describe --tags `git rev-list --tags --max-count=1`)"
+          TAG="${GITHUB_REF#refs/tags/}"
+
+          TAG="$(git describe --tags `git rev-list --tags --max-count=1`)"
           docker pull "$IMAGE:rc"
 
           docker tag "$IMAGE:rc" "$IMAGE:latest"
-          docker tag "$IMAGE:rc" "$IMAGE:$VERSION"
+          docker tag "$IMAGE:rc" "$IMAGE:$TAG"
 
           docker push "$IMAGE:latest"
-          docker push "$IMAGE:$VERSION"
+          docker push "$IMAGE:$TAG"
         shell: bash
       - name: Convert ${{ env.DOCS_FILE }} from Asciidoc to Markdown for DockerHub description
         run: |
@@ -98,9 +103,3 @@ jobs:
           repository: ${{ matrix.image-name }}
           short-description: ${{ github.event.repository.description }}
           readme-filepath: ./UPLOAD.md
-
-  # bump versions
-  # Github release
-
-  # TODO dockerhub in a matrix
-  # TODO revert version in antora.yml? from bash (sed)?
