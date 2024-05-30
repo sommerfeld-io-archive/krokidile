@@ -29,7 +29,7 @@ jobs:
         run: npm install --save-dev standard-version
         shell: bash
       - name: standard-version - Run to determine the version and create a tag
-        run: npx standard-version 
+        run: npx standard-version
         shell: bash
       - name: Info - git tags
         run: git tag
@@ -48,4 +48,3 @@ jobs:
       # TODO revert antora.yml from bash (sed)
 
   # TODO dockerhub in a matrix
-  
