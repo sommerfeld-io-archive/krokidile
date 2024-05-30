@@ -31,7 +31,7 @@ services:
     volumes:
       - .:/workspaces/krokidile
     working_dir: /workspaces/krokidile
-  
+
   lint-folders:
     container_name: ${COMPOSE_PROJECT_NAME}-lint-folders
     image: sommerfeldio/folderslint:latest
