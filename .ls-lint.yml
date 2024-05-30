@@ -33,6 +33,11 @@ ls:
   .gitkeep: lowercase
 
 ignore:
+  - docs/ui-bundle/.gulp.json
+  - docs/ui-bundle/src/js/vendor/highlight.bundle.js
+  - webpack.config.js
+
+  # commons
   - .git
   - .idea
   - .vscode
