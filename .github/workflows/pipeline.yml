@@ -323,7 +323,7 @@ jobs:
 
   # ----- Tag repository ------------------------
 
-  release-repository:
+  release-code:
     runs-on: ubuntu-latest
     needs: ['test-rc']
     if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
