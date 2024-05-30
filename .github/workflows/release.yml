@@ -1,7 +1,8 @@
 ---
-##
-##
-##
+## This file defines a GitHub Actions workflow for releasing the project. The purpose of this
+## workflow is to automate the release process of the project. It specifies the steps and
+## conditions for creating a release whenever a new tag and GitHub release is pushed to the
+## repository.
 
 name: Release
 
