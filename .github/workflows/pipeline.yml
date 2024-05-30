@@ -321,37 +321,14 @@ jobs:
         run: echo "CHANGE ME"
         shell: bash
 
-  # ----- Cleanup -------------------------------
-
-  cleanup:
-    runs-on: ubuntu-latest
-    name: ${{ matrix.image-name }}
-    needs: ['test-rc']
-    if: always()
-    permissions:
-      contents: read
-    strategy: # see build-image (duplicated because github actions does not support anchors)
-      matrix:
-        include:
-          - registry: docker.io
-            image-name: krokidile
-          - registry: docker.io
-            image-name: krokidile-docs
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Remove (:${{ github.sha }}) from ${{ matrix.registry }}
-        run: |
-          TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${{ secrets.DOCKERHUB_USER }}'", "password": "'${{ secrets.DOCKERHUB_TOKEN }}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
-          curl -X DELETE -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}/tags/${{ github.sha }}/
-        shell: bash
-
   # ----- Tag repository ------------------------
 
   release-repository:
     runs-on: ubuntu-latest
     needs: ['test-rc']
     if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -386,3 +363,28 @@ jobs:
         run: cat docs/antora.yml
         shell: bash
       # TODO revert version in antora.yml? from bash (sed)?
+
+  # ----- Cleanup -------------------------------
+
+  cleanup:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.image-name }}
+    needs: ['test-rc']
+    if: always()
+    permissions:
+      contents: read
+    strategy: # see build-image (duplicated because github actions does not support anchors)
+      matrix:
+        include:
+          - registry: docker.io
+            image-name: krokidile
+          - registry: docker.io
+            image-name: krokidile-docs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Remove (:${{ github.sha }}) from ${{ matrix.registry }}
+        run: |
+          TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${{ secrets.DOCKERHUB_USER }}'", "password": "'${{ secrets.DOCKERHUB_TOKEN }}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
+          curl -X DELETE -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}/tags/${{ github.sha }}/
+        shell: bash
