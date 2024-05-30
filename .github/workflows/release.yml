@@ -41,7 +41,7 @@ jobs:
         run: npx semantic-release
         shell: bash
 
-  release-docker-images:
+  publish-release:
     runs-on: ubuntu-latest
     if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
     name: ${{ matrix.image-name }}:${{ github.sha }}
