@@ -43,6 +43,6 @@ jobs:
 
   # bump versions
   # Github release
-    
+
   # TODO dockerhub in a matrix
   # TODO revert version in antora.yml? from bash (sed)?
