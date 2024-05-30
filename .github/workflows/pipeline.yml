@@ -351,6 +351,7 @@ jobs:
           npm install --save-dev @semantic-release/github
         shell: bash
       # TODO bump versions in antora.yml
+      # TODO https://github.com/sommerfeld-io/krokidile/issues/20
       - name: semantic-release - Run
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -363,6 +364,7 @@ jobs:
         run: cat docs/antora.yml
         shell: bash
       # TODO revert version in antora.yml? from bash (sed)?
+      # TODO https://github.com/sommerfeld-io/krokidile/issues/20
 
   # ----- Cleanup -------------------------------
 
