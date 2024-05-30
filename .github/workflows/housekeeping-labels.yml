@@ -54,6 +54,7 @@ jobs:
           gh label create "security" --color "cd3ad7" --description "CVEs, code scan violations, etc." --force
           gh label create "task" --color "0052CC" --description "Implementation task - relates to a user story (most of the time)" --force
           gh label create "user-story" --color "0E8A16" --description "User Story to describe a new feature" --force
+          gh label create "needs-triage" --color "FBCA04" --description "Issue needs to be triaged and assigned" --force
 
           gh label create "dependencies" --color "000000" --description "Dependabot: Pull requests that update a dependency file" --force
           gh label create "docker" --color "000000" --description "Dependabot: Pull requests that update Docker code" --force
