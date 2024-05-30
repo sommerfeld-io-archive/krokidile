@@ -23,11 +23,11 @@ SOFTWARE.
 == Excluded from MIT License
 * The UI Bundle located under `docs/ui-bundle` is used to render a documentation website on https://krokidile.sommerfeld.io. This UI bundle is NOT part of the Software and hence not licensed under the MIT License.
 * The website configuration located under `docs/config` is part of the website and hence also NOT licensed under the MIT License.
-* The project config on Github uses Secrets which are used to upload Docker Images to DockerHub and upload the documentation website to https://krokidile.sommerfeld.io (among others). The Github Secrets are NOT part of the Software and hence not licensed under the MIT License.
+* The project config on GitHub uses secrets which are used to upload Docker Images to DockerHub and upload the documentation website to https://krokidile.sommerfeld.io (among others). The GitHub secrets are NOT part of the Software and hence not licensed under the MIT License.
 
 These listed components are not part of the Software and hence not licensed under the MIT License. They are proprietary and may not be used without the explicit permission of the author.
 
-However the documentation located under `docs/modules` is part of the Software and hence licensed under the MIT License.
+However the documentation itself located under `docs/modules` is part of the Software and hence licensed under the MIT License.
 
 // +---------------------------------------------------+
 // |                                                   |
