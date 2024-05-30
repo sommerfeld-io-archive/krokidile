@@ -13,8 +13,9 @@ ls:
   .yaml: kebab-case
   .feature: kebab-case
 
-  .sh: kebab-case
+  .java: PascalCase
   .kt: PascalCase
+  .sh: kebab-case
 
   .css: kebab-case
   .html: kebab-case
@@ -24,13 +25,14 @@ ls:
 
   Dockerfile: PascalCase
   Vagrantfile: PascalCase
-  Jenkinsfile: PascalCase
 
+  .babelrc: lowercase
   .env: lowercase
+  .dockerignore: lowercase
   .folderslintrc: lowercase
-  .shellcheckrc: lowercase
   .gitignore: lowercase
   .gitkeep: lowercase
+  .shellcheckrc: lowercase
 
 ignore:
   - docs/ui-bundle/.gulp.json
@@ -45,8 +47,9 @@ ignore:
   - .gitpod.yml
   - target
 
-  # linter definitions
+  # linter definitions etc.
   - .hadolint.yml
   - .ls-lint.yml
   - .pre-commit-config.yaml
   - .yamllint.yml
+  - .versionrc.json
