@@ -154,7 +154,7 @@ jobs:
         with:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
-          message: "docs:: [Actions Bot] generate docs"
+          message: "docs: [Actions Bot] generate docs"
 
   # ----- Build stage ---------------------------
 
@@ -332,6 +332,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{github.ref}}
       - name: Info - package.json
         run: cat package.json
         shell: bash
@@ -365,6 +367,12 @@ jobs:
         shell: bash
       # TODO revert version in antora.yml? from bash (sed)?
       # TODO https://github.com/sommerfeld-io/krokidile/issues/20
+      - name: Commit and push
+        uses: EndBug/add-and-commit@v9.1.4
+        with:
+          author_name: sebastian
+          author_email: sebastian@sommerfeld.io
+          message: "docs: [Actions Bot] bump version"
 
   # ----- Cleanup -------------------------------
 

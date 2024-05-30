@@ -3,7 +3,7 @@
 ##
 ##
 
-name: Tag
+name: Release
 
 on:
   release:
