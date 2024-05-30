@@ -96,7 +96,7 @@ jobs:
 
   docs:
     runs-on: ubuntu-latest
-    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    if: ${{ github.actor != 'dependabot[bot]' }}
     permissions:
       contents: write
     steps:
@@ -160,6 +160,7 @@ jobs:
 
   build-image:
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: ${{ matrix.image-name }}:${{ github.sha }}
     needs: [
       'docs',
@@ -235,6 +236,7 @@ jobs:
 
   test-image:
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: ${{ matrix.image-name }}
     needs: ['build-image']
     permissions:
@@ -258,9 +260,9 @@ jobs:
 
   publish-rc:
     runs-on: ubuntu-latest
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
     name: ${{ matrix.image-name }} as release candidate
     needs: ['test-image']
-    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
     permissions: # see build-image (duplicated because github actions does not support anchors)
       contents: read
       pull-requests: write
