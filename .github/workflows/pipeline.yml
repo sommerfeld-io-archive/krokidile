@@ -104,11 +104,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{github.ref}}
-      - name: Adjust version in docs/antora.yml
-        uses: sebastian-sommerfeld-io/github-action-update-antora-yml@main
-        with:
-          git_ref: ${{github.ref}}
-          file: docs/antora.yml
+      # - name: Adjust version in docs/antora.yml
+      #   uses: sebastian-sommerfeld-io/github-action-update-antora-yml@main
+      #   with:
+      #     git_ref: ${{github.ref}}
+      #     file: docs/antora.yml
       - name: Copy adoc files to project root
         run: |
           cp docs/modules/ROOT/pages/index.adoc README.adoc
