@@ -300,13 +300,33 @@ jobs:
       #     exit-code: false
       #     write-comment: ${{ github.event_name == 'pull_request' }}
 
+  test-rc:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    name: ${{ matrix.image-name }}
+    needs: ['publish-rc']
+    permissions:
+      contents: read
+    strategy: # see build-image (duplicated because github actions does not support anchors)
+      matrix:
+        include:
+          - registry: docker.io
+            image-name: krokidile
+          - registry: docker.io
+            image-name: krokidile-docs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Dummy for ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_RC }}
+        run: echo "CHANGE ME"
+        shell: bash
+
   # ----- Cleanup -------------------------------
 
   cleanup:
     runs-on: ubuntu-latest
     name: ${{ matrix.image-name }}
-    # needs: ['test-rc']
-    needs: ['publish-rc']
+    needs: ['test-rc']
     if: always()
     permissions:
       contents: read
@@ -325,3 +345,44 @@ jobs:
           TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${{ secrets.DOCKERHUB_USER }}'", "password": "'${{ secrets.DOCKERHUB_TOKEN }}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
           curl -X DELETE -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}/tags/${{ github.sha }}/
         shell: bash
+
+  # ----- Tag repository ------------------------
+
+  release-repository:
+    runs-on: ubuntu-latest
+    needs: ['test-rc']
+    if: ${{ (github.actor != 'dependabot[bot]') && (github.ref == 'refs/heads/main') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Info - package.json
+        run: cat package.json
+        shell: bash
+      - name: Info - docs/antora.yml
+        run: cat docs/antora.yml
+        shell: bash
+      - name: Install Node.js
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 22.2.0
+      - name: semantic-release - Install
+        run: |
+          npm install --save-dev semantic-release
+          npm install --save-dev @semantic-release/commit-analyzer
+          npm install --save-dev @semantic-release/release-notes-generator
+          npm install --save-dev @semantic-release/npm
+          npm install --save-dev @semantic-release/github
+        shell: bash
+      # TODO bump versions in antora.yml
+      - name: semantic-release - Run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+        shell: bash
+      - name: Info - package.json
+        run: cat package.json
+        shell: bash
+      - name: Info - docs/antora.yml
+        run: cat docs/antora.yml
+        shell: bash
+      # TODO revert version in antora.yml? from bash (sed)?
