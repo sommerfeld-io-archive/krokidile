@@ -64,6 +64,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ matrix.image-name }}
+          repository: ${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}
           short-description: ${{ github.event.repository.description }}
           readme-filepath: ./UPLOAD.md
