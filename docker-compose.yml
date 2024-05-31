@@ -48,10 +48,6 @@ services:
       - .:/workspaces/krokidile
     working_dir: /workspaces/krokidile
     entrypoint: hadolint Dockerfile.app
-    depends_on:
-      - lint-filenames
-      - lint-folders
-      - lint-yaml
 
   lint-dockerfile-docs:
     container_name: ${COMPOSE_PROJECT_NAME}-lint-dockerfile-docs
@@ -60,9 +56,6 @@ services:
       - .:/workspaces/krokidile
     working_dir: /workspaces/krokidile
     entrypoint: hadolint Dockerfile.docs
-    depends_on:
-      - lint-filenames
-      - lint-yaml
 
   kroki:
     container_name: ${COMPOSE_PROJECT_NAME}-kroki
@@ -70,9 +63,10 @@ services:
     ports:
       - 3001:8000
     depends_on:
-      - lint-yaml
-      - lint-filenames
       - lint-dockerfile-app
+      - lint-filenames
+      - lint-folders
+      - lint-yaml
 
   app:
     container_name: ${COMPOSE_PROJECT_NAME}-app
@@ -96,6 +90,7 @@ services:
     ports:
       - 3080:3080
     depends_on:
-      - lint-yaml
-      - lint-filenames
       - lint-dockerfile-docs
+      - lint-filenames
+      - lint-folders
+      - lint-yaml

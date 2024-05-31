@@ -1,0 +1,115 @@
+= ADR-002: Comparison of Husky and Pre-commit for Managing Git Hooks in Node.js Applications
+Sebastian Sommerfeld <sebastian@sommerfeld.io>
+
+[cols="1,6"]
+|===
+|Status |Accepted
+|Decision Date |2024-05-31
+|Decision |-
+|===
+
+Both Husky and Pre-commit are popular tools for managing Git hooks in software projects. Each has its strengths and weaknesses, and the choice between them depends on the specific requirements of your project. This ADR compares link:https://github.com/typicode/husky[Husky] and link:https://pre-commit.com   [pre-commit] based on various criteria relevant to managing pre-commit hooks in a Node.js application.
+
+== Overview
+Husky is a Git hooks manager specifically designed for JavaScript/Node.js projects. It allows developers to run scripts defined in their `package.json` before certain Git actions, such as committing code or pushing changes. 
+
+Pre-commit is a framework for managing and maintaining multi-language pre-commit hooks. While it is language-agnostic and can be used with any type of project, it provides a centralized way to manage hooks and integrates with various linters, formatters, and other tools.
+
+== Installation and Setup
+* Husky integrates directly with npm/Yarn, making it a natural choice for Node.js projects.
+* Pre-commit requires Python for installation but can be used in any project.
+
+== Configuration and Customization
+=== Husky
+Husky leverages npm scripts for configuration, making it very flexible for Node.js environments. You can define any script in your `package.json` and run it as a Git hook.
+
+Example `package.json`:
+[source, json]
+----
+"scripts": {
+  "lint": "eslint .",
+  "test": "jest"
+}
+----
+
+Hook setup:
+[source, bash]
+----
+npx husky add .husky/pre-commit "npm run lint && npm run test"
+----
+
+=== Pre-commit
+Pre-commit uses a configuration file (`.pre-commit-config.yaml`) to define hooks and their associated tools. It supports a wide range of pre-built hooks and allows custom hooks to be defined.
+
+[source, yml]
+----
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        entry: npx eslint --fix
+        language: node
+        files: \.(js|jsx|ts|tsx)$
+      - id: prettier
+        name: prettier
+        entry: npx prettier --write
+        language: node
+        files: \.(js|jsx|ts|tsx|json|yaml|yml|md)$
+----
+
+== Flexibility and Extensibility
+=== Husky
+* Highly flexible within the Node.js ecosystem.
+* Integrates seamlessly with npm scripts and Node-based tools.
+* Requires custom scripts or additional tools for non-JavaScript tasks (e.g., YAML linting).
+
+=== Pre-commit
+* Language-agnostic and supports multiple languages out of the box.
+* Extensive repository of pre-built hooks for various languages and tools.
+* Easily extensible with custom hooks.
+* Centralized configuration for all hooks.
+
+== Community and Ecosystem
+=== Husky
+* Strong focus on the JavaScript/Node.js community.
+* Widely used in JavaScript projects, with many community-contributed resources and examples.
+* Relies on the npm ecosystem for additional functionality.
+
+=== Pre-commit
+* Broader language support, appealing to polyglot projects.
+* Active community with contributions across various programming languages.
+* Rich ecosystem of pre-built hooks and integrations.
+
+== Performance
+=== Husky
+* Efficient for Node.js projects, leveraging existing npm scripts.
+* Performance depends on the complexity and number of npm scripts.
+
+=== Pre-commit
+* Can be slower if many hooks or complex hooks are defined, as it runs a separate process for each hook.
+* Performance varies based on the hooks and tools used.
+
+== Summary
+[options="header"]
+|===
+|Criteria          |Husky                   |Pre-commit
+|Installation      |Easy with npm           |Requires Python
+|Configuration     |npm scripts             |`.pre-commit-config.yaml`
+|Language Support  |JavaScript/Node.js      |Multi-language
+|Flexibility       |High within Node.js     |High across multiple languages
+|Ecosystem         |JavaScript-focused      |Polyglot
+|Community Support |Strong in JavaScript    |Broad and active
+|Performance       |Efficient for npm tasks |Variable, depends on hooks
+|===
+
+Choosing between Husky and Pre-commit depends on your project requirements. If your project is primarily Node.js and you prefer to manage hooks using npm scripts, Husky is an excellent choice. If your project involves multiple languages or you prefer a centralized configuration file for hooks, Pre-commit offers greater flexibility and extensibility.
+
+== Decision
+
