@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Validate commit messages
+npx commitlint --edit "$1"
 
 docker compose up lint-yaml --exit-code-from lint-yaml
 docker compose up lint-filenames --exit-code-from lint-filenames

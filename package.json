@@ -13,11 +13,6 @@
     "bundle": "webpack --mode production",
     "start": "webpack serve"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint --edit \"$1\""
-    }
-  },
   "keywords": [],
   "author": "sommerfeld.io",
   "license": "MIT License",
