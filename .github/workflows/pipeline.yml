@@ -16,6 +16,15 @@
 ## tests pass successfully (and the workflow is running on the `main` branch), indicating that the
 ## Snapshot image is robust and reliable, it is then tagged as a release candidate. Notably, release
 ## candidates are exclusively published from the `main` branch.
+##
+## === Release
+## link:https://github.com/semantic-release/semantic-release[semantic-release] is used to automate
+## the release process. 
+##
+## GitHub Actions does not trigger workflows on release events created by the GitHub Actions
+## `GITHUB_TOKEN`. This is a known limitation to prevent recursive workflow runs. To work around
+## this, a Personal Access Token (PAT) is used instead of the `GITHUB_TOKEN`. The PAT should have
+## the repo scope. This will allow the release event to trigger other workflows.
 
 name: Build + Deployment Pipeline
 
@@ -145,7 +154,7 @@ jobs:
         run: |
           for file in *.adoc; do
             content=$(cat "$file")
-            content="${content//xref:development-guide.adoc[]/link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/development-guide/pages/development-guide.adoc[Development Guide]}"
+            content="${content//xref:development-guide.adoc[]/link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide]}"
             echo "$content" > "$file"
           done
         shell: bash
@@ -252,8 +261,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Dummy for ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ github.sha }}
-        run: |
-          echo "CHANGE ME"
+        run: echo "CHANGE ME"
         shell: bash
 
   # ----- Deploy :rc stage ----------------------
