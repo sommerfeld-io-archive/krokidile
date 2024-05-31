@@ -358,9 +358,10 @@ jobs:
           npm install --save-dev @semantic-release/commit-analyzer
           npm install --save-dev @semantic-release/release-notes-generator
           npm install --save-dev @semantic-release/npm
+          npm install --save-dev @semantic-release/exec
           npm install --save-dev @semantic-release/github
         shell: bash
-      # TODO bump versions in antora.yml
+      # TODO bump versions in antora.yml + push
       # TODO https://github.com/sommerfeld-io/krokidile/issues/20
       - name: semantic-release - Run
         env:

@@ -9,6 +9,12 @@
         "npmPublish": false
       }
     ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "VERSION=${nextRelease.version} && sed -i \"s/version: .*/version: $VERSION/\" docs/antora.yml"
+      }
+    ],
     "@semantic-release/github"
   ]
 }

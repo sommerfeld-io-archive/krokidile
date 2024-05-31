@@ -132,12 +132,11 @@ Key definitions of Semantic Versioning:
 * Patch version (`x.x.patch`) must be incremented if only backward compatible bug fixes are introduced. A bug fix is defined as an internal change that fixes incorrect behavior.
 * Minor version (`x.minor.x`) must be incremented if new, backward compatible functionality is introduced to the public API. It must be incremented if any public API functionality is marked as deprecated. It may be incremented if substantial new functionality or improvements are introduced within the private code. It may include patch level changes. Patch version must be reset to 0 when minor version is incremented.
 * Major version (`major.x.x`) must be incremented if any backward incompatible changes are introduced to the public API. It may also include minor and patch level changes. Patch and minor versions must be reset to 0 when major version is incremented.
-* A pre-release version may be denoted by appending a hyphen and a series of dot separated identifiers immediately following the patch version. Pre-release versions have a lower precedence than the associated normal version. A pre-release version indicates that the version is unstable and might not satisfy the intended compatibility requirements as denoted by its associated normal version. Examples: `1.0.0-alpha.0`, `1.0.0-beta.0`.
 
 Our Git tags always include a leading "v" before the version number.
 
 == Docker Tag Strategy
-The Docker tag strategy follows Semantic Versioning for our Releases.
+The Docker tag strategy follows Semantic Versioning for our releases.
 
 == Artifacts are immutable
 We are validating the delivered artifact with the pipeline. It is built once and deployed to all environments. A common anti-pattern is building an artifact for each environment. Each build is a possibility to introduce unintended changes. By promoting a single artifact through the stages we ensure that the deployed artifact is exactly the one that was tested.
