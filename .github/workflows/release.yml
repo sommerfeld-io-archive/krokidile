@@ -40,13 +40,13 @@ jobs:
 
           echo "New version tag = $TAG"
 
-          docker pull "$IMAGE:rc"
+          docker pull "${{ matrix.image-name }}:rc"
 
-          docker tag "$IMAGE:rc" "$IMAGE:latest"
-          docker tag "$IMAGE:rc" "$IMAGE:$TAG"
+          docker tag "${{ matrix.image-name }}:rc" "${{ matrix.image-name }}:latest"
+          docker tag "${{ matrix.image-name }}:rc" "${{ matrix.image-name }}:$TAG"
 
-          docker push "$IMAGE:latest"
-          docker push "$IMAGE:$TAG"
+          docker push "${{ matrix.image-name }}:latest"
+          docker push "${{ matrix.image-name }}:$TAG"
         shell: bash
       - name: Convert ${{ env.DOCS_FILE }} from Asciidoc to Markdown for DockerHub description
         run: |
