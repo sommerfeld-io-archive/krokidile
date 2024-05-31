@@ -40,6 +40,7 @@ The `<type>` and `<summary>` fields are mandatory. The `type` must be one of the
 
 * *build*: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
 * *ci*: Changes to our CI configuration files and scripts (examples: CircleCi, SauceLabs)
+* *chore*: Changes that don't modify src or test files (example: updating tasks, linting, etc.)
 * *docs*: Documentation only changes
 * *feat*: A new feature
 * *fix*: A bug fix
@@ -81,7 +82,7 @@ Closes #<pr number>
 
 Similarly, a Deprecation section should start with "DEPRECATED: " followed by a short description of what is deprecated, a blank line, and a detailed description of the deprecation that also mentions the recommended update path.
 
-We use link:https://www.npmjs.com/package/@commitlint/config-angular[commitlint] to lint our commit messages. This ensures that all commit messages adhere to the specified format.
+We use link:@commitlint/config-conventional[commitlint] to lint our commit messages. This ensures that all commit messages follow a consistent format and adhere to the guidelines outlined above.
 
 == Trunk-Based Development
 We follow a trunk-based development approach, which means that we primarily focus our development efforts on the main branch of our repository. This approach encourages frequent and continuous integration of code changes directly into the main branch, allowing us to avoid long-lived feature branches and promote a fast-paced development cycle. We still rely on branching and Pull Requests, but our branches do not live for longer than one day (more on that in the coming sections).

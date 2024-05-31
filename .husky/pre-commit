@@ -1,17 +1,36 @@
 #!/bin/bash
+# shellcheck disable=SC1091
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Validate commit messages
-npx commitlint --edit "$1"
+function caption() {
+    if [ -z "$1" ]; then
+        echo "[ERROR] No caption passed"
+        exit 1
+    fi
 
+    echo
+    echo "--------------------------------------------------"
+    echo "$1"
+    echo "--------------------------------------------------"
+    echo
+}
+
+caption "Linting commit messages"
+#npx commitlint --edit "$GIT_PARAMS"
+#npx commitlint --edit "$1"
+npx --no-install commitlint --edit "$1"
+
+caption "Linting from docker-compose"
 docker compose up lint-yaml --exit-code-from lint-yaml
 docker compose up lint-filenames --exit-code-from lint-filenames
 docker compose up lint-folders --exit-code-from lint-folders
 docker compose up lint-dockerfile-app --exit-code-from lint-dockerfile-app
 docker compose up lint-dockerfile-docs --exit-code-from lint-dockerfile-docs
+docker compose down --volumes --remove-orphans
 
+caption "Linting from npm"
 npm run lint
 npm test
 
-# Shebang files should be executable
+caption "Shebang files should be executable"
 find . -type f -iname "*.sh" -exec chmod +x {} \;

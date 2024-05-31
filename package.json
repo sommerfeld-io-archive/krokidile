@@ -6,7 +6,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "prepare": "husky && husky install",
+    "postinstall": "husky",
     "lint": "echo 'No linters specified'",
     "test": "echo 'No test specified'",
     "dev": "webpack-dev-server --mode development --open --hot",
@@ -26,7 +26,6 @@
     "@babel/preset-env": "^7.24.6",
     "@babel/preset-react": "^7.24.6",
     "@commitlint/cli": "^19.3.0",
-    "@commitlint/config-angular": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@semantic-release/commit-analyzer": "^12.0.0",
     "@semantic-release/exec": "^6.0.3",
