@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 docker compose up lint-yaml --exit-code-from lint-yaml
 docker compose up lint-filenames --exit-code-from lint-filenames
 docker compose up lint-folders --exit-code-from lint-folders
