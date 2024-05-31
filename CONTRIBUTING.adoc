@@ -4,7 +4,7 @@ Sebastian Sommerfeld <sebastian@sommerfeld.io>
 == Code
 We're thrilled that you'd like to contribute to this project. You can do this by submitting a pull request.
 
-. Take a look at our link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/development-guide/pages/development-guide.adoc[Development Guide] to get an idea of how we work
+. Take a look at our link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide] to get an idea of how we work
 . Fork and clone the repository
 . Create a new branch: git checkout -b my-branch-name
 . Make your changes and include tests (preferably by using TDD)

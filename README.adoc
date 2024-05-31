@@ -81,7 +81,7 @@ services:
 ----
 
 == Local Development
-First, read the link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/development-guide/pages/development-guide.adoc[Development Guide].
+First, read the link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide].
 
 Start the development server with the following command: `npm start`.
 
