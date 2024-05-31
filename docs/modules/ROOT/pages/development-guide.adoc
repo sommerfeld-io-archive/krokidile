@@ -45,6 +45,8 @@ The `<type>` and `<summary>` fields are mandatory. The `type` must be one of the
 * *fix*: A bug fix
 * *perf*: A code change that improves performance
 * *refactor*: A code change that neither fixes a bug nor adds a feature
+* *revert*: Reverts a previous commit
+* *style*: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
 * *test*: Adding missing tests or correcting existing tests
 
 Use the summary field to provide a succinct description of the change:
@@ -78,6 +80,8 @@ Closes #<pr number>
 ----
 
 Similarly, a Deprecation section should start with "DEPRECATED: " followed by a short description of what is deprecated, a blank line, and a detailed description of the deprecation that also mentions the recommended update path.
+
+We use link:https://www.npmjs.com/package/@commitlint/config-angular[commitlint] to lint our commit messages. This ensures that all commit messages adhere to the specified format.
 
 == Trunk-Based Development
 We follow a trunk-based development approach, which means that we primarily focus our development efforts on the main branch of our repository. This approach encourages frequent and continuous integration of code changes directly into the main branch, allowing us to avoid long-lived feature branches and promote a fast-paced development cycle. We still rely on branching and Pull Requests, but our branches do not live for longer than one day (more on that in the coming sections).

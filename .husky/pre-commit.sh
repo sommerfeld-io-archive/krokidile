@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+. "$(dirname -- "$0")/_/husky.sh"
 
 # Validate commit messages
 npx commitlint --edit "$1"
