@@ -11,10 +11,10 @@ content:
     - url: /workspaces/krokidile
       branches: ['main']
       start_path: docs
-    # - url: https://github.com/sommerfeld-io/krokidile.git
-    #   branches: ~
-    #   tags: [v*]
-    #   start_path: docs
+    - url: https://github.com/sommerfeld-io/krokidile.git
+      branches: ~
+      tags: ['v*', '!v0.0.1']
+      start_path: docs
 
 asciidoc:
   attributes:
