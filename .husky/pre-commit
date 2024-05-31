@@ -23,7 +23,7 @@ find . -type f -iname "*.sh" -exec chmod +x {} \;
 
 caption "Running Prettier"
 npx prettier --write "**/*.{yml,yaml,json}"
-npx prettier --write "src/**/*.{html,css,ts,js}"
+npx prettier --write "src/**/*.{html,css,scss,less,ts,js}"
 
 caption "Linting from docker-compose"
 docker compose up lint-yaml --exit-code-from lint-yaml
