@@ -15,7 +15,6 @@
 ## ....
 
 services:
-
   lint-yaml:
     container_name: ${COMPOSE_PROJECT_NAME}-lint-yaml
     image: cytopia/yamllint:latest

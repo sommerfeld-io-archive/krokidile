@@ -32,3 +32,7 @@ npm test
 
 caption "Shebang files should be executable"
 find . -type f -iname "*.sh" -exec chmod +x {} \;
+
+caption "Running Prettier"
+npx prettier --write "**/*.{yml,yaml,json}"
+npx prettier --write "src/**/*.{html,css,ts,js}"
