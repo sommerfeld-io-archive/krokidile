@@ -383,6 +383,17 @@ jobs:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
           message: "docs: [Actions Bot] bump version"
+      - name: Reset version in docs/antora.yml (back to branch name)
+        uses: sebastian-sommerfeld-io/github-action-update-antora-yml@main
+        with:
+          git_ref: ${{github.ref}}
+          file: docs/antora.yml
+      - name: Commit and push
+        uses: EndBug/add-and-commit@v9.1.4
+        with:
+          author_name: sebastian
+          author_email: sebastian@sommerfeld.io
+          message: "docs: [Actions Bot] reset version back to branch name"
 
   # ----- Cleanup -------------------------------
 
