@@ -29,5 +29,24 @@
   "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/post-create-command.sh",
   "postStartCommand": "docker compose --file ${containerWorkspaceFolder}/.devcontainer/ops/docker-compose.yml --env-file ${containerWorkspaceFolder}/.devcontainer/ops/.env up -d",
 
-  "forwardPorts": [3990]
+  "forwardPorts": [
+    3990
+  ],
+  "portsAttributes": {
+    "3990": {
+      "label": "3990 Portainer"
+    },
+    "9000": {
+      "label": "9000 Node app (preview or bundled)"
+    },
+    "3000": {
+      "label": "3000 Node app from Docker Compose"
+    },
+    "3001": {
+      "label": "3001 Kroki from Docker Compose"
+    },
+    "3080": {
+      "label": "3080 Docs website from Docker Compose"
+    }
+  }
 }
