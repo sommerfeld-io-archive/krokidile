@@ -19,7 +19,7 @@
 ##
 ## === Release
 ## link:https://github.com/semantic-release/semantic-release[semantic-release] is used to automate
-## the release process. 
+## the release process.
 ##
 ## GitHub Actions does not trigger workflows on release events created by the GitHub Actions
 ## `GITHUB_TOKEN`. This is a known limitation to prevent recursive workflow runs. To work around
