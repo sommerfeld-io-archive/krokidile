@@ -16,9 +16,7 @@ caption() {
 }
 
 caption "Linting commit messages"
-#npx commitlint --edit "$GIT_PARAMS"
-#npx commitlint --edit "$1"
-npx --no-install commitlint --edit "$1"
+npx commitlint --edit "$1"
 
 caption "Linting from docker-compose"
 docker compose up lint-yaml --exit-code-from lint-yaml
