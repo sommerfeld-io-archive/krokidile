@@ -23,4 +23,5 @@ RUN npm install
 COPY . /app
 
 EXPOSE 9000
-CMD ["npm", "start-dev-server"]
+RUN npm run bundle
+CMD ["npm", "start"]

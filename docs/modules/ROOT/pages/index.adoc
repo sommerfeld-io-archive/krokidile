@@ -83,7 +83,7 @@ services:
 == Local Development
 First, read the xref:development-guide.adoc[].
 
-Start the development server with the following command: `npm start`.
+Start the development server with the following command: `npm run dev`.
 
 The whole Docker stack can be built and started with `docker compose build && docker compose up`.
 

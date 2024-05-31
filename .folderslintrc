@@ -26,8 +26,8 @@
 
     "src",
 
+    "dist/**",
     "node_modules/**",
-
     "target/**"
   ]
 }
