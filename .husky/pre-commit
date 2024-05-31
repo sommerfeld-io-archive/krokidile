@@ -2,7 +2,7 @@
 # shellcheck disable=SC1091
 . "$(dirname -- "$0")/_/husky.sh"
 
-function caption() {
+caption() {
     if [ -z "$1" ]; then
         echo "[ERROR] No caption passed"
         exit 1
