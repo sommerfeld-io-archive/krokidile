@@ -359,6 +359,7 @@ jobs:
           npm install --save-dev @semantic-release/release-notes-generator
           npm install --save-dev @semantic-release/npm
           npm install --save-dev @semantic-release/exec
+          npm install --save-dev @semantic-release/git
           npm install --save-dev @semantic-release/github
         shell: bash
       # TODO bump versions in antora.yml + push

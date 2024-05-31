@@ -15,6 +15,16 @@
         "prepareCmd": "VERSION=${nextRelease.version} && sed -i \"s/version: .*/version: $VERSION/\" docs/antora.yml"
       }
     ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "docs/antora.yml",
+          "package.json",
+          "package-lock.json"],
+        "message": "refactor(release): ${nextRelease.version}\n\n${nextRelease.notes}"
+      }
+    ],
     "@semantic-release/github"
   ]
 }
