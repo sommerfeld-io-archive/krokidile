@@ -30,16 +30,17 @@ name: Build + Deployment Pipeline
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - '**.adoc'
-  pull_request:
     branches-ignore:
       - dependabot/**
+    paths-ignore:
+      - '**.adoc'
+      - '.devcontainer/**'
+      - '.vscode/**'
   schedule:
     - cron: '0 1 * * 2'
 
+
+    
 env:
   IMAGE_TAG_RC: rc
   IMAGE_TAG_LATEST: latest
