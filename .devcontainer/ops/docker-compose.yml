@@ -9,7 +9,6 @@
 ## |===
 
 services:
-
   portainer:
     image: portainer/portainer-ce:alpine
     container_name: portainer

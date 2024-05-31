@@ -50,7 +50,6 @@ permissions:
   contents: read
 
 jobs:
-
   # info:
   #   runs-on: ubuntu-latest
   #   steps:
@@ -163,7 +162,7 @@ jobs:
         with:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
-          message: "docs: [Actions Bot] generate docs"
+          message: 'docs: [Actions Bot] generate docs'
 
   # ----- Build stage ---------------------------
 
@@ -171,9 +170,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: ${{ matrix.image-name }}:${{ github.sha }}
-    needs: [
-      'docs',
-    ]
+    needs: ['docs']
     permissions:
       contents: read
       pull-requests: write
@@ -385,7 +382,7 @@ jobs:
         with:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
-          message: "docs: [Actions Bot] bump version"
+          message: 'docs: [Actions Bot] bump version'
       - name: Reset version in docs/antora.yml (back to branch name)
         uses: sebastian-sommerfeld-io/github-action-update-antora-yml@main
         with:
@@ -396,7 +393,7 @@ jobs:
         with:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
-          message: "docs: [Actions Bot] reset version back to branch name"
+          message: 'docs: [Actions Bot] reset version back to branch name'
 
   # ----- Cleanup -------------------------------
 

@@ -1,33 +1,33 @@
 {
-	"name": "krokidile",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
+  "name": "krokidile",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
 
-	"customizations": {
-		"vscode": {
-			"settings": {},
-			"extensions": [
-				"streetsidesoftware.code-spell-checker",
-				"asciidoctor.asciidoctor-vscode",
-				"ms-azuretools.vscode-docker",
-				"aaron-bond.better-comments",
-				"pomdtr.markdown-kroki",
-				"timonwong.shellcheck",
-				"jebbs.plantuml",
-				"github.vscode-github-actions",
-				"redhat.vscode-yaml",
-				"GitHub.copilot"
-			]
-		}
-	},
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "streetsidesoftware.code-spell-checker",
+        "asciidoctor.asciidoctor-vscode",
+        "ms-azuretools.vscode-docker",
+        "aaron-bond.better-comments",
+        "pomdtr.markdown-kroki",
+        "timonwong.shellcheck",
+        "jebbs.plantuml",
+        "github.vscode-github-actions",
+        "redhat.vscode-yaml",
+        "GitHub.copilot"
+      ]
+    }
+  },
 
-	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2.10.2": {}
-	},
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2.10.2": {}
+  },
 
-	"postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/post-create-command.sh",
-	"postStartCommand": "docker compose --file ${containerWorkspaceFolder}/.devcontainer/ops/docker-compose.yml --env-file ${containerWorkspaceFolder}/.devcontainer/ops/.env up -d",
+  "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/post-create-command.sh",
+  "postStartCommand": "docker compose --file ${containerWorkspaceFolder}/.devcontainer/ops/docker-compose.yml --env-file ${containerWorkspaceFolder}/.devcontainer/ops/.env up -d",
 
-	"forwardPorts": [3990]
+  "forwardPorts": [3990]
 }

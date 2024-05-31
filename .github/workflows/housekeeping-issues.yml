@@ -5,7 +5,7 @@
 ## your development projects. It is designed to automatically trigger whenever new issues or Pull
 ## Requests are created.
 
-name: "Housekeeping: Issues + PRs"
+name: 'Housekeeping: Issues + PRs'
 
 on:
   issues:
