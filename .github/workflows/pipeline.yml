@@ -356,7 +356,7 @@ jobs:
       # TODO https://github.com/sommerfeld-io/krokidile/issues/20
       - name: semantic-release - Run
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_REPO_AND_PROJECT }}
         run: npx semantic-release
         shell: bash
       - name: Info - package.json
