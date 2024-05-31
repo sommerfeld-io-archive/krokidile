@@ -50,16 +50,6 @@ permissions:
   contents: read
 
 jobs:
-  # info:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Docker Version
-  #       run: |
-  #         docker version
-  #         docker compose version
-  #       shell: bash
 
   # ----- Commit stage - 1 - lint ---------------
 
