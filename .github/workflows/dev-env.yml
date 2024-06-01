@@ -7,8 +7,6 @@ on:
   push:
     paths:
       - '.devcontainer/**'
-    paths-ignore:
-      - '**.adoc'
 
 jobs:
   devcontainer:
