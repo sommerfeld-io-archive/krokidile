@@ -30,7 +30,7 @@ COPY . /workspaces/krokidile
 
 #COPY docs/config /antora
 #WORKDIR /antora
-WORKDIR /workspaces/krokidile/docs/config
+WORKDIR /workspaces/krokidile/docs
 RUN antora playbooks/public.yml --stacktrace --clean --fetch
 
 # sleep for a moment ... otherwise the search-index.js is not built correctly

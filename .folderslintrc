@@ -14,8 +14,7 @@
     "config",
 
     "docs",
-    "docs/config",
-    "docs/config/playbooks",
+    "docs/playbooks",
     "docs/modules",
     "docs/modules/*/assets/attachments/**",
     "docs/modules/*/assets/images/**",
