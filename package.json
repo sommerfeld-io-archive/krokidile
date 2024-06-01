@@ -11,7 +11,7 @@
     "test": "echo 'No test specified'",
     "dev": "webpack-dev-server --mode development --open --hot",
     "bundle": "webpack --mode production",
-    "start": "webpack serve"
+    "start": "webpack serve --mode production"
   },
   "keywords": [],
   "author": "sommerfeld.io",

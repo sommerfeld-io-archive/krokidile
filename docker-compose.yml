@@ -87,7 +87,7 @@ services:
       context: .
       dockerfile: Dockerfile.docs
     ports:
-      - 3080:3080
+      - 3080:3000
     depends_on:
       - lint-dockerfile-docs
       - lint-filenames

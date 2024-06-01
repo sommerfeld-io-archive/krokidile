@@ -50,7 +50,6 @@ permissions:
   contents: read
 
 jobs:
-
   # ----- Commit stage - 1 - lint ---------------
 
   lint-yaml:

@@ -29,7 +29,7 @@
   "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/post-create-command.sh",
   "postStartCommand": "docker compose --file ${containerWorkspaceFolder}/.devcontainer/ops/docker-compose.yml --env-file ${containerWorkspaceFolder}/.devcontainer/ops/.env up -d",
 
-  "forwardPorts": [3990, 9000, 3000, 3001, 3080],
+  "forwardPorts": [3990, 9000, 3000, 3001, 3000],
   "portsAttributes": {
     "3990": {
       "label": "3990 Portainer"
@@ -43,8 +43,8 @@
     "3001": {
       "label": "3001 Kroki from Docker Compose"
     },
-    "3080": {
-      "label": "3080 Docs website from Docker Compose"
+    "3000": {
+      "label": "3000 Docs website from Docker Compose"
     }
   }
 }
