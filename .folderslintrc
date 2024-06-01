@@ -7,11 +7,14 @@
     ".github",
     ".github/workflows",
 
+    ".husky",
+
     ".vscode",
 
+    "config",
+
     "docs",
-    "docs/config",
-    "docs/config/playbooks",
+    "docs/playbooks",
     "docs/modules",
     "docs/modules/*/assets/attachments/**",
     "docs/modules/*/assets/images/**",
@@ -25,9 +28,10 @@
     "docs/ui-bundle/**",
 
     "src",
+    "public/**",
 
+    "dist/**",
     "node_modules/**",
-
     "target/**"
   ]
 }

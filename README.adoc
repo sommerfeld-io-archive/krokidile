@@ -63,7 +63,7 @@ This project also publishes a documentation container. The documentation contain
 Start with plain Docker:
 [source, bash]
 ----
-docker run --rm -p 3080:3080 sommerfeldio/krokidile-docs:latest
+docker run --rm -p 3000:3000 sommerfeldio/krokidile-docs:latest
 ----
 
 This Docker compose stack starts a krokidile-docs instance. 
@@ -77,13 +77,15 @@ services:
       context: .
       dockerfile: Dockerfile.docs
     ports:
-      - 3080:3080
+      - 3000:3000
 ----
 
 == Local Development
-First, read the link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide].
+Consider the following steps to start developing on this project:
 
-Start the development server with the following command: `npm start`.
+. Read the link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide].
+. Prepare the node environment with `npm install`.
+. Start the development server with the following command: `npm run dev`.
 
 The whole Docker stack can be built and started with `docker compose build && docker compose up`.
 

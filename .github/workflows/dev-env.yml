@@ -1,0 +1,39 @@
+---
+## This pipeline file tests the development environment setup (e.g. the devcontainer).
+
+name: Test Development Environment
+
+on:
+  push:
+    paths:
+      - '.devcontainer/**'
+  schedule:
+    - cron: '0 1 * * 2'
+
+jobs:
+  devcontainer:
+    runs-on: ubuntu-latest
+    env:
+      image-name: devcontainer
+      context: .devcontainer
+      dockerfile: Dockerfile
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ${{ env.context }}/${{ env.dockerfile }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build the Docker image WITHOUT pushing
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ env.context }}
+          file: ${{ env.context }}/${{ env.dockerfile }}
+          build-args: |
+            VERSION=${{ github.sha }}
+            COMMIT_SHA=${{ github.sha }}
+          platforms: linux/amd64
+          push: false
+          tags: local/${{ env.image-name }}:${{ github.sha }}

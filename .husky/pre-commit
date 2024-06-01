@@ -1,0 +1,38 @@
+#!/bin/bash
+# shellcheck disable=SC1091
+. "$(dirname -- "$0")/_/husky.sh"
+
+caption() {
+    if [ -z "$1" ]; then
+        echo "[ERROR] No caption passed"
+        exit 1
+    fi
+
+    echo
+    echo "--------------------------------------------------"
+    echo "$1"
+    echo "--------------------------------------------------"
+    echo
+}
+
+caption "Linting commit messages"
+npx commitlint --edit "$1"
+
+caption "Shebang files should be executable"
+find . -type f -iname "*.sh" -exec chmod +x {} \;
+
+caption "Running Prettier"
+npx prettier --write "**/*.{yml,yaml,json}"
+npx prettier --write "src/**/*.{html,css,scss,less,ts,js}"
+
+caption "Linting from docker-compose"
+docker compose up lint-yaml --exit-code-from lint-yaml
+docker compose up lint-filenames --exit-code-from lint-filenames
+docker compose up lint-folders --exit-code-from lint-folders
+docker compose up lint-dockerfile-app --exit-code-from lint-dockerfile-app
+docker compose up lint-dockerfile-docs --exit-code-from lint-dockerfile-docs
+docker compose down --volumes --remove-orphans
+
+caption "Linting from npm"
+npm run lint
+npm test

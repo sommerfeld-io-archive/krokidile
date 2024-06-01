@@ -30,13 +30,13 @@ name: Build + Deployment Pipeline
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - '**.adoc'
-  pull_request:
     branches-ignore:
       - dependabot/**
+    paths-ignore:
+      - '**.adoc'
+      - '.devcontainer/**'
+      - '.husky/**'
+      - '.vscode/**'
   schedule:
     - cron: '0 1 * * 2'
 
@@ -50,18 +50,6 @@ permissions:
   contents: read
 
 jobs:
-
-  # info:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Docker Version
-  #       run: |
-  #         docker version
-  #         docker compose version
-  #       shell: bash
-
   # ----- Commit stage - 1 - lint ---------------
 
   lint-yaml:
@@ -163,7 +151,7 @@ jobs:
         with:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
-          message: "docs: [Actions Bot] generate docs"
+          message: 'docs: [Actions Bot] generate docs'
 
   # ----- Build stage ---------------------------
 
@@ -171,9 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: ${{ matrix.image-name }}:${{ github.sha }}
-    needs: [
-      'docs',
-    ]
+    needs: ['docs']
     permissions:
       contents: read
       pull-requests: write
@@ -233,15 +219,17 @@ jobs:
           command: cves
           image: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ github.sha }}
           exit-code: false
-          write-comment: ${{ github.event_name == 'pull_request' }}
-      # - name: Docker Scout Compare :${{ github.sha }} to :${{ env.IMAGE_TAG_RC }}"
-      #   uses: docker/scout-action@v1.9.1
-      #   with:
-      #     command: compare
-      #     image: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ github.sha }}
-      #     to: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_RC }}
-      #     exit-code: false
-      #     write-comment: ${{ github.event_name == 'pull_request' }}
+          #write-comment: ${{ github.event_name == 'pull_request' }}
+          write-comment: true
+      - name: Docker Scout Compare :${{ github.sha }} to :${{ env.IMAGE_TAG_RC }}"
+        uses: docker/scout-action@v1.9.1
+        with:
+          command: compare
+          image: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ github.sha }}
+          to: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_RC }}
+          exit-code: false
+          #write-comment: ${{ github.event_name == 'pull_request' }}
+          write-comment: true
 
   test-image:
     runs-on: ubuntu-latest
@@ -299,14 +287,15 @@ jobs:
           docker tag "$SRC_IMAGE" "$TARGET_IMAGE"
           docker push "$TARGET_IMAGE"
         shell: bash
-      # - name: Docker Scout Compare :${{ env.IMAGE_TAG_RC }}" to :${{ env.IMAGE_TAG_LATEST }}
-      #   uses: docker/scout-action@v1.9.1
-      #   with:
-      #     command: compare
-      #     image: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_RC }}
-      #     to: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_LATEST }}
-      #     exit-code: false
-      #     write-comment: ${{ github.event_name == 'pull_request' }}
+      - name: Docker Scout Compare :${{ env.IMAGE_TAG_RC }}" to :${{ env.IMAGE_TAG_LATEST }}
+        uses: docker/scout-action@v1.9.1
+        with:
+          command: compare
+          image: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_RC }}
+          to: ${{ matrix.registry }}/${{ secrets.DOCKERHUB_USER }}/${{ matrix.image-name }}:${{ env.IMAGE_TAG_LATEST }}
+          exit-code: false
+          #write-comment: ${{ github.event_name == 'pull_request' }}
+          write-comment: true
 
   test-rc:
     runs-on: ubuntu-latest
@@ -382,7 +371,7 @@ jobs:
         with:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
-          message: "docs: [Actions Bot] bump version"
+          message: 'docs: [Actions Bot] bump version'
       - name: Reset version in docs/antora.yml (back to branch name)
         uses: sebastian-sommerfeld-io/github-action-update-antora-yml@main
         with:
@@ -393,7 +382,7 @@ jobs:
         with:
           author_name: sebastian
           author_email: sebastian@sommerfeld.io
-          message: "docs: [Actions Bot] reset version back to branch name"
+          message: 'docs: [Actions Bot] reset version back to branch name'
 
   # ----- Cleanup -------------------------------
 

@@ -6,7 +6,7 @@
 ## the settings from link:https://github.com/organizations/sommerfeld-io/settings/repository-defaults[GitHub organizations label-config]
 ## don't take effect.
 
-name: "Housekeeping: Labels"
+name: 'Housekeeping: Labels'
 
 on:
   schedule:

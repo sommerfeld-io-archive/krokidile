@@ -1,33 +1,50 @@
 {
-	"name": "krokidile",
-    "build": {
-        "dockerfile": "Dockerfile"
+  "name": "krokidile",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "streetsidesoftware.code-spell-checker",
+        "asciidoctor.asciidoctor-vscode",
+        "ms-azuretools.vscode-docker",
+        "aaron-bond.better-comments",
+        "pomdtr.markdown-kroki",
+        "timonwong.shellcheck",
+        "jebbs.plantuml",
+        "github.vscode-github-actions",
+        "redhat.vscode-yaml",
+        "GitHub.copilot"
+      ]
+    }
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2.10.2": {}
+  },
+
+  "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/post-create-command.sh",
+  "postStartCommand": "docker compose --file ${containerWorkspaceFolder}/.devcontainer/ops/docker-compose.yml --env-file ${containerWorkspaceFolder}/.devcontainer/ops/.env up -d",
+
+  "forwardPorts": [3990, 9000, 3000, 3001, 3000],
+  "portsAttributes": {
+    "3990": {
+      "label": "3990 Portainer"
     },
-
-	"customizations": {
-		"vscode": {
-			"settings": {},
-			"extensions": [
-				"streetsidesoftware.code-spell-checker",
-				"asciidoctor.asciidoctor-vscode",
-				"ms-azuretools.vscode-docker",
-				"aaron-bond.better-comments",
-				"pomdtr.markdown-kroki",
-				"timonwong.shellcheck",
-				"jebbs.plantuml",
-				"github.vscode-github-actions",
-				"redhat.vscode-yaml",
-				"GitHub.copilot"
-			]
-		}
-	},
-
-	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2.10.2": {}
-	},
-
-	"postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/post-create-command.sh",
-	"postStartCommand": "docker compose --file ${containerWorkspaceFolder}/.devcontainer/ops/docker-compose.yml --env-file ${containerWorkspaceFolder}/.devcontainer/ops/.env up -d",
-
-	"forwardPorts": [3990]
+    "9000": {
+      "label": "9000 Node app (preview or bundled)"
+    },
+    "3000": {
+      "label": "3000 Node app from Docker Compose"
+    },
+    "3001": {
+      "label": "3001 Kroki from Docker Compose"
+    },
+    "3000": {
+      "label": "3000 Docs website from Docker Compose"
+    }
+  }
 }
