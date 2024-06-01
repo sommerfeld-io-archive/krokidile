@@ -35,6 +35,7 @@ ls:
   .shellcheckrc: lowercase
 
 ignore:
+  - dist
   - docs/ui-bundle/.gulp.json
   - docs/ui-bundle/src/js/vendor/highlight.bundle.js
 
