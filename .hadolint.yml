@@ -7,6 +7,7 @@ trustedRegistries:
   - docker.io
   - ghcr.io
   - quay.io
+  - mcr.microsoft.com
 
 label-schema:
   maintainer: email
