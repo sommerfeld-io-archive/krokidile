@@ -59,3 +59,4 @@ COPY config/httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY --from=build /tmp/antora/krokidile-docs/public /usr/local/apache2/htdocs
 
 USER "$USER"
+EXPOSE 3000
