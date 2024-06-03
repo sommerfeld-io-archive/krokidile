@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  return <p>I will be a plantuml live editor</p>;
+  return (
+    <div>
+      <p>I will be a plantuml live editor</p>
+    </div>
+  );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('editor'));
