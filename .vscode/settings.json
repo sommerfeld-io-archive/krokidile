@@ -1,11 +1,5 @@
 {
-  "cSpell.words": [
-    "brotli",
-    "commitlint",
-    "exitcode",
-    "krokidile",
-    "sommerfeldio"
-  ],
+  "cSpell.words": ["brotli", "commitlint", "exitcode", "krokidile", "sommerfeldio"],
   "asciidoc.antora.enableAntoraSupport": true,
   "yaml.schemas": {
     "https://json.schemastore.org/yamllint.json": "file:///workspaces/krokidile/docs/config/playbooks/public.yml"
