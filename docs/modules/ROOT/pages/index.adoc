@@ -85,7 +85,7 @@ Consider the following steps to start developing on this project:
 
 . Read the xref:development-guide.adoc[].
 . Prepare the node environment with `npm install`.
-. Start the development server with the following command: `npm run dev`.
+. Start the development server with the following command: `npm run dev`. Keep in mind that the development server is not connected to a Kroki instance and will not render diagrams. To render diagrams, start Krokidile from its docker-compose stack.
 
 The whole Docker stack can be built and started with `docker compose build && docker compose up`.
 
