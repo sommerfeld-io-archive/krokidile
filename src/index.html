@@ -1,33 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React App</title>
+    <title>Krokidile</title>
   </head>
   <body class="d-flex flex-column h-100">
     <!-- <div class="container"> -->
     <!-- ========== NAV =================================================================== -->
-    <header class="d-flex justify-content-center py-3 text-bg-dark">
-      <ul class="nav nav-pills">
-        <li class="nav-item">
-          <a href="#" class="btn btn-outline-light me-2" aria-current="page">Krokidile</a>
-        </li>
-        <li class="nav-item">
-          <a href="https://krokidile.sommerfeld.io" class="nav-link text-white">Docs</a>
-        </li>
-        <li class="nav-item">
-          <a href="https://github.com/sommerfeld-io/krokidile" class="nav-link text-white"
-            >GitHub</a
-          >
-        </li>
-      </ul>
-    </header>
+    <nav class="py-2 bg-body-tertiary border-bottom">
+      <div class="container d-flex flex-wrap">
+        <ul class="nav me-auto">
+          <li class="nav-item" id="kroki-url"></li>
+        </ul>
+        <ul class="nav">
+          <li class="nav-item"><a href="https://krokidile.sommerfeld.io" class="nav-link link-body-emphasis px-2">Docs</a></li>
+          <li class="nav-item"><a href="https://github.com/sommerfeld-io/krokidile" class="nav-link link-body-emphasis px-2">GitHub</a></li>
+        </ul>
+      </div>
+    </nav>
     <!-- ========== /NAV ================================================================== -->
-
-    <div class="row align-items-start">
-      <div class="col-12" id="kroki-url"></div>
-    </div>
 
     <div class="row align-items-start">
       <!-- ========== EDITOR ============================================================== -->

@@ -22,7 +22,7 @@ document.getElementById('diagram-code').addEventListener('input', async function
 });
 
 function KrokiUrl() {
-  return <a href={krokiUrl}>{krokiUrl}</a>;
+  return <a href={krokiUrl} class="nav-link link-body-emphasis px-2">{krokiUrl}</a>;
 }
 
 ReactDOM.render(<KrokiUrl />, document.getElementById('kroki-url'));
