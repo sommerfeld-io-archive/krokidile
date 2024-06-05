@@ -12,6 +12,7 @@
     ".vscode",
 
     "config",
+    "config/docker-stacks/release",
 
     "docs",
     "docs/playbooks",
@@ -27,8 +28,8 @@
     "docs/ui-bundle",
     "docs/ui-bundle/**",
 
-    "src",
     "public/**",
+    "src",
 
     "dist/**",
     "node_modules/**",

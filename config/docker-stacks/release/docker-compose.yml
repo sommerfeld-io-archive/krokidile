@@ -1,0 +1,24 @@
+---
+## Docker Compose configuration for a production environment. This config references all images
+## through a released version tag (the explicit version, not `:latest`).
+##
+## This Docker Compose configuration is designed to start all containers required for running the
+## specified released version of krokidile.
+##
+## [source, bash]
+## ....
+## docker compose up
+## ....
+
+services:
+  app:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: sommerfeldio/krokidile:0.3.0
+    ports:
+      - 3300:3000
+
+  docs:
+    container_name: ${COMPOSE_PROJECT_NAME}-docs
+    image: sommerfeldio/krokidile-docs:0.3.0
+    ports:
+      - 3380:3000
