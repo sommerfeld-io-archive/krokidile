@@ -26,7 +26,7 @@ caption "Removing trailing whitespace"
 find . -type f -not -path "./.git/*" -not -path "./node_modules/*" -exec sed -i 's/[ \t]*$//' {} \;
 
 caption "Adding a newline at the end of all staged files (if missing)"
-git diff --cached --name-only | while read file; do
+git diff --cached --name-only | while read -r file; do
     if [ -f "$file" ] && [ "$(tail -c 1 "$file")" != "" ]; then
         echo "" >> "$file"
         git add "$file"

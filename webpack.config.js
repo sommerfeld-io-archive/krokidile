@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -39,6 +40,10 @@ module.exports = {
           'css-loader',
         ]
       },
+			{
+				test: /\.ttf$/,
+				use: ['file-loader']
+			},
     ],
   },
   plugins: [
@@ -52,6 +57,7 @@ module.exports = {
       threshold: 10240,
       minRatio: 0.8,
     }),
+    new MonacoWebpackPlugin(),
   ],
   optimization: {
     splitChunks: {
