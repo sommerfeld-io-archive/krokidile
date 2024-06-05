@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './custom.scss';
 
 // see https://docs.kroki.io/kroki/setup/encode-diagram/#nodejs
 const pako = require('pako');
