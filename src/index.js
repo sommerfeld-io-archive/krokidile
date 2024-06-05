@@ -14,10 +14,37 @@ const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/k
 //
 // Setup Monaco Editor
 //
-monaco.editor.create(document.getElementById('editor'), {
-  value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-  language: 'javascript',
+const editor = monaco.editor.create(document.getElementById('editor'), {
+  value: ['@startuml', "' ...", '@enduml'].join('\n'),
+  language: 'plantuml',
   theme: 'vs-dark',
+});
+
+//
+// Get the diagram code from the editor and send it to the Kroki service.
+//
+editor.onDidChangeModelContent(() => {
+  const diagramCode = editor.getValue();
+  if (!diagramCode) {
+    console.log('Diagram code is empty');
+    return;
+  }
+
+  const data = Buffer.from(diagramCode, 'utf8');
+  const compressed = pako.deflate(data, { level: 9 });
+  const encodedDiagramCode = Buffer.from(compressed)
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+
+  fetch(`${KROKI_URL}/plantuml/svg/${encodedDiagramCode}`)
+    .then((response) => response.text())
+    .then((imageResult) => {
+      document.getElementById('preview').innerHTML = imageResult;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 });
 
 //
