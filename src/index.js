@@ -10,7 +10,6 @@ const Buffer = require('buffer/').Buffer; // note the trailing slash
 const krokiUrl = 'https://kroki.io';
 // todo https://github.com/sommerfeld-io/krokidile/issues/41
 
-
 //
 // Get the diagram code from the input field and send it to the Kroki service.
 //
@@ -34,7 +33,6 @@ document.getElementById('diagram-code').addEventListener('input', async function
   const imageResult = await response.text();
   document.getElementById('preview').innerHTML = `${imageResult}`;
 });
-
 
 //
 // Return the Kroki URL. to display it in the footer.
