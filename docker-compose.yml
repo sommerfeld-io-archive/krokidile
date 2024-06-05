@@ -56,16 +56,16 @@ services:
     working_dir: /workspaces/krokidile
     entrypoint: hadolint Dockerfile.docs
 
-  kroki:
-    container_name: ${COMPOSE_PROJECT_NAME}-kroki
-    image: yuzutech/kroki:0.25.0
-    ports:
-      - 3001:8000
-    depends_on:
-      - lint-dockerfile-app
-      - lint-filenames
-      - lint-folders
-      - lint-yaml
+  # kroki:
+  #   container_name: ${COMPOSE_PROJECT_NAME}-kroki
+  #   image: yuzutech/kroki:0.25.0
+  #   ports:
+  #     - 3001:8000
+  #   depends_on:
+  #     - lint-dockerfile-app
+  #     - lint-filenames
+  #     - lint-folders
+  #     - lint-yaml
 
   app:
     container_name: ${COMPOSE_PROJECT_NAME}-app
@@ -75,10 +75,15 @@ services:
       dockerfile: Dockerfile.app
     ports:
       - 3000:3000
-    environment:
-      - KROKI_URL=http://kroki:3001
     depends_on:
-      - kroki
+      - lint-dockerfile-docs
+      - lint-filenames
+      - lint-folders
+      - lint-yaml
+    # environment:
+    #   - REACT_APP_KROKI_URL=http://kroki:3001
+    # depends_on:
+    #   - kroki
 
   docs:
     container_name: ${COMPOSE_PROJECT_NAME}-docs

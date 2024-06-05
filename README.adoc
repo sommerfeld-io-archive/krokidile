@@ -27,30 +27,23 @@ krokidile provides a web-based live editor for diagrams, enabling developers to 
 * Real-time preview of diagrams based on diagram code
 * Support for multiple diagram types (see https://kroki.io)
 * Export diagrams as PNG or SVG image
-* Configure krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
+// * Configure krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
 
 == How to use
 === krokidile
 The only way to use krokidile is to use the Docker image. The Docker image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile.
 [source, bash]
 ----
-docker run --rm -p 3000:3000 -e KROKI_URL=https://kroki.io sommerfeldio/krokidile:latest
+docker run --rm -p 3000:3000 sommerfeldio/krokidile:latest
 ----
 
 This Docker compose stack starts a kroki instance and krokidile. The krokidile instance is configured to use the kroki instance. The Environment variable `KROKI_URL` is mandatory, there is no default value.
 [source, yml]
 ----
 services:
-  kroki:
-    container_name: kroki
-    image: yuzutech/kroki:0.25.0
-    ports:
-      - 3001:8000
   krokidile:
     container_name: krokidile
     image: sommerfeldio/krokidile:latest
-    environment:
-      - KROKI_URL=http://kroki:3001
     ports:
       - 3000:3000
     depends_on:
@@ -58,12 +51,12 @@ services:
 ----
 
 === krokidile-docs
-This project also publishes a documentation container. The documentation container is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile-docs.
+This project also publishes a documentation. The image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile-docs.
 
 Start with plain Docker:
 [source, bash]
 ----
-docker run --rm -p 3000:3000 sommerfeldio/krokidile-docs:latest
+docker run --rm -p 3080:3000 sommerfeldio/krokidile-docs:latest
 ----
 
 This Docker compose stack starts a krokidile-docs instance. 
@@ -77,19 +70,57 @@ services:
       context: .
       dockerfile: Dockerfile.docs
     ports:
-      - 3000:3000
+      - 3080:3000
 ----
 
-== Local Development
+== How to Development
 Consider the following steps to start developing on this project:
 
 . Read the link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide].
 . Prepare the node environment with `npm install`.
 . Start the development server with the following command: `npm run dev`.
+// .. Keep in mind that the development server is not connected to a Kroki instance and will not render diagrams. To render diagrams, start Krokidile from its docker-compose stack.
 
 The whole Docker stack can be built and started with `docker compose build && docker compose up`.
 
 To use the DevContainer, open the project in VSCode and select "Reopen in Container" from the command palette. Having Visual Studio Code (VSCode) and the Dev Container plugin installed are essential prerequisites for this development environment. Docker, of course, is also mandatory.
+
+=== Components
+The Frontend is built with React on top of Node.js. The Backend is a Kroki instance.
+
+The Application consists of the following components:
+
+[plantuml, puml-build-image, svg]
+----
+@startuml
+
+skinparam linetype ortho
+skinparam monochrome false
+skinparam componentStyle uml2
+skinparam backgroundColor transparent
+skinparam activity {
+    'FontName Ubuntu
+    FontName Roboto
+}
+
+actor User
+component Kroki as "Kroki.io" <<External Service>>
+
+rectangle dc as "Docker Compose Stack" {
+    component App <<Node>> 
+    component Docs <<Antora>>
+}
+
+User -right-> App
+App -right-> Kroki
+
+User -right-> Docs
+Docs -[hidden]up-> App
+
+@enduml
+----
+
+The Docker Compose stacks from this repo feature some additional components that are not part of the application itself but are required to run some linting tasks etc. Because they are not part of the actual application, they are not listed here.
 
 == Risks and Technical Debts
 link:{url-project}/issues?q=is%3Aissue+label%3Asecurity%2Crisk+is%3Aopen[All issues labeled as risk (= some sort of risk or a technical debt) or security (= related to security issues)] are tracked as Github issue and carry the respective label.

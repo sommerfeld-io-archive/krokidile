@@ -1,12 +1,62 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React App</title>
+    <title>Krokidile</title>
   </head>
-  <body>
-    <div id="root"></div>
-    <script src="../dist/bundle.js"></script>
+  <body class="d-flex flex-column h-100">
+    <!-- <div class="container"> -->
+    <!-- ========== NAV =================================================================== -->
+    <nav class="py-2 bg-body-tertiary border-bottom">
+      <div class="container d-flex flex-wrap">
+        <div
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+        >
+          <span class="fs-4">Krokidile</span>
+        </div>
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="https://krokidile.sommerfeld.io" class="nav-link link-body-emphasis px-2"
+              >Docs</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="https://github.com/sommerfeld-io/krokidile"
+              class="nav-link link-body-emphasis px-2"
+            >
+              <i class="bi d-block mx-auto mb-1 bi-github"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- ========== /NAV ================================================================== -->
+
+    <div class="row align-items-start">
+      <!-- ========== EDITOR ============================================================== -->
+      <div class="col-6" id="editor">
+        <textarea id="diagram-code"></textarea>
+      </div>
+      <!-- ========== /EDITOR ============================================================= -->
+
+      <!-- ========== PREVIEW ============================================================= -->
+      <div class="col-6">
+        <div id="preview"></div>
+      </div>
+      <!-- ========== /PREVIEW ============================================================ -->
+    </div>
+
+    <footer class="py-3 my-4">
+      <div class="text-center text-body-secondary">
+        <p>
+          <i class="bi mx-auto mb-1 bi-info-circle"></i> Kroki Server:
+          <span id="kroki-url"></span>
+        </p>
+      </div>
+    </footer>
+
+    <!-- </div> -->
   </body>
 </html>
