@@ -34,7 +34,7 @@ document.getElementById('diagram-code').addEventListener('input', async function
 });
 
 //
-// Return the Kroki URL. to display it in the footer.
+// Return the Kroki URL as html-link to display in the footer.
 //
 function KrokiUrl() {
   return (
