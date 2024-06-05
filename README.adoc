@@ -27,30 +27,23 @@ krokidile provides a web-based live editor for diagrams, enabling developers to 
 * Real-time preview of diagrams based on diagram code
 * Support for multiple diagram types (see https://kroki.io)
 * Export diagrams as PNG or SVG image
-* Configure krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
+// * Configure krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
 
 == How to use
 === krokidile
 The only way to use krokidile is to use the Docker image. The Docker image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile.
 [source, bash]
 ----
-docker run --rm -p 3000:3000 -e KROKI_URL=https://kroki.io sommerfeldio/krokidile:latest
+docker run --rm -p 3000:3000 sommerfeldio/krokidile:latest
 ----
 
 This Docker compose stack starts a kroki instance and krokidile. The krokidile instance is configured to use the kroki instance. The Environment variable `KROKI_URL` is mandatory, there is no default value.
 [source, yml]
 ----
 services:
-  kroki:
-    container_name: kroki
-    image: yuzutech/kroki:0.25.0
-    ports:
-      - 3001:8000
   krokidile:
     container_name: krokidile
     image: sommerfeldio/krokidile:latest
-    environment:
-      - KROKI_URL=http://kroki:3001
     ports:
       - 3000:3000
     depends_on:
@@ -58,12 +51,12 @@ services:
 ----
 
 === krokidile-docs
-This project also publishes a documentation container. The documentation container is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile-docs.
+This project also publishes a documentation. The image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile-docs.
 
 Start with plain Docker:
 [source, bash]
 ----
-docker run --rm -p 3000:3000 sommerfeldio/krokidile-docs:latest
+docker run --rm -p 3080:3000 sommerfeldio/krokidile-docs:latest
 ----
 
 This Docker compose stack starts a krokidile-docs instance. 
@@ -77,7 +70,7 @@ services:
       context: .
       dockerfile: Dockerfile.docs
     ports:
-      - 3000:3000
+      - 3080:3000
 ----
 
 == How to Development
@@ -108,22 +101,18 @@ skinparam activity {
 }
 
 actor User
+component Kroki as "Kroki.io" <<External Service>>
 
 rectangle dc as "Docker Compose Stack" {
-    component App <<Node>> {
-        control cors as "CORS Proxy" <<App Config>>
-        rectangle Frontend <<React>>
-    }
-    component Kroki
+    component App <<Node>> 
     component Docs <<Antora>>
 }
 
-User -right-> Frontend
-Frontend -down-> cors
-cors -right-> Kroki
+User -right-> App
+App -right-> Kroki
 
 User -right-> Docs
-Docs -[hidden]down-> App
+Docs -[hidden]up-> App
 
 @enduml
 ----
