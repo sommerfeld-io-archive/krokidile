@@ -15,9 +15,9 @@ const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/k
 // Setup Monaco Editor
 //
 monaco.editor.create(document.getElementById('editor'), {
-	value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-	language: 'javascript',
-  theme: 'vs-dark'
+  value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
+  language: 'javascript',
+  theme: 'vs-dark',
 });
 
 //
