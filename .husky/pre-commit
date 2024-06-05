@@ -25,6 +25,14 @@ npx prettier --write "src/**/*.{html,css,scss,less,ts,js}"
 caption "Removing trailing whitespace"
 find . -type f -not -path "./.git/*" -not -path "./node_modules/*" -exec sed -i 's/[ \t]*$//' {} \;
 
+caption "Add a newline at the end of all files (if missing)"
+git diff --cached --name-only | while read file; do
+    if [ -f "$file" ] && [ "$(tail -c 1 "$file")" != "" ]; then
+        echo "" >> "$file"
+        git add "$file"
+    fi
+done
+
 caption "Linting commit messages"
 npx commitlint --edit "$1"
 
