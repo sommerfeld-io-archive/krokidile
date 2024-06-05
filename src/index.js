@@ -1,7 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 // see https://docs.kroki.io/kroki/setup/encode-diagram/#nodejs
 const pako = require('pako');
@@ -34,10 +35,11 @@ document.getElementById('diagram-code').addEventListener('input', async function
 
 function KrokiUrl() {
   return (
-    <a href={krokiUrl} class="nav-link link-body-emphasis px-2">
+    <a href={krokiUrl} className="text-white text-decoration-none">
       {krokiUrl}
     </a>
   );
 }
 
-ReactDOM.render(<KrokiUrl />, document.getElementById('kroki-url'));
+// ReactDOM.render(<KrokiUrl />, document.getElementById('kroki-url'));
+ReactDOM.createRoot(document.getElementById('kroki-url')).render(<KrokiUrl />);

@@ -10,9 +10,9 @@
     <!-- ========== NAV =================================================================== -->
     <nav class="py-2 bg-body-tertiary border-bottom">
       <div class="container d-flex flex-wrap">
-        <ul class="nav me-auto">
-          <li class="nav-item" id="kroki-url"></li>
-        </ul>
+        <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <span class="fs-4">Krokidile</span>
+        </div>
         <ul class="nav">
           <li class="nav-item">
             <a href="https://krokidile.sommerfeld.io" class="nav-link link-body-emphasis px-2"
@@ -22,9 +22,9 @@
           <li class="nav-item">
             <a
               href="https://github.com/sommerfeld-io/krokidile"
-              class="nav-link link-body-emphasis px-2"
-              >GitHub</a
-            >
+              class="nav-link link-body-emphasis px-2">
+              <i class="bi d-block mx-auto mb-1 bi-github"></i>
+            </a>
           </li>
         </ul>
       </div>
@@ -44,6 +44,15 @@
       </div>
       <!-- ========== /PREVIEW ============================================================ -->
     </div>
+
+    <footer class="py-3 my-4">
+      <div class="text-center text-body-secondary">
+        <p>
+          <i class="bi mx-auto mb-1 bi-info-circle"></i> Kroki Server:
+          <span id="kroki-url"></span>
+        </p>
+      </div>
+    </footer>
 
     <!-- </div> -->
   </body>
