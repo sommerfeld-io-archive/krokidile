@@ -59,7 +59,7 @@ Start with plain Docker:
 docker run --rm -p 3080:3000 sommerfeldio/krokidile-docs:latest
 ----
 
-This Docker compose stack starts a krokidile-docs instance. 
+This Docker compose stack starts a krokidile-docs instance.
 [source, yml]
 ----
 services:
@@ -107,7 +107,7 @@ actor User
 component Kroki as "Kroki.io" <<External Service>>
 
 rectangle dc as "Docker Compose Stack" {
-    component App <<Node>> 
+    component App <<Node>>
     component Docs <<Antora>>
 }
 
