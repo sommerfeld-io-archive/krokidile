@@ -7,10 +7,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const pako = require('pako');
 const Buffer = require('buffer/').Buffer; // note the trailing slash
 
-// todo https://github.com/sommerfeld-io/krokidile/issues/41
 const krokiUrl = 'https://kroki.io';
-// const krokiUrl = 'http://kroki:3001';
+// todo https://github.com/sommerfeld-io/krokidile/issues/41
 
+
+//
+// Get the diagram code from the input field and send it to the Kroki service.
+//
 document.getElementById('diagram-code').addEventListener('input', async function (e) {
   const diagramCode = e.target.value;
 
@@ -32,6 +35,10 @@ document.getElementById('diagram-code').addEventListener('input', async function
   document.getElementById('preview').innerHTML = `${imageResult}`;
 });
 
+
+//
+// Return the Kroki URL. to display it in the footer.
+//
 function KrokiUrl() {
   return (
     <a href={krokiUrl} className="text-white text-decoration-none">
@@ -40,5 +47,4 @@ function KrokiUrl() {
   );
 }
 
-// ReactDOM.render(<KrokiUrl />, document.getElementById('kroki-url'));
 ReactDOM.createRoot(document.getElementById('kroki-url')).render(<KrokiUrl />);
