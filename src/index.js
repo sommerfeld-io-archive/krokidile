@@ -48,7 +48,7 @@ monaco.editor.create(document.getElementById('editor'), {
 //
 function KrokiHyperlink() {
   return (
-    <a href={KROKI_URL} className="text-secondary text-decoration-none">
+    <a href={KROKI_URL} className="text-secondary  text-decoration-none">
       {KROKI_URL}
     </a>
   );
