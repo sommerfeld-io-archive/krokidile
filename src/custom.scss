@@ -1,6 +1,11 @@
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css');
 @import '~monaco-editor/min/vs/editor/editor.main.css';
 
+body {
+  overflow: hidden;
+}
+
 .preview-wrapper {
   padding: 2em 0.25em;
+  overflow: scroll;
 }
