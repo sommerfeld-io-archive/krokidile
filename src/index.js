@@ -21,7 +21,6 @@ document.getElementById('diagram-code').addEventListener('input', async function
     return;
   }
 
-  // const encodedDiagramCode = btoa(encodeURIComponent(diagramCode));
   const data = Buffer.from(diagramCode, 'utf8');
   const compressed = pako.deflate(data, { level: 9 });
   const encodedDiagramCode = Buffer.from(compressed)
