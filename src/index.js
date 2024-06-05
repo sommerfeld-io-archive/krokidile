@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // see https://docs.kroki.io/kroki/setup/encode-diagram/#nodejs
 const pako = require('pako');
-const Buffer = require('buffer/').Buffer;  // note the trailing slash 
+const Buffer = require('buffer/').Buffer; // note the trailing slash
 
 // todo https://github.com/sommerfeld-io/krokidile/issues/41
 const krokiUrl = 'https://kroki.io';
@@ -19,11 +19,12 @@ document.getElementById('diagram-code').addEventListener('input', async function
   }
 
   // const encodedDiagramCode = btoa(encodeURIComponent(diagramCode));
-  const data = Buffer.from(diagramCode, 'utf8') 
-  const compressed = pako.deflate(data, { level: 9 }) 
+  const data = Buffer.from(diagramCode, 'utf8');
+  const compressed = pako.deflate(data, { level: 9 });
   const encodedDiagramCode = Buffer.from(compressed)
-    .toString('base64') 
-    .replace(/\+/g, '-').replace(/\//g, '_') 
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
 
   const response = await fetch(`${krokiUrl}/plantuml/svg/${encodedDiagramCode}`);
   const imageResult = await response.text();
