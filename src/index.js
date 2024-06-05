@@ -14,7 +14,7 @@ document.getElementById('diagram-code').addEventListener('input', async function
   const diagramCode = e.target.value;
 
   if (!diagramCode) {
-    console.error('Diagram code is empty');
+    console.log('Diagram code is empty');
     return;
   }
 
