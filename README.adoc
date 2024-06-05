@@ -80,7 +80,7 @@ services:
       - 3000:3000
 ----
 
-== Local Development
+== How to Development
 Consider the following steps to start developing on this project:
 
 . Read the link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide].
@@ -90,6 +90,45 @@ Consider the following steps to start developing on this project:
 The whole Docker stack can be built and started with `docker compose build && docker compose up`.
 
 To use the DevContainer, open the project in VSCode and select "Reopen in Container" from the command palette. Having Visual Studio Code (VSCode) and the Dev Container plugin installed are essential prerequisites for this development environment. Docker, of course, is also mandatory.
+
+=== Components
+The Application consists of the following components:
+
+[plantuml, puml-build-image, svg]
+----
+@startuml
+
+skinparam linetype ortho
+skinparam monochrome false
+skinparam componentStyle uml2
+skinparam backgroundColor transparent
+skinparam activity {
+    'FontName Ubuntu
+    FontName Roboto
+}
+
+actor User
+
+rectangle dc as "Docker Compose Stack" {
+    component App <<Node>> {
+        control cors as "CORS Proxy" <<App Config>>
+        rectangle Frontend <<React>>
+    }
+    component Kroki
+    component Docs <<Antora>>
+}
+
+User -right-> Frontend
+Frontend -down-> cors
+cors -right-> Kroki
+
+User -right-> Docs
+Docs -[hidden]down-> App
+
+@enduml
+----
+
+The Docker Compose stacks from this repo feature some additional components that are not part of the application itself but are required to run some linting tasks etc. Because they are not part of the actual application, they are not listed here.
 
 == Risks and Technical Debts
 link:{url-project}/issues?q=is%3Aissue+label%3Asecurity%2Crisk+is%3Aopen[All issues labeled as risk (= some sort of risk or a technical debt) or security (= related to security issues)] are tracked as Github issue and carry the respective label.
