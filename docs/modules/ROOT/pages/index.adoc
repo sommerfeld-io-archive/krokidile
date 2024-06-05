@@ -118,8 +118,6 @@ rectangle dc as "Docker Compose Stack" {
     component Docs <<Antora>>
 }
 
-
-
 User -right-> Frontend
 Frontend -down-> cors
 cors -right-> Kroki
