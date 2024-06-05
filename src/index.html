@@ -1,63 +1,77 @@
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Krokidile</title>
-  </head>
-  <body class="d-flex flex-column h-100">
-    <!-- <div class="container"> -->
-    <!-- ========== NAV =================================================================== -->
-    <nav class="py-2 bg-body-tertiary border-bottom">
-      <div class="container d-flex flex-wrap">
-        <div
-          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
-        >
-          <span class="fs-4">Krokidile</span>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        .full-width {
+            width: 100%;
+        }
+        .full-height {
+            height: 100%;
+        }
+    </style>
+
+</head>
+  <body>
+
+    <div class="container-fluid full-height">
+      <div class="row full-height">
+        <!-- ========== NAV =================================================================== -->
+        <div class="col-2 p-3">
+          <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+              <span class="fs-4">Krokidile</span>
+            </div>
+            
+            <hr>
+            
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li>
+                  <a href="https://krokidile.sommerfeld.io" class="nav-link text-white">
+                    <i class="bi pe-none me-2 bi-file-earmark-text"></i>
+                    Documentation
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/sommerfeld-io/krokidile" class="nav-link text-white">
+                    <i class="bi pe-none me-2 bi-github"></i>
+                    GitHub
+                  </a>
+                </li>
+              </ul>
+              
+            <hr>
+
+            <ul class="nav nav-pills flex-column mb-auto">
+              <li>
+                <div class="nav-link text-secondary">
+                  <i class="bi pe-none me-2 bi-info-circle"></i>
+                  <span id="kroki-url"></span>
+                </div>
+              </li>
+            </ul>
         </div>
-        <ul class="nav">
-          <li class="nav-item">
-            <a href="https://krokidile.sommerfeld.io" class="nav-link link-body-emphasis px-2"
-              >Docs</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              href="https://github.com/sommerfeld-io/krokidile"
-              class="nav-link link-body-emphasis px-2"
-            >
-              <i class="bi d-block mx-auto mb-1 bi-github"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <!-- ========== /NAV ================================================================== -->
+        <!-- ========== /NAV ================================================================== -->
 
-    <div class="row align-items-start">
-      <!-- ========== EDITOR ============================================================== -->
-      <div class="col-6">
-        <div id="editor"></div>
-        <textarea id="diagram-code"></textarea>
+        <div class="col-5">
+          <!-- ========== EDITOR ========== -->
+          <div id="editor"></div>
+          <!-- ========== /EDITOR ========= -->
+        </div>
+        <div class="col-5">
+          <!-- ========== PREVIEW ========= -->
+          <div id="preview"></div>
+          <!-- ========== /PREVIEW ======== -->
+        </div>
       </div>
-      <!-- ========== /EDITOR ============================================================= -->
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
-      <!-- ========== PREVIEW ============================================================= -->
-      <div class="col-6">
-        <div id="preview"></div>
-      </div>
-      <!-- ========== /PREVIEW ============================================================ -->
-    </div>
-
-    <footer class="py-3 my-4">
-      <div class="text-center text-body-secondary">
-        <p>
-          <i class="bi mx-auto mb-1 bi-info-circle"></i> Kroki Server:
-          <span id="kroki-url"></span>
-        </p>
-      </div>
-    </footer>
-
-    <!-- </div> -->
   </body>
 </html>
