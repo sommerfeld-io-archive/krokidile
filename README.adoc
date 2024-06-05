@@ -37,7 +37,8 @@ The only way to use krokidile is to use the Docker image. The Docker image is av
 docker run --rm -p 3000:3000 sommerfeldio/krokidile:latest
 ----
 
-This Docker compose stack starts a kroki instance and krokidile. The krokidile instance is configured to use the kroki instance. The Environment variable `KROKI_URL` is mandatory, there is no default value.
+// This Docker compose stack starts a kroki instance and krokidile. The krokidile instance is configured to use the kroki instance. The Environment variable `KROKI_URL` is mandatory, there is no default value.
+This Docker compose stack starts a krokidile instance. The krokidile instance uses https://kroki.io to convert diagram code into images.
 [source, yml]
 ----
 services:
