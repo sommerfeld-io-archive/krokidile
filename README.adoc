@@ -7,7 +7,7 @@ Sebastian Sommerfeld <sebastian@sommerfeld.io>
 :job: pipeline.yml
 :badge: badge.svg
 
-Krokidile is a web-based Live-Editor for Diagrams to use with link:https://kroki.io[Kroki.io].
+Krokidile is a web-based Live-Editor for Diagrams to use with link:https://kroki.io[Kroki.io]. 
 
 image:{github-actions-url}/{job}/{badge}[Github Badge, link={github-actions-url}/{job}]
 

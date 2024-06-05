@@ -15,15 +15,18 @@ caption() {
     echo
 }
 
-caption "Linting commit messages"
-npx commitlint --edit "$1"
-
 caption "Shebang files should be executable"
 find . -type f -iname "*.sh" -exec chmod +x {} \;
 
 caption "Running Prettier"
 npx prettier --write "**/*.{yml,yaml,json}"
 npx prettier --write "src/**/*.{html,css,scss,less,ts,js}"
+
+caption "Removing trailing whitespace"
+find . -type f -not -path "./.git/*" -not -path "./node_modules/*" -exec sed -i 's/[ \t]*$//' {} \;
+
+caption "Linting commit messages"
+npx commitlint --edit "$1"
 
 caption "Linting from docker-compose"
 docker compose up lint-yaml --exit-code-from lint-yaml
