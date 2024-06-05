@@ -67,16 +67,6 @@ services:
   #     - lint-folders
   #     - lint-yaml
 
-  # kroki-cors-proxy:
-  #   container_name: ${COMPOSE_PROJECT_NAME}-kroki-cors-proxy
-  #   image: nginx:alpine
-  #   volumes:
-  #     - ./config/nginx.conf:/etc/nginx/nginx.conf
-  #   ports:
-  #     - 3002:8000
-  #   depends_on:
-  #     - kroki
-
   app:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: local/${COMPOSE_PROJECT_NAME}:${DEV_TAG}
@@ -85,15 +75,15 @@ services:
       dockerfile: Dockerfile.app
     ports:
       - 3000:3000
-    # environment:
-    #   - REACT_APP_KROKI_URL=http://kroki-cors-proxy:3002
-    # depends_on:
-    #   - kroki-cors-proxy
     depends_on:
       - lint-dockerfile-docs
       - lint-filenames
       - lint-folders
       - lint-yaml
+    # environment:
+    #   - REACT_APP_KROKI_URL=http://kroki:3001
+    # depends_on:
+    #   - kroki
 
   docs:
     container_name: ${COMPOSE_PROJECT_NAME}-docs

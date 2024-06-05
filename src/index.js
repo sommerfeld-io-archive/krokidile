@@ -9,6 +9,7 @@ const Buffer = require('buffer/').Buffer; // note the trailing slash
 
 // todo https://github.com/sommerfeld-io/krokidile/issues/41
 const krokiUrl = 'https://kroki.io';
+// const krokiUrl = 'http://kroki:3001';
 
 document.getElementById('diagram-code').addEventListener('input', async function (e) {
   const diagramCode = e.target.value;
