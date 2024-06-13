@@ -33,9 +33,6 @@ COPY . /workspaces/krokidile
 WORKDIR /workspaces/krokidile/docs
 RUN antora playbooks/public.yml --stacktrace --clean --fetch
 
-# sleep for a moment ... otherwise the search-index.js is not built correctly
-# RUN sleep 5
-
 
 ## Expose the documentation site using httpd.
 ##
