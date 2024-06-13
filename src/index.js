@@ -13,7 +13,7 @@ const Buffer = require('buffer/').Buffer; // note the trailing slash
 const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
 
 //
-// Setup Monaco Editor
+// Setup Monaco Editor.
 //
 const editor = monaco.editor.create(document.getElementById('editor'), {
   value: ['@startuml', "' ...", '@enduml'].join('\n'),
@@ -50,87 +50,3 @@ editor.onDidChangeModelContent(() => {
       console.error('Error:', error);
     });
 });
-
-//
-// Get the diagram code from the input field and send it to the Kroki service.
-//
-// document.getElementById('diagram-code').addEventListener('input', async function (e) {
-//   const diagramCode = e.target.value;
-
-//   if (!diagramCode) {
-//     console.log('Diagram code is empty');
-//     return;
-//   }
-
-//   const data = Buffer.from(diagramCode, 'utf8');
-//   const compressed = pako.deflate(data, { level: 9 });
-//   const encodedDiagramCode = Buffer.from(compressed)
-//     .toString('base64')
-//     .replace(/\+/g, '-')
-//     .replace(/\//g, '_');
-
-//   const response = await fetch(`${KROKI_URL}/plantuml/svg/${encodedDiagramCode}`);
-//   const imageResult = await response.text();
-//   document.getElementById('preview').innerHTML = `${imageResult}`;
-// });
-
-function MainNav() {
-  return (
-    <ul class="nav nav-pills flex-column mb-auto">
-      <NavLink
-        href="https://krokidile.sommerfeld.io"
-        text="Documentation"
-        icon="file-earmark-text"
-        color="white"
-      />
-      <NavLink
-        href="https://github.com/sommerfeld-io/krokidile"
-        text="GitHub"
-        icon="github"
-        color="white"
-      />
-    </ul>
-  );
-}
-
-function ExternalNav() {
-  return (
-    <ul class="nav nav-pills flex-column mb-auto">
-      <NavLink
-        href="https://plantuml.com/de/deployment-diagram"
-        text="PlantUML.com Docs"
-        icon="arrow-up-right-square"
-        color="secondary"
-      />
-      <NavLink
-        href="https://crashedmind.github.io/PlantUMLHitchhikersGuide/index.html"
-        text="PlantUML Guide"
-        icon="arrow-up-right-square"
-        color="secondary"
-      />
-    </ul>
-  );
-}
-
-function MetaNav() {
-  return (
-    <ul class="nav nav-pills flex-column mb-auto">
-      <NavLink href={KROKI_URL} text={KROKI_URL} icon="info-circle" color="secondary" />
-    </ul>
-  );
-}
-
-function NavLink(props) {
-  return (
-    <li>
-      <a href={props.href} className={`nav-link text-${props.color}`}>
-        <i className={`bi pe-none me-2 bi-${props.icon}`}></i>
-        {props.text}
-      </a>
-    </li>
-  );
-}
-
-ReactDOM.createRoot(document.getElementById('main-nav')).render(<MainNav />);
-ReactDOM.createRoot(document.getElementById('external-nav')).render(<ExternalNav />);
-ReactDOM.createRoot(document.getElementById('meta-nav')).render(<MetaNav />);

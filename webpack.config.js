@@ -9,6 +9,10 @@ module.exports = {
       import: './src/index.js',
       dependOn: 'shared',
     },
+    nav: {
+      import: './src/nav.js',
+      dependOn: 'shared',
+    },
     shared: 'lodash',
   },
   output: {
