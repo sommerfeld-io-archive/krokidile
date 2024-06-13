@@ -20,7 +20,7 @@ function MainNav() {
       />
       <NavLink
         href="https://github.com/sommerfeld-io/krokidile"
-        text="GitHub"
+        text="GitHub Repository"
         icon="github"
         color="white"
       />
