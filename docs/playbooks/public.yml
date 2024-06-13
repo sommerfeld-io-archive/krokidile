@@ -13,7 +13,12 @@ content:
       start_path: docs
     - url: https://github.com/sommerfeld-io/krokidile.git
       branches: ~
-      tags: ['v*', '!v0.0.1']
+      tags: [
+        'v*',
+        '!v0.0.*',
+        '!v0.1.*',
+        '!v0.2.*'
+      ]
       start_path: docs
 
 asciidoc:
