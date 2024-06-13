@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import * as monaco from 'monaco-editor';
+import { PUmlExtension } from '@sinm/monaco-plantuml';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.scss';
@@ -19,6 +20,9 @@ const editor = monaco.editor.create(document.getElementById('editor'), {
   language: 'plantuml',
   theme: 'vs-dark',
 });
+
+const extension = new PUmlExtension();
+const disposer = extension.active(editor);
 
 //
 // Get the diagram code from the editor and send it to the Kroki service.
