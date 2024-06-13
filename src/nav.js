@@ -4,9 +4,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.scss';
 
-
 const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
-
 
 //
 // The main navigation.
@@ -30,7 +28,6 @@ function MainNav() {
   );
 }
 
-
 //
 // The external navigation containing links to docs pages etc.
 //
@@ -53,7 +50,6 @@ function ExternalNav() {
   );
 }
 
-
 //
 // The meta navigation containing links to services which are used by the app. Plus some additional information.
 //
@@ -64,7 +60,6 @@ function MetaNav() {
     </ul>
   );
 }
-
 
 //
 // Render the actual navigation link.
@@ -79,7 +74,6 @@ function NavLink(props) {
     </li>
   );
 }
-
 
 ReactDOM.createRoot(document.getElementById('main-nav')).render(<MainNav />);
 ReactDOM.createRoot(document.getElementById('external-nav')).render(<ExternalNav />);
