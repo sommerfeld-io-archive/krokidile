@@ -24,17 +24,11 @@ RUN yarn global add @asciidoctor/core@~3.0.2 \
 
 COPY . /workspaces/krokidile
 
-# COPY docs/ui-bundle /antora-ui
-# WORKDIR /antora-ui
-# RUN yarn install && gulp bundle
+WORKDIR /workspaces/krokidile/docs/ui-bundle
+RUN yarn install && gulp bundle
 
-#COPY docs/config /antora
-#WORKDIR /antora
 WORKDIR /workspaces/krokidile/docs
 RUN antora playbooks/public.yml --stacktrace --clean --fetch
-
-# sleep for a moment ... otherwise the search-index.js is not built correctly
-# RUN sleep 5
 
 
 ## Expose the documentation site using httpd.
@@ -56,7 +50,7 @@ RUN chown -hR "$USER:$USER" /usr/local/apache2 \
     && rm /usr/local/apache2/htdocs/index.html
 
 COPY config/httpd.conf /usr/local/apache2/conf/httpd.conf
-COPY --from=build /tmp/antora/krokidile-docs/public /usr/local/apache2/htdocs
+COPY --from=build /workspaces/krokidile/target/public /usr/local/apache2/htdocs
 
 USER "$USER"
 EXPOSE 3000
