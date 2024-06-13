@@ -74,15 +74,43 @@ editor.onDidChangeModelContent(() => {
 //   document.getElementById('preview').innerHTML = `${imageResult}`;
 // });
 
-//
-// Return the Kroki URL as html-link to display in the footer.
-//
-function KrokiHyperlink() {
+function MainNav() {
   return (
-    <a href={KROKI_URL} className="text-secondary  text-decoration-none">
-      {KROKI_URL}
-    </a>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <NavLink href="https://krokidile.sommerfeld.io" text="Documentation" icon="file-earmark-text" color="white" />
+      <NavLink href="https://github.com/sommerfeld-io/krokidile" text="GitHub" icon="github" color="white" />
+    </ul>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('kroki-url')).render(<KrokiHyperlink />);
+function ExternalNav() {
+  return (
+    <ul class="nav nav-pills flex-column mb-auto">
+      <NavLink href="https://plantuml.com/de/deployment-diagram" text="PlantUML.com Docs" icon="arrow-up-right-square" color="secondary" />
+      <NavLink href="https://crashedmind.github.io/PlantUMLHitchhikersGuide/index.html" text="PlantUML Guide" icon="arrow-up-right-square" color="secondary" />
+    </ul>
+  );
+}
+
+function MetaNav() {
+  return (
+    <ul class="nav nav-pills flex-column mb-auto">
+      <NavLink href={KROKI_URL} text={KROKI_URL} icon="info-circle" color="secondary" />
+    </ul>
+  );
+}
+
+function NavLink(props) {
+  return (
+    <li>
+      <a href={props.href} className={`nav-link text-${props.color}`}>
+        <i className={`bi pe-none me-2 bi-${props.icon}`}></i>
+          {props.text}
+      </a>
+    </li>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('main-nav')).render(<MainNav />);
+ReactDOM.createRoot(document.getElementById('external-nav')).render(<ExternalNav />);
+ReactDOM.createRoot(document.getElementById('meta-nav')).render(<MetaNav />);
