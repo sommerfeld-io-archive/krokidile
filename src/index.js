@@ -77,8 +77,18 @@ editor.onDidChangeModelContent(() => {
 function MainNav() {
   return (
     <ul class="nav nav-pills flex-column mb-auto">
-      <NavLink href="https://krokidile.sommerfeld.io" text="Documentation" icon="file-earmark-text" color="white" />
-      <NavLink href="https://github.com/sommerfeld-io/krokidile" text="GitHub" icon="github" color="white" />
+      <NavLink
+        href="https://krokidile.sommerfeld.io"
+        text="Documentation"
+        icon="file-earmark-text"
+        color="white"
+      />
+      <NavLink
+        href="https://github.com/sommerfeld-io/krokidile"
+        text="GitHub"
+        icon="github"
+        color="white"
+      />
     </ul>
   );
 }
@@ -86,8 +96,18 @@ function MainNav() {
 function ExternalNav() {
   return (
     <ul class="nav nav-pills flex-column mb-auto">
-      <NavLink href="https://plantuml.com/de/deployment-diagram" text="PlantUML.com Docs" icon="arrow-up-right-square" color="secondary" />
-      <NavLink href="https://crashedmind.github.io/PlantUMLHitchhikersGuide/index.html" text="PlantUML Guide" icon="arrow-up-right-square" color="secondary" />
+      <NavLink
+        href="https://plantuml.com/de/deployment-diagram"
+        text="PlantUML.com Docs"
+        icon="arrow-up-right-square"
+        color="secondary"
+      />
+      <NavLink
+        href="https://crashedmind.github.io/PlantUMLHitchhikersGuide/index.html"
+        text="PlantUML Guide"
+        icon="arrow-up-right-square"
+        color="secondary"
+      />
     </ul>
   );
 }
@@ -105,7 +125,7 @@ function NavLink(props) {
     <li>
       <a href={props.href} className={`nav-link text-${props.color}`}>
         <i className={`bi pe-none me-2 bi-${props.icon}`}></i>
-          {props.text}
+        {props.text}
       </a>
     </li>
   );
