@@ -18,6 +18,7 @@
   "license": "MIT License",
   "description": "Krokidile is a web-based Live-Editor for Diagrams to use with Kroki.io.",
   "dependencies": {
+    "@sinm/monaco-plantuml": "^0.5.6",
     "bootstrap": "^5.3.3",
     "buffer": "^6.0.3",
     "jquery": "^3.7.1",
