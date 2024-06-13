@@ -11,7 +11,7 @@ const pako = require('pako');
 const Buffer = require('buffer/').Buffer; // note the trailing slash
 
 const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
-const DEFAULT_EDITOR_VALUE = ['@startuml', "' ...", '@enduml'].join('\n')
+const DEFAULT_EDITOR_VALUE = ['@startuml', "' ...", '@enduml'].join('\n');
 
 //
 // Setup Monaco Editor.
