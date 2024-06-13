@@ -1,7 +1,7 @@
 ---
 name: public
 title: krokidile
-version: monaco-plantuml
+version: main
 start_page: ROOT:index.adoc
 nav:
   - modules/ROOT/nav.adoc
