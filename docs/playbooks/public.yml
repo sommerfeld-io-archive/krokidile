@@ -31,14 +31,14 @@ antora:
 
 ui:
   bundle:
-    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
-    # url: /antora-ui/build/ui-bundle.zip
+    # url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    url: /workspaces/krokidile/docs/ui-bundle/build/ui-bundle.zip
     snapshot: true
 
 output:
   clean: true
-  dir: /tmp/antora/krokidile-docs/public
+  dir: /workspaces/krokidile/target/public
 
 runtime:
-  cache_dir: /tmp/antora/krokidile-docs/cache/antora
+  cache_dir: /workspaces/krokidile/target/cache/antora
   fetch: true
