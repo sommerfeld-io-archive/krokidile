@@ -20,7 +20,6 @@ COPY package*.json ./
 RUN npm install
 
 COPY . /workspaces/krokidile
-
 RUN npm run bundle
 
 
