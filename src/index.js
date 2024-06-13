@@ -11,12 +11,15 @@ const pako = require('pako');
 const Buffer = require('buffer/').Buffer; // note the trailing slash
 
 const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
+const DEFAULT_EDITOR_VALUE = ['@startuml', "' ...", '@enduml'].join('\n')
 
 //
 // Setup Monaco Editor.
+// Write contents from the local storage to the editor. If there is no content in the local
+// storage, use the default content.
 //
 const editor = monaco.editor.create(document.getElementById('editor'), {
-  value: ['@startuml', "' ...", '@enduml'].join('\n'),
+  value: localStorage.getItem('editorContent') || DEFAULT_EDITOR_VALUE,
   language: 'plantuml',
   theme: 'vs-dark',
 });
@@ -26,9 +29,13 @@ const disposer = extension.active(editor);
 
 //
 // Get the diagram code from the editor and send it to the Kroki service.
+// The editor content ist stored in the local storage to make sure the content survives a page
+// reload.
 //
 editor.onDidChangeModelContent(() => {
   const diagramCode = editor.getValue();
+  localStorage.setItem('editorContent', diagramCode);
+
   if (!diagramCode) {
     console.log('Diagram code is empty');
     return;

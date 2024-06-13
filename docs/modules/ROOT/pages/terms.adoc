@@ -1,0 +1,17 @@
+= Terms of Use and Privacy Policy
+
+== Krokidile App
+The Krokidile App uses cookies to improve your experience. We'll assume you're ok with this. Krokidile does not work without cookies. There is not way to opt out. If you are not ok with this, please do not use the Krokidile app.
+
+Cookies are not used to track a users behavior or to collect any sort of statistical data whatsoever. Cookies are only used to enhance the functionality of the website and for the purpose of storing your preferences.
+
+The following cookies are used:
+
+[cols="1,6", options="header"]
+|===
+|Cookie Name |Purpose
+|`editorContent` |Stores the content of the editor to make sure the diagram code is not lost when the page is reloaded.
+|===
+
+== Krokidile Documentation Website
+The Krokidile Documentation Website does not use any cookies.

@@ -24,6 +24,12 @@ function MainNav() {
         icon="github"
         color="white"
       />
+      <NavLink
+        href="https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/terms.adoc"
+        text="Terms of Use"
+        icon="github"
+        color="white"
+      />
     </ul>
   );
 }
