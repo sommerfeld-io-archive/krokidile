@@ -1,7 +1,7 @@
 = Development Guide
 Sebastian Sommerfeld <sebastian@sommerfeld.io>
 
-This section outlines the way we develop the krokidile project, focusing on development, tooling, deployment, and support considerations. It outlines the practices and principles we value.
+This section outlines the way we develop the Krokidile project, focusing on development, tooling, deployment, and support considerations. It outlines the practices and principles we value.
 
 == Everything as Code
 We embrace treating as much as possible as code, incorporating best practices from software development in every aspect of our work. We prioritize utilizing technologies and tools that allow us to leverage version control and adhere to established development practices like branching and code reviews. This applies to source code, infrastructure code, utility scripts and basically everything that can be depicted as some sort of code.
@@ -164,7 +164,7 @@ Development will primarily occur on Ubuntu workstations.
 The IDE of choice for development is Visual Studio Code (VSCode). VSCode is preferred due to its support for DevContainers (an essential requirement) and GitHub Copilot.
 
 == Source Code Hosting
-All krokidile projects will be hosted on GitHub.
+All Krokidile projects will be hosted on GitHub.
 
 == Pipelines and Workflows
 The pipeline and workflow engine of choice is GitHub Actions.

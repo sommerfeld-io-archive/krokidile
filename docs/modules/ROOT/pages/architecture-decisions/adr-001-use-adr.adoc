@@ -29,7 +29,7 @@ The workflow will be:
 
 == Consequences
 
-. Developers must write an ADR and submit it for review before selecting an approach to any architectural decision -- that is, any decision that affects the way krokidile application is put together at a high level.
+. Developers must write an ADR and submit it for review before selecting an approach to any architectural decision -- that is, any decision that affects the way Krokidile application is put together at a high level.
 . We will have a concrete artifact around which to focus discussion, before finalizing decisions.
 . If we follow the process, decisions will be made deliberately, as a group.
 . We will have a useful persistent record of why the system is the way it is.

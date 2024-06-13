@@ -21,24 +21,24 @@ Diagrams are rendered with Kroki. Kroki is a tool that renders diagrams from cod
 
 The main advantage of using diagrams as code is that it allows for version control, collaboration, and automation, just like any other piece of code in your repository
 
-krokidile provides a web-based live editor for diagrams, enabling developers to see a real-time preview of their diagrams as they write the code. This immediate feedback loop makes it easier to create and modify diagrams, as developers can instantly see the impact of their changes.
+Krokidile provides a web-based live editor for diagrams, enabling developers to see a real-time preview of their diagrams as they write the code. This immediate feedback loop makes it easier to create and modify diagrams, as developers can instantly see the impact of their changes.
 
 == Features
 * Real-time preview of diagrams based on diagram code
 * Support for multiple diagram types (see https://kroki.io)
 * Export diagrams as PNG or SVG image
-// * Configure krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
+// * Configure Krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
 
 == How to use
-=== krokidile
-The only way to use krokidile is to use the Docker image. The Docker image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile.
+=== Krokidile
+The only way to use Krokidile is to use the Docker image. The Docker image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile.
 [source, bash]
 ----
 docker run --rm -p 3000:3000 sommerfeldio/krokidile:latest
 ----
 
-// This Docker compose stack starts a kroki instance and krokidile. The krokidile instance is configured to use the kroki instance. The Environment variable `KROKI_URL` is mandatory, there is no default value.
-This Docker compose stack starts a krokidile instance. The krokidile instance uses https://kroki.io to convert diagram code into images.
+// This Docker compose stack starts a kroki instance and Krokidile. The Krokidile instance is configured to use the kroki instance. The Environment variable `KROKI_URL` is mandatory, there is no default value.
+This Docker compose stack starts a Krokidile instance. The Krokidile instance uses https://kroki.io to convert diagram code into images.
 [source, yml]
 ----
 services:
@@ -51,7 +51,7 @@ services:
       - kroki
 ----
 
-=== krokidile-docs
+=== Krokidile Docs
 This project also publishes a documentation. The image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile-docs.
 
 Start with plain Docker:
@@ -60,7 +60,7 @@ Start with plain Docker:
 docker run --rm -p 3080:3000 sommerfeldio/krokidile-docs:latest
 ----
 
-This Docker compose stack starts a krokidile-docs instance.
+This Docker compose stack starts a Krokidile Dococumentation website.
 [source, yml]
 ----
 services:

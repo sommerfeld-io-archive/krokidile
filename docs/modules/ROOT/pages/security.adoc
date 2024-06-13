@@ -2,12 +2,12 @@
 Sebastian Sommerfeld <sebastian@sommerfeld.io>
 
 == Supported Versions
-We only provide security updates for the latest release of krokidile. This means that we recommend using the Docker images tagged with the latest version or the `latest` tag. Whenever we fix an issue, we release a new version that includes the fix. We do not provide security updates for older versions.
+We only provide security updates for the latest release of Krokidile. This means that we recommend using the Docker images tagged with the latest version or the `latest` tag. Whenever we fix an issue, we release a new version that includes the fix. We do not provide security updates for older versions.
 
 == Reporting a Vulnerability
 We deeply appreciate any effort to discover and disclose security vulnerabilities responsibly.
 
-If you would like to report a vulnerability in krokidile, or have security concerns regarding krokidile, please do not submit an issue. Instead, lease email sebastian@sommerfeld.io.
+If you would like to report a vulnerability in Krokidile, or have security concerns regarding Krokidile, please do not submit an issue. Instead, lease email sebastian@sommerfeld.io.
 
 In order for us to best respond to your report, please include any of the following:
 
@@ -16,4 +16,4 @@ In order for us to best respond to your report, please include any of the follow
 * Tool output
 
 == Detecting Vulnerabilities
-We prioritize the security of our krokidile project and take proactive measures to detect vulnerabilities. As part of our continuous integration and delivery process, we scan our Docker images using Docker Scout in every pipeline run and for every pull request. This ensures that any potential vulnerabilities are identified and addressed promptly.
+We prioritize the security of our Krokidile project and take proactive measures to detect vulnerabilities. As part of our continuous integration and delivery process, we scan our Docker images using Docker Scout in every pipeline run and for every pull request. This ensures that any potential vulnerabilities are identified and addressed promptly.
