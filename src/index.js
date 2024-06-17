@@ -11,9 +11,8 @@ const pako = require('pako');
 const Buffer = require('buffer/').Buffer; // note the trailing slash
 
 const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
-// const DEFAULT_EDITOR_VALUE = ['@startuml', "' ...", '@enduml'].join('\n');
 
-const DEFAULT_EDITOR_VALUE = `@startuml
+const DEFAULT_PUML = `@startuml
 
 skinparam linetype ortho
 skinparam monochrome false
@@ -38,7 +37,7 @@ User -right-> Component
 // storage, use the default content.
 //
 const editor = monaco.editor.create(document.getElementById('editor'), {
-  value: localStorage.getItem('editorContent') || DEFAULT_EDITOR_VALUE,
+  value: localStorage.getItem('editorContent') || DEFAULT_PUML,
   language: 'plantuml',
   theme: 'vs-dark',
 });
