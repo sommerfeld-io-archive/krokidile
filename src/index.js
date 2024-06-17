@@ -85,16 +85,17 @@ editor.onDidChangeModelContent(() => {
 //
 function ActionsMenu() {
   var buttonStyle = 'outline-light';
+  var saveImageStyle = 'download'
   return (
     <div class="btn-group" role="group" aria-label="actions-menu">
       <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadCode()}>
-        <i className={`bi bi-save`}></i> Code
+        <i className={`bi bi-${saveImageStyle}`}></i> Code
       </button>
       <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadSvg()}>
-        <i className={`bi bi-save`}></i> SVG
+        <i className={`bi bi-${saveImageStyle}`}></i> SVG
       </button>
       <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadPng()}>
-        <i className={`bi bi-save`}></i> PNG
+        <i className={`bi bi-${saveImageStyle}`}></i> PNG
       </button>
     </div>
   );
