@@ -162,7 +162,7 @@ function downloadPng() {
 //
 // Shortcut CTRL + s to download diagram code
 //
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
   if (event.ctrlKey && event.key === 's') {
     event.preventDefault();
     downloadCode();
