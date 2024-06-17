@@ -198,7 +198,7 @@ jobs:
           labels: |
             org.opencontainers.image.revision=${{ github.sha }}
       - name: Build the Docker image and push to ${{ matrix.registry }}
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/${{ matrix.dockerfile }}
