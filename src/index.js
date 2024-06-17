@@ -110,10 +110,7 @@ function downloadCode() {
   const diagramCode = editor.getValue();
   const blob = new Blob([diagramCode], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = fileName;
-  link.click();
+  triggerDownload(url, fileName)
 }
 
 //
@@ -128,10 +125,7 @@ function downloadSvg() {
     .then((svgResult) => {
       const blob = new Blob([svgResult], { type: 'image/svg+xml' });
       const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = fileName;
-      link.click();
+      triggerDownload(url, fileName)
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -149,14 +143,21 @@ function downloadPng() {
     .then((response) => response.blob())
     .then((pngResult) => {
       const url = URL.createObjectURL(pngResult);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = fileName;
-      link.click();
+      triggerDownload(url, fileName)
     })
     .catch((error) => {
       console.error('Error:', error);
     });
+}
+
+//
+// Trigger the actual download of the file.
+//
+function triggerDownload(url, fileName) {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  link.click();
 }
 
 //
