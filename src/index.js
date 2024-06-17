@@ -110,7 +110,7 @@ function downloadCode() {
   const diagramCode = editor.getValue();
   const blob = new Blob([diagramCode], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
-  triggerDownload(url, fileName)
+  triggerDownload(url, fileName);
 }
 
 //
@@ -125,7 +125,7 @@ function downloadSvg() {
     .then((svgResult) => {
       const blob = new Blob([svgResult], { type: 'image/svg+xml' });
       const url = URL.createObjectURL(blob);
-      triggerDownload(url, fileName)
+      triggerDownload(url, fileName);
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -143,7 +143,7 @@ function downloadPng() {
     .then((response) => response.blob())
     .then((pngResult) => {
       const url = URL.createObjectURL(pngResult);
-      triggerDownload(url, fileName)
+      triggerDownload(url, fileName);
     })
     .catch((error) => {
       console.error('Error:', error);
