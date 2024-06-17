@@ -11,7 +11,26 @@ const pako = require('pako');
 const Buffer = require('buffer/').Buffer; // note the trailing slash
 
 const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
-const DEFAULT_EDITOR_VALUE = ['@startuml', "' ...", '@enduml'].join('\n');
+// const DEFAULT_EDITOR_VALUE = ['@startuml', "' ...", '@enduml'].join('\n');
+
+const DEFAULT_EDITOR_VALUE = `@startuml
+
+skinparam linetype ortho
+skinparam monochrome false
+skinparam componentStyle uml2
+skinparam backgroundColor transparent
+skinparam activity {
+    'FontName Ubuntu
+    FontName Roboto
+}
+
+actor User
+component Component
+
+User -right-> Component
+
+@enduml
+`
 
 //
 // Setup Monaco Editor.
@@ -28,6 +47,19 @@ const extension = new PUmlExtension();
 const disposer = extension.active(editor);
 
 //
+// Encode the diagram code. Prepare to send to kroki server.
+//
+function encodeDiagramCode(diagramCode) {
+  const data = Buffer.from(diagramCode, 'utf8');
+  const compressed = pako.deflate(data, { level: 9 });
+  
+  return Buffer.from(compressed)
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+}
+
+//
 // Get the diagram code from the editor and send it to the Kroki service.
 // The editor content ist stored in the local storage to make sure the content survives a page
 // reload.
@@ -41,14 +73,7 @@ editor.onDidChangeModelContent(() => {
     return;
   }
 
-  const data = Buffer.from(diagramCode, 'utf8');
-  const compressed = pako.deflate(data, { level: 9 });
-  const encodedDiagramCode = Buffer.from(compressed)
-    .toString('base64')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_');
-
-  fetch(`${KROKI_URL}/plantuml/svg/${encodedDiagramCode}`)
+  fetch(`${KROKI_URL}/plantuml/svg/${encodeDiagramCode(diagramCode)}`)
     .then((response) => response.text())
     .then((imageResult) => {
       document.getElementById('preview').innerHTML = imageResult;
@@ -57,3 +82,77 @@ editor.onDidChangeModelContent(() => {
       console.error('Error:', error);
     });
 });
+
+
+//
+// Render buttons to download sources and images.
+//
+function ActionsMenu() {
+  var buttonStyle = "outline-light"
+  return (
+    <div class="btn-group" role="group" aria-label="actions-menu">
+      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadCode()}><i className={`bi bi-save`}></i> Code</button>
+      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadSvg()}><i className={`bi bi-save`}></i> SVG</button>
+      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadPng()}><i className={`bi bi-save`}></i> PNG</button>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('actions-menu')).render(<ActionsMenu />);
+
+//
+// Download the contents of the editor as text file.
+//
+function downloadCode() {
+  const fileName = 'code.puml';
+  const diagramCode = editor.getValue();
+  const blob = new Blob([diagramCode], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  link.click();
+}
+
+//
+// Download the preview image as SVG.
+//
+function downloadSvg() {
+  const fileName = 'diagram.svg';
+  const diagramCode = editor.getValue();
+  
+  fetch(`${KROKI_URL}/plantuml/svg/${encodeDiagramCode(diagramCode)}`)
+    .then((response) => response.text())
+    .then((svgResult) => {
+      const blob = new Blob([svgResult], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      link.click();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+//
+// Download the preview image as PNG.
+//
+function downloadPng() {
+  const fileName = 'diagram.png';
+  const diagramCode = editor.getValue();
+  
+  fetch(`${KROKI_URL}/plantuml/png/${encodeDiagramCode(diagramCode)}`)
+    .then((response) => response.blob())
+    .then((pngResult) => {
+      const url = URL.createObjectURL(pngResult);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      link.click();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
