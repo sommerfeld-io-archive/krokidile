@@ -30,7 +30,7 @@ component Component
 User -right-> Component
 
 @enduml
-`
+`;
 
 //
 // Setup Monaco Editor.
@@ -52,11 +52,8 @@ const disposer = extension.active(editor);
 function encodeDiagramCode(diagramCode) {
   const data = Buffer.from(diagramCode, 'utf8');
   const compressed = pako.deflate(data, { level: 9 });
-  
-  return Buffer.from(compressed)
-    .toString('base64')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_');
+
+  return Buffer.from(compressed).toString('base64').replace(/\+/g, '-').replace(/\//g, '_');
 }
 
 //
@@ -83,17 +80,22 @@ editor.onDidChangeModelContent(() => {
     });
 });
 
-
 //
 // Render buttons to download sources and images.
 //
 function ActionsMenu() {
-  var buttonStyle = "outline-light"
+  var buttonStyle = 'outline-light';
   return (
     <div class="btn-group" role="group" aria-label="actions-menu">
-      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadCode()}><i className={`bi bi-save`}></i> Code</button>
-      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadSvg()}><i className={`bi bi-save`}></i> SVG</button>
-      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadPng()}><i className={`bi bi-save`}></i> PNG</button>
+      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadCode()}>
+        <i className={`bi bi-save`}></i> Code
+      </button>
+      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadSvg()}>
+        <i className={`bi bi-save`}></i> SVG
+      </button>
+      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadPng()}>
+        <i className={`bi bi-save`}></i> PNG
+      </button>
     </div>
   );
 }
@@ -120,7 +122,7 @@ function downloadCode() {
 function downloadSvg() {
   const fileName = 'diagram.svg';
   const diagramCode = editor.getValue();
-  
+
   fetch(`${KROKI_URL}/plantuml/svg/${encodeDiagramCode(diagramCode)}`)
     .then((response) => response.text())
     .then((svgResult) => {
@@ -142,7 +144,7 @@ function downloadSvg() {
 function downloadPng() {
   const fileName = 'diagram.png';
   const diagramCode = editor.getValue();
-  
+
   fetch(`${KROKI_URL}/plantuml/png/${encodeDiagramCode(diagramCode)}`)
     .then((response) => response.blob())
     .then((pngResult) => {
