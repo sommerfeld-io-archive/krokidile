@@ -25,8 +25,12 @@ Krokidile provides a web-based live editor for diagrams, enabling developers to 
 
 == Features
 * Real-time preview of diagrams based on diagram code
-* Support for multiple diagram types (see https://kroki.io)
 * Export diagrams as PNG or SVG image
+* Save the diagram code as a file
+* Supported diagram types
+** C4 with PlantUML
+** PlantUML
+// (see https://kroki.io)
 // * Configure Krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
 
 == How to use
@@ -99,24 +103,26 @@ skinparam linetype ortho
 skinparam monochrome false
 skinparam componentStyle uml2
 skinparam backgroundColor transparent
+skinparam NoteBackgroundColor #eee
 skinparam activity {
     'FontName Ubuntu
     FontName Roboto
 }
 
 actor User
-component Kroki as "Kroki.io" <<External Service>>
+component kroki as "Kroki Server" <<Service>>
+note bottom of kroki: https://kroki.io
 
 rectangle dc as "Docker Compose Stack" {
-    component App <<Node>>
-    component Docs <<Antora>>
+    component app as "Krokidile App" <<NodeJS>>
+    component docs as "Krokidile Docs" <<Antora>>
 }
 
-User -right-> App
-App -right-> Kroki
+User -right-> app
+app -right-> kroki
 
-User -right-> Docs
-Docs -[hidden]up-> App
+User -right-> docs
+docs -[hidden]up-> app
 
 @enduml
 ----
