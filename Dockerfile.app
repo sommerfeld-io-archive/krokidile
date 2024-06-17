@@ -11,7 +11,7 @@
 
 ## This stage is based on the official Node.js image and copies the application code into the
 ## image, installs the dependencies and bundles the application
-FROM node:22.2.0-alpine3.20 AS build
+FROM node:22.3.0-alpine3.20 AS build
 LABEL maintainer="sebastian@sommerfeld.io"
 
 WORKDIR /workspaces/krokidile
