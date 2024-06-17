@@ -25,8 +25,12 @@ Krokidile provides a web-based live editor for diagrams, enabling developers to 
 
 == Features
 * Real-time preview of diagrams based on diagram code
-* Support for multiple diagram types (see https://kroki.io)
 * Export diagrams as PNG or SVG image
+* Save the diagram code as a file
+* Supported diagram types
+** C4 with PlantUML
+** PlantUML
+// (see https://kroki.io)
 // * Configure Krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
 
 == How to use
