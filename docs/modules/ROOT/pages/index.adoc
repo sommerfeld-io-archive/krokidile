@@ -99,13 +99,15 @@ skinparam linetype ortho
 skinparam monochrome false
 skinparam componentStyle uml2
 skinparam backgroundColor transparent
+skinparam NoteBackgroundColor #eee
 skinparam activity {
     'FontName Ubuntu
     FontName Roboto
 }
 
 actor User
-component Kroki as "Kroki.io" <<External Service>>
+component Kroki <<Service>>
+note bottom of Kroki: https://kroki.io
 
 rectangle dc as "Docker Compose Stack" {
     component App <<Node>>
