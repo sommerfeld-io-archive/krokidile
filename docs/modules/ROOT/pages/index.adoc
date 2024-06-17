@@ -106,19 +106,19 @@ skinparam activity {
 }
 
 actor User
-component Kroki <<Service>>
-note bottom of Kroki: https://kroki.io
+component kroki as "Kroki Server" <<Service>>
+note bottom of kroki: https://kroki.io
 
 rectangle dc as "Docker Compose Stack" {
-    component App <<Node>>
-    component Docs <<Antora>>
+    component app as "Krokidile App" <<NodeJS>>
+    component docs as "Krokidile Docs" <<Antora>>
 }
 
-User -right-> App
-App -right-> Kroki
+User -right-> app
+app -right-> kroki
 
-User -right-> Docs
-Docs -[hidden]up-> App
+User -right-> docs
+docs -[hidden]up-> app
 
 @enduml
 ----
