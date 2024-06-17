@@ -84,3 +84,31 @@ function NavLink(props) {
 ReactDOM.createRoot(document.getElementById('main-nav')).render(<MainNav />);
 ReactDOM.createRoot(document.getElementById('external-nav')).render(<ExternalNav />);
 ReactDOM.createRoot(document.getElementById('meta-nav')).render(<MetaNav />);
+
+//
+// Select different diagram types for the editor.
+//
+function DiagramTypeSelector() {
+  return (
+    <div>
+      <DiagramTypeRadio id="c4plantuml" label="C4 PlantUML" />
+      <DiagramTypeRadio id="plantuml" label="PlantUML" />
+    </div>
+  );
+}
+
+//
+// Render the radio button for the diagram type.
+//
+function DiagramTypeRadio(props) {
+  var buttonStyle = 'outline-white'
+  var buttonSize = 'sm'
+  return (
+    <span>
+      <input type="radio" class="btn-check" name="diagram-type-option" id={`${props.id}`} autocomplete="off" checked />
+      <label className={`btn btn-${buttonStyle} btn-${buttonSize}`} for={`${props.id}`}>{props.label}</label>
+    </span>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('diagram-type-selector')).render(<DiagramTypeSelector />);

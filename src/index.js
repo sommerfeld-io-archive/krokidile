@@ -83,7 +83,7 @@ editor.onDidChangeModelContent(() => {
 // Render buttons to download sources and images.
 //
 function ActionsMenu() {
-  var buttonStyle = 'outline-light';
+  var buttonStyle = 'outline-secondary';
   var saveImageStyle = 'download';
   return (
     <div class="btn-group" role="group" aria-label="actions-menu">
