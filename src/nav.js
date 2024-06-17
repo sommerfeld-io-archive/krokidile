@@ -13,7 +13,7 @@ function MainNav() {
   return (
     <ul class="nav nav-pills flex-column mb-auto">
       <NavLink
-        href="https://krokidile.sommerfeld.io"
+        href="https://github.com/sommerfeld-io/krokidile/tree/main/docs/modules/ROOT/pages"
         text="Documentation"
         icon="file-earmark-text"
         color="white"
