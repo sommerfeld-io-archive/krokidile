@@ -1,7 +1,7 @@
 ---
 name: public
 title: krokidile
-version: main
+version: download-images-and-sources
 start_page: ROOT:index.adoc
 nav:
   - modules/ROOT/nav.adoc
