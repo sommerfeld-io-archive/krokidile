@@ -83,18 +83,18 @@ editor.onDidChangeModelContent(() => {
 // Render buttons to download sources and images.
 //
 function ActionsMenu() {
-  var buttonStyle = 'outline-secondary';
-  var saveImageStyle = 'download';
+  var buttonStyle = 'btn-outline-secondary';
+  var saveImageStyle = 'bi-download';
   return (
     <div class="btn-group" role="group" aria-label="actions-menu">
-      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadCode()}>
-        <i className={`bi bi-${saveImageStyle}`}></i> Code
+      <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => downloadCode()}>
+        <i className={`bi ${saveImageStyle}`}></i> Code
       </button>
-      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadSvg()}>
-        <i className={`bi bi-${saveImageStyle}`}></i> SVG
+      <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => downloadSvg()}>
+        <i className={`bi ${saveImageStyle}`}></i> SVG
       </button>
-      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadPng()}>
-        <i className={`bi bi-${saveImageStyle}`}></i> PNG
+      <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => downloadPng()}>
+        <i className={`bi ${saveImageStyle}`}></i> PNG
       </button>
     </div>
   );

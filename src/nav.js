@@ -101,8 +101,8 @@ function DiagramTypeSelector() {
 // Render the radio button for the diagram type.
 //
 function DiagramTypeRadio(props) {
-  var buttonStyle = 'outline-white';
-  var buttonSize = 'sm';
+  var buttonStyle = 'btn-outline-white';
+  var buttonSize = 'btn-sm';
   return (
     <span>
       <input
@@ -113,7 +113,7 @@ function DiagramTypeRadio(props) {
         autocomplete="off"
         checked
       />
-      <label className={`btn btn-${buttonStyle} btn-${buttonSize}`} for={`${props.id}`}>
+      <label className={`btn ${buttonStyle} ${buttonSize}`} for={`${props.id}`}>
         {props.label}
       </label>
     </span>
