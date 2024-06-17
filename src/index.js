@@ -85,7 +85,7 @@ editor.onDidChangeModelContent(() => {
 //
 function ActionsMenu() {
   var buttonStyle = 'outline-light';
-  var saveImageStyle = 'download'
+  var saveImageStyle = 'download';
   return (
     <div class="btn-group" role="group" aria-label="actions-menu">
       <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadCode()}>
