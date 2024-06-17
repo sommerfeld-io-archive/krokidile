@@ -101,14 +101,25 @@ function DiagramTypeSelector() {
 // Render the radio button for the diagram type.
 //
 function DiagramTypeRadio(props) {
-  var buttonStyle = 'outline-white'
-  var buttonSize = 'sm'
+  var buttonStyle = 'outline-white';
+  var buttonSize = 'sm';
   return (
     <span>
-      <input type="radio" class="btn-check" name="diagram-type-option" id={`${props.id}`} autocomplete="off" checked />
-      <label className={`btn btn-${buttonStyle} btn-${buttonSize}`} for={`${props.id}`}>{props.label}</label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="diagram-type-option"
+        id={`${props.id}`}
+        autocomplete="off"
+        checked
+      />
+      <label className={`btn btn-${buttonStyle} btn-${buttonSize}`} for={`${props.id}`}>
+        {props.label}
+      </label>
     </span>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('diagram-type-selector')).render(<DiagramTypeSelector />);
+ReactDOM.createRoot(document.getElementById('diagram-type-selector')).render(
+  <DiagramTypeSelector />,
+);
