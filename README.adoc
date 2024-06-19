@@ -47,8 +47,6 @@ services:
     image: sommerfeldio/krokidile:latest
     ports:
       - 3000:3000
-    depends_on:
-      - kroki
 ----
 
 === Krokidile Docs
@@ -67,9 +65,6 @@ services:
   docs:
     container_name: krokidile-docs
     image: sommerfeldio/krokidile-docs:latest
-    build:
-      context: .
-      dockerfile: Dockerfile.docs
     ports:
       - 3080:3000
 ----
