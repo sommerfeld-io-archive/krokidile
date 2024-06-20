@@ -1,17 +1,18 @@
 = Terms of Use and Privacy Policy
 
 == Krokidile App
-The Krokidile App uses cookies to improve your experience. We'll assume you're ok with this. Krokidile does not work without cookies. There is not way to opt out. If you are not ok with this, please do not use the Krokidile app.
+The Krokidile App uses cookies or local browser storage to improve your experience. We'll assume you're ok with this. Krokidile does not work without cookies / local storage. There is not way to opt out. If you are not ok with this, please do not use the Krokidile app.
 
-Cookies are not used to track a users behavior or to collect any sort of statistical data whatsoever. Cookies are only used to enhance the functionality of the website and for the purpose of storing your preferences.
+Cookies / local storage are not used to track a users behavior or to collect any sort of statistical data whatsoever. Cookies / local storage are only used to enhance the functionality of the website and for the purpose of storing your preferences.
 
-The following cookies are used:
+The following cookies  / local storage are used:
 
-[cols="1,6", options="header"]
+[cols="1,1,5", options="header"]
 |===
-|Cookie Name |Purpose
-|`editorContent` |Stores the content of the editor to make sure the diagram code is not lost when the page is reloaded.
+|Name |Type |Purpose
+|`editorContent`|Local Storage |Stores the content of the editor to make sure the diagram code is not lost when the page is reloaded.
+|`selectedDiagramType`|Local Storage |Stores the diagram type. Based on this cookie the Kroki endpoint and the syntax highlighting is set.
 |===
 
 == Krokidile Documentation Website
-The Krokidile Documentation Website does not use any cookies.
+The Krokidile Documentation Website does not use any cookies or local storage.
