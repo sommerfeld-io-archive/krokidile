@@ -19,6 +19,8 @@ User -right-> Component
 @enduml
 `;
 
+// ------------------------------------------------------------------------------------------------
+
 export const C4PUML_ENDPOINT = 'c4plantuml';
 export const C4PUML_EDITOR_LANGUAGE = PUML_ENDPOINT;
 export const C4PUML_MARKUP = `@startuml C4_Elements
@@ -32,6 +34,8 @@ Rel(personAlias, containerAlias, "Label", "Optional Technology")
 @enduml
 `;
 
+// ------------------------------------------------------------------------------------------------
+
 export const DITAA_ENDPOINT = 'ditaa';
 export const DITAA_EDITOR_LANGUAGE = 'plaintext';
 export const DITAA_MARKUP = `
@@ -41,3 +45,16 @@ export const DITAA_MARKUP = `
 |      |    |       |
 +------+    +-------+
 `;
+
+// ------------------------------------------------------------------------------------------------
+
+export const BLOCKDIAG_ENDPOINT = 'blockdiag';
+export const BLOCKDIAG_EDITOR_LANGUAGE = 'plaintext';
+export const BLOCKDIAG_MARKUP = `blockdiag {
+    blockdiag -> generates -> "block-diagrams";
+    blockdiag -> is -> "very easy!";
+  
+    blockdiag [color = "greenyellow"];
+    "block-diagrams" [color = "pink"];
+    "very easy!" [color = "orange"];
+}`;
