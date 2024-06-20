@@ -87,3 +87,21 @@ export const RACKDIAG_MARKUP = `rackdiag {
   5: Web Server;
   7: Load Balancer;
 }`;
+
+
+// ------------------------------------------------------------------------------------------------
+
+export const MERMAID_ENDPOINT = 'mermaid';
+export const MERMAID_EDITOR_LANGUAGE = 'plaintext';
+export const MERMAID_MARKUP = `sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->John: Hello John, how are you?
+    loop Healthcheck
+        John->John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts prevail...
+    John-->Alice: Great!
+    John->Bob: How about you?
+    Bob-->John: Jolly good!
+`;
