@@ -12,7 +12,8 @@ const pako = require('pako');
 const Buffer = require('buffer/').Buffer; // note the trailing slash
 
 const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
-const SELECTED_DIAGRAM_TYPE = localStorage.getItem('selectedDiagramType') || diagramTypes.PUML_ENDPOINT;
+const SELECTED_DIAGRAM_TYPE =
+  localStorage.getItem('selectedDiagramType') || diagramTypes.PUML_ENDPOINT;
 
 // Set the default content for the editor based on the selected diagram type.
 var DEFAULT_EDITOR_CONTENT = diagramTypes.PUML_MARKUP;
