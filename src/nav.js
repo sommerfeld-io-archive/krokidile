@@ -123,3 +123,31 @@ function DiagramTypeRadio(props) {
 ReactDOM.createRoot(document.getElementById('diagram-type-selector')).render(
   <DiagramTypeSelector />,
 );
+
+//
+// The meta navigation containing links to services which are used by the app. Plus some additional information.
+//
+function ShortcutList() {
+  return (
+    <ul class="nav nav-pills flex-column mb-auto">
+      <Shortcut text="CTRL-S = Download Code" icon="keyboard" color="secondary" />
+      <Shortcut text="CTRL-Enter = Render Preview" icon="keyboard" color="secondary" />
+    </ul>
+  );
+}
+
+//
+// Render the actual shortcut.
+//
+function Shortcut(props) {
+  return (
+    <li>
+      <span className={`nav-link text-${props.color}`}>
+        <i className={`bi pe-none me-2 bi-${props.icon}`}></i>
+        {props.text}
+      </span>
+    </li>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('shortcuts')).render(<ShortcutList />);
