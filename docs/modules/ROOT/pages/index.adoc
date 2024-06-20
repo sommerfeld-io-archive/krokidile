@@ -113,7 +113,7 @@ The Application consists of the following components:
    |          |                 |
    |          |   +-----------+ |
    |          |   | Krokidile | |
-   +------------->|    App    | |
+   +------------->|   Docs    | |
               |   +-----------+ |
               +-----------------+
 ----

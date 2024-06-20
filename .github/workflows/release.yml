@@ -54,6 +54,7 @@ jobs:
         shell: bash
       - name: Convert ${{ env.DOCS_FILE }} from Asciidoc to Markdown for DockerHub description
         run: |
+          sudo apt-get update
           sudo apt-get install -y pandoc asciidoc
           asciidoc -b docbook ${{ env.DOCS_FILE }}.adoc
           mv ${{ env.DOCS_FILE }}.xml ./UPLOAD.xml
