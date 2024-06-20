@@ -105,7 +105,6 @@ export const MERMAID_MARKUP = `sequenceDiagram
     Bob-->John: Jolly good!
 `;
 
-
 // ------------------------------------------------------------------------------------------------
 
 export const STRUCTURIZR_ENDPOINT = 'structurizr';
@@ -125,6 +124,6 @@ export const STRUCTURIZR_MARKUP = `workspace {
             autolayout lr
         }
     }
-    
+
 }
 `;
