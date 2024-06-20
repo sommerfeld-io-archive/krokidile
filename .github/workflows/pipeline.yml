@@ -143,6 +143,7 @@ jobs:
           for file in *.adoc; do
             content=$(cat "$file")
             content="${content//xref:development-guide.adoc[]/link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide]}"
+            content="${content//xref:contribute.adoc[]/link:https://github.com/sommerfeld-io/krokidile/blob/main/CONTRIBUTING.adoc[Contribute to this Project]}"
             echo "$content" > "$file"
           done
         shell: bash
