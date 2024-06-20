@@ -75,7 +75,6 @@ country
 
 Person *--1 Location`;
 
-
 // ------------------------------------------------------------------------------------------------
 
 export const RACKDIAG_ENDPOINT = 'rackdiag';
