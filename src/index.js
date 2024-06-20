@@ -5,49 +5,21 @@ import { PUmlExtension } from '@sinm/monaco-plantuml';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.scss';
+import * as diagramTypes from './diagram-type-data.js';
 
 // see https://docs.kroki.io/kroki/setup/encode-diagram/#nodejs
 const pako = require('pako');
 const Buffer = require('buffer/').Buffer; // note the trailing slash
 
 const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
-const SELECTED_DIAGRAM_TYPE = localStorage.getItem('selectedDiagramType') || 'plantuml';
+const SELECTED_DIAGRAM_TYPE = localStorage.getItem('selectedDiagramType') || diagramTypes.PUML_ENDPOINT;
 
-const DEFAULT_PUML = `@startuml
-
-skinparam linetype ortho
-skinparam monochrome false
-skinparam componentStyle uml2
-skinparam backgroundColor transparent
-skinparam activity {
-    'FontName Ubuntu
-    FontName Roboto
-}
-
-actor User
-component Component
-
-User -right-> Component
-
-@enduml
-`;
-
-const DEFAULT_C4PUML = `@startuml C4_Elements
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
-
-Person(personAlias, "Label", "Optional Description")
-Container(containerAlias, "Label", "Technology", "Optional Description")
-System(systemAlias, "Label", "Optional Description")
-
-Rel(personAlias, containerAlias, "Label", "Optional Technology")
-@enduml
-`;
-
-var DEFAULT_EDITOR_CONTENT = DEFAULT_PUML;
-if (SELECTED_DIAGRAM_TYPE === 'plantuml') {
-  DEFAULT_EDITOR_CONTENT = DEFAULT_PUML;
-} else if (SELECTED_DIAGRAM_TYPE === 'c4plantuml') {
-  DEFAULT_EDITOR_CONTENT = DEFAULT_C4PUML;
+// Set the default content for the editor based on the selected diagram type.
+var DEFAULT_EDITOR_CONTENT = diagramTypes.PUML_MARKUP;
+if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.PUML_MARKUP;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.C4PUML_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.C4PUML_MARKUP;
 }
 
 //
@@ -57,15 +29,15 @@ if (SELECTED_DIAGRAM_TYPE === 'plantuml') {
 //
 const editor = monaco.editor.create(document.getElementById('editor'), {
   value: localStorage.getItem('editorContent') || DEFAULT_EDITOR_CONTENT,
-  language: 'plantuml',
+  language: diagramTypes.PUML_EDITOR_LANGUAGE,
   theme: 'vs-dark',
 });
 
 // Activate extensions for the editor to ptovide syntax highlighting and auto-completion.
-if (SELECTED_DIAGRAM_TYPE === 'plantuml') {
+if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
   const extension = new PUmlExtension();
   const disposer = extension.active(editor);
-} else if (SELECTED_DIAGRAM_TYPE === 'c4plantuml') {
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.C4PUML_ENDPOINT) {
   const extension = new PUmlExtension();
   const disposer = extension.active(editor);
 }
