@@ -74,3 +74,17 @@ state
 country
 
 Person *--1 Location`;
+
+
+// ------------------------------------------------------------------------------------------------
+
+export const RACKDIAG_ENDPOINT = 'rackdiag';
+export const RACKDIAG_EDITOR_LANGUAGE = 'plaintext';
+export const RACKDIAG_MARKUP = `rackdiag {
+  16U;
+  1: UPS [2U];
+  3: Web Server;
+  4: Web Server;
+  5: Web Server;
+  7: Load Balancer;
+}`;
