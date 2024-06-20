@@ -56,10 +56,15 @@ function encodeDiagramCode(diagramCode) {
 }
 
 //
-// Get the diagram code from the editor and send it to the Kroki service.
+// Get the diagram code from the editor and send it to the Kroki service. Send the code only when
+// there is no change in the editor content for a defined amount of seconds. This is to avoid
+//  sending too many requests to the Kroki service.
+//
 // The editor content ist stored in the local storage to make sure the content survives a page
 // reload.
 //
+let debounceTimeout;
+let milliseconds = 1000;
 editor.onDidChangeModelContent(() => {
   const diagramCode = editor.getValue();
   localStorage.setItem('editorContent', diagramCode);
@@ -69,14 +74,17 @@ editor.onDidChangeModelContent(() => {
     return;
   }
 
-  fetch(`${KROKI_URL}/plantuml/svg/${encodeDiagramCode(diagramCode)}`)
-    .then((response) => response.text())
-    .then((imageResult) => {
-      document.getElementById('preview').innerHTML = imageResult;
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    fetch(`${KROKI_URL}/plantuml/svg/${encodeDiagramCode(diagramCode)}`)
+      .then((response) => response.text())
+      .then((imageResult) => {
+        document.getElementById('preview').innerHTML = imageResult;
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, milliseconds);
 });
 
 //
