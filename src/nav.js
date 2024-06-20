@@ -11,7 +11,7 @@ const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/k
 //
 function MainNav() {
   return (
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul className={`nav nav-pills flex-column mb-auto`}>
       <NavLink
         href="https://github.com/sommerfeld-io/krokidile/tree/main/docs/modules/ROOT/pages"
         text="Documentation"
@@ -39,7 +39,7 @@ function MainNav() {
 //
 function ExternalNav() {
   return (
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul className={`nav nav-pills flex-column mb-auto`}>
       <NavLink
         href="https://plantuml.com/de/deployment-diagram"
         text="PlantUML.com Docs"
@@ -61,7 +61,7 @@ function ExternalNav() {
 //
 function MetaNav() {
   return (
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul className={`nav nav-pills flex-column mb-auto`}>
       <NavLink href={KROKI_URL} text={KROKI_URL} icon="info-circle" color="secondary" />
     </ul>
   );
@@ -84,3 +84,31 @@ function NavLink(props) {
 ReactDOM.createRoot(document.getElementById('main-nav')).render(<MainNav />);
 ReactDOM.createRoot(document.getElementById('external-nav')).render(<ExternalNav />);
 ReactDOM.createRoot(document.getElementById('meta-nav')).render(<MetaNav />);
+
+//
+// The meta navigation containing links to services which are used by the app. Plus some additional information.
+//
+function ShortcutList() {
+  return (
+    <ul className={`nav nav-pills flex-column mb-auto`}>
+      <Shortcut text="CTRL-S = Download Code" icon="keyboard" color="secondary" />
+      <Shortcut text="CTRL-Enter = Render Preview" icon="keyboard" color="secondary" />
+    </ul>
+  );
+}
+
+//
+// Render the actual shortcut.
+//
+function Shortcut(props) {
+  return (
+    <li>
+      <span className={`nav-link text-${props.color}`}>
+        <i className={`bi pe-none me-2 bi-${props.icon}`}></i>
+        {props.text}
+      </span>
+    </li>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('shortcuts')).render(<ShortcutList />);

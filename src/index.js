@@ -5,31 +5,23 @@ import { PUmlExtension } from '@sinm/monaco-plantuml';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.scss';
+import * as diagramTypes from './diagram-type-data.js';
 
 // see https://docs.kroki.io/kroki/setup/encode-diagram/#nodejs
 const pako = require('pako');
 const Buffer = require('buffer/').Buffer; // note the trailing slash
 
 const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
+const SELECTED_DIAGRAM_TYPE =
+  localStorage.getItem('selectedDiagramType') || diagramTypes.PUML_ENDPOINT;
 
-const DEFAULT_PUML = `@startuml
-
-skinparam linetype ortho
-skinparam monochrome false
-skinparam componentStyle uml2
-skinparam backgroundColor transparent
-skinparam activity {
-    'FontName Ubuntu
-    FontName Roboto
+// Set the default content for the editor based on the selected diagram type.
+var DEFAULT_EDITOR_CONTENT = diagramTypes.PUML_MARKUP;
+if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.PUML_MARKUP;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.C4PUML_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.C4PUML_MARKUP;
 }
-
-actor User
-component Component
-
-User -right-> Component
-
-@enduml
-`;
 
 //
 // Setup Monaco Editor.
@@ -37,13 +29,19 @@ User -right-> Component
 // storage, use the default content.
 //
 const editor = monaco.editor.create(document.getElementById('editor'), {
-  value: localStorage.getItem('editorContent') || DEFAULT_PUML,
-  language: 'plantuml',
+  value: localStorage.getItem('editorContent') || DEFAULT_EDITOR_CONTENT,
+  language: diagramTypes.PUML_EDITOR_LANGUAGE,
   theme: 'vs-dark',
 });
 
-const extension = new PUmlExtension();
-const disposer = extension.active(editor);
+// Activate extensions for the editor to ptovide syntax highlighting and auto-completion.
+if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
+  const extension = new PUmlExtension();
+  const disposer = extension.active(editor);
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.C4PUML_ENDPOINT) {
+  const extension = new PUmlExtension();
+  const disposer = extension.active(editor);
+}
 
 //
 // Encode the diagram code. Prepare to send to kroki server.
@@ -56,10 +54,15 @@ function encodeDiagramCode(diagramCode) {
 }
 
 //
-// Get the diagram code from the editor and send it to the Kroki service.
+// Get the diagram code from the editor and send it to the Kroki service. Send the code only when
+// there is no change in the editor content for a defined amount of seconds. This is to avoid
+//  sending too many requests to the Kroki service.
+//
 // The editor content ist stored in the local storage to make sure the content survives a page
 // reload.
 //
+let debounceTimeout;
+let milliseconds = 1000;
 editor.onDidChangeModelContent(() => {
   const diagramCode = editor.getValue();
   localStorage.setItem('editorContent', diagramCode);
@@ -69,32 +72,35 @@ editor.onDidChangeModelContent(() => {
     return;
   }
 
-  fetch(`${KROKI_URL}/plantuml/svg/${encodeDiagramCode(diagramCode)}`)
-    .then((response) => response.text())
-    .then((imageResult) => {
-      document.getElementById('preview').innerHTML = imageResult;
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    fetch(`${KROKI_URL}/${SELECTED_DIAGRAM_TYPE}/svg/${encodeDiagramCode(diagramCode)}`)
+      .then((response) => response.text())
+      .then((imageResult) => {
+        document.getElementById('preview').innerHTML = imageResult;
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, milliseconds);
 });
 
 //
 // Render buttons to download sources and images.
 //
 function ActionsMenu() {
-  var buttonStyle = 'outline-light';
-  var saveImageStyle = 'download';
+  var buttonStyle = 'btn-outline-light';
+  var saveImageStyle = 'bi-download';
   return (
-    <div class="btn-group" role="group" aria-label="actions-menu">
-      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadCode()}>
-        <i className={`bi bi-${saveImageStyle}`}></i> Code
+    <div className={`btn-group`} role="group" aria-label="actions-menu">
+      <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => downloadCode()}>
+        <i className={`bi ${saveImageStyle}`}></i> Code
       </button>
-      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadSvg()}>
-        <i className={`bi bi-${saveImageStyle}`}></i> SVG
+      <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => downloadSvg()}>
+        <i className={`bi ${saveImageStyle}`}></i> SVG
       </button>
-      <button type={`button`} className={`btn btn-${buttonStyle}`} onClick={() => downloadPng()}>
-        <i className={`bi bi-${saveImageStyle}`}></i> PNG
+      <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => downloadPng()}>
+        <i className={`bi ${saveImageStyle}`}></i> PNG
       </button>
     </div>
   );
@@ -169,3 +175,47 @@ document.addEventListener('keydown', function (event) {
     downloadCode();
   }
 });
+
+//
+// Select different diagram types for the editor.
+// ID must match the endpoint in the Kroki service.
+//
+function DiagramTypeSelector() {
+  return (
+    <div>
+      <DiagramTypeRadio id="c4plantuml" label="C4 PlantUML" />
+      <DiagramTypeRadio id="plantuml" label="PlantUML" />
+    </div>
+  );
+}
+
+//
+// Render the radio button for the diagram type.
+//
+function DiagramTypeRadio(props) {
+  var buttonStyle = 'btn-outline-white';
+  var buttonSize = 'btn-sm';
+  return (
+    <span>
+      <input
+        type="radio"
+        className={`btn-check`}
+        name="diagram-type-option"
+        id={`${props.id}`}
+        autoComplete="off"
+        defaultChecked={SELECTED_DIAGRAM_TYPE === props.id}
+        onChange={() => {
+          localStorage.setItem('selectedDiagramType', `${props.id}`);
+          window.location.reload();
+        }}
+      />
+      <label className={`btn ${buttonStyle} ${buttonSize}`} htmlFor={`${props.id}`}>
+        {props.label}
+      </label>
+    </span>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('diagram-type-selector')).render(
+  <DiagramTypeSelector />,
+);

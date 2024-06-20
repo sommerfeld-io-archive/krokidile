@@ -25,12 +25,21 @@ Krokidile provides a web-based live editor for diagrams, enabling developers to 
 
 == Features
 * Real-time preview of diagrams based on diagram code
-* Support for multiple diagram types (see https://kroki.io)
 * Export diagrams as PNG or SVG image
+* Save the diagram code as a file
+* Supported diagram types
+** C4 with PlantUML
+** PlantUML
+// (see https://kroki.io)
 // * Configure Krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
 
+=== Code editor behavior
+When the diagram type is changed the editor is populated with an example code of the selected diagram type. However, when code is changed by the user, the code is stored in the browsers local storage and will be loaded when the page is reloaded to ensure the user does not lose their work when accidentally reloading the page.
+
+This conflicts with displaying the example code of the selected diagram type. The code written by the user is more important than the example code. Therefore, the example code is not displayed when the user has written code.
+
 == How to use
-=== Krokidile
+=== Krokidile Application
 The only way to use Krokidile is to use the Docker image. The Docker image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile.
 [source, bash]
 ----
@@ -49,7 +58,7 @@ services:
       - 3000:3000
 ----
 
-=== Krokidile Docs
+=== Krokidile Documentation
 This project also publishes a documentation. The image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile-docs.
 
 Start with plain Docker:
@@ -69,10 +78,10 @@ services:
       - 3080:3000
 ----
 
-== How to Development
+== Development
 Consider the following steps to start developing on this project:
 
-. Read the link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide].
+. Read the link:https://github.com/sommerfeld-io/krokidile/blob/main/docs/modules/ROOT/pages/development-guide.adoc[Development Guide] and link:https://github.com/sommerfeld-io/krokidile/blob/main/CONTRIBUTING.adoc[Contribute to this Project] pages.
 . Prepare the node environment with `npm install`.
 . Start the development server with the following command: `npm run dev`.
 // .. Keep in mind that the development server is not connected to a Kroki instance and will not render diagrams. To render diagrams, start Krokidile from its docker-compose stack.
