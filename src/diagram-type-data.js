@@ -19,6 +19,8 @@ User -right-> Component
 @enduml
 `;
 
+// ------------------------------------------------------------------------------------------------
+
 export const C4PUML_ENDPOINT = 'c4plantuml';
 export const C4PUML_EDITOR_LANGUAGE = PUML_ENDPOINT;
 export const C4PUML_MARKUP = `@startuml C4_Elements
@@ -30,4 +32,98 @@ System(systemAlias, "Label", "Optional Description")
 
 Rel(personAlias, containerAlias, "Label", "Optional Technology")
 @enduml
+`;
+
+// ------------------------------------------------------------------------------------------------
+
+export const DITAA_ENDPOINT = 'ditaa';
+export const DITAA_EDITOR_LANGUAGE = 'plaintext';
+export const DITAA_MARKUP = `
++------+    +-------+
+|      |    |       |
+| Some +----+ Stuff |
+|      |    |       |
++------+    +-------+
+`;
+
+// ------------------------------------------------------------------------------------------------
+
+export const BLOCKDIAG_ENDPOINT = 'blockdiag';
+export const BLOCKDIAG_EDITOR_LANGUAGE = 'plaintext';
+export const BLOCKDIAG_MARKUP = `blockdiag {
+    blockdiag -> generates -> "block-diagrams";
+    blockdiag -> is -> "very easy!";
+
+    blockdiag [color = "greenyellow"];
+    "block-diagrams" [color = "pink"];
+    "very easy!" [color = "orange"];
+}`;
+
+// ------------------------------------------------------------------------------------------------
+
+export const ERD_ENDPOINT = 'erd';
+export const ERD_EDITOR_LANGUAGE = 'plaintext';
+export const ERD_MARKUP = `[Person]
+*name
++birth_location_id
+
+[Location]
+*id
+city
+state
+country
+
+Person *--1 Location`;
+
+// ------------------------------------------------------------------------------------------------
+
+export const RACKDIAG_ENDPOINT = 'rackdiag';
+export const RACKDIAG_EDITOR_LANGUAGE = 'plaintext';
+export const RACKDIAG_MARKUP = `rackdiag {
+  16U;
+  1: UPS [2U];
+  3: Web Server;
+  4: Web Server;
+  5: Web Server;
+  7: Load Balancer;
+}`;
+
+// ------------------------------------------------------------------------------------------------
+
+export const MERMAID_ENDPOINT = 'mermaid';
+export const MERMAID_EDITOR_LANGUAGE = 'plaintext';
+export const MERMAID_MARKUP = `sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->John: Hello John, how are you?
+    loop Healthcheck
+        John->John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts prevail...
+    John-->Alice: Great!
+    John->Bob: How about you?
+    Bob-->John: Jolly good!
+`;
+
+// ------------------------------------------------------------------------------------------------
+
+export const STRUCTURIZR_ENDPOINT = 'structurizr';
+export const STRUCTURIZR_EDITOR_LANGUAGE = 'plaintext';
+export const STRUCTURIZR_MARKUP = `workspace {
+
+    model {
+        u = person "User"
+        ss = softwareSystem "Software System"
+
+        u -> ss "Uses"
+    }
+
+    views {
+        systemContext ss {
+            include *
+            autolayout lr
+        }
+    }
+
+}
 `;

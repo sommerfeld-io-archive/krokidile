@@ -28,8 +28,14 @@ Krokidile provides a web-based live editor for diagrams, enabling developers to 
 * Export diagrams as PNG or SVG image
 * Save the diagram code as a file
 * Supported diagram types
+** BlockDiag
+** Ditaa
 ** C4 with PlantUML
+** Erd (Entity-Relationship Diagram)
+** Mermaid
 ** PlantUML
+** RackDiag
+** Structurizr
 // (see https://kroki.io)
 // * Configure Krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
 
@@ -95,36 +101,21 @@ The Frontend is built with React on top of Node.js. The Backend is a Kroki insta
 
 The Application consists of the following components:
 
-[plantuml, puml-build-image, svg]
+[ditaa, "ditaa-diagram"]
 ----
-@startuml
-
-skinparam linetype ortho
-skinparam monochrome false
-skinparam componentStyle uml2
-skinparam backgroundColor transparent
-skinparam NoteBackgroundColor #eee
-skinparam activity {
-    'FontName Ubuntu
-    FontName Roboto
-}
-
-actor User
-component kroki as "Kroki Server" <<Service>>
-note bottom of kroki: https://kroki.io
-
-rectangle dc as "Docker Compose Stack" {
-    component app as "Krokidile App" <<NodeJS>>
-    component docs as "Krokidile Docs" <<Antora>>
-}
-
-User -right-> app
-app -right-> kroki
-
-User -right-> docs
-docs -[hidden]up-> app
-
-@enduml
++------+      +-----------------+
+| User |      |  Docker Compose |
++--+---+      |                 |
+   |          |   +-----------+ |      +--------+
+   |          |   | Krokidile | |      | Kroki  |
+   +------------->|    App    +------->| Server |
+   |          |   +-----------+ |      +--------+
+   |          |                 |
+   |          |   +-----------+ |
+   |          |   | Krokidile | |
+   +------------->|    App    | |
+              |   +-----------+ |
+              +-----------------+
 ----
 
 The Docker Compose stacks from this repo feature some additional components that are not part of the application itself but are required to run some linting tasks etc. Because they are not part of the actual application, they are not listed here.

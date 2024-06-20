@@ -17,10 +17,32 @@ const SELECTED_DIAGRAM_TYPE =
 
 // Set the default content for the editor based on the selected diagram type.
 var DEFAULT_EDITOR_CONTENT = diagramTypes.PUML_MARKUP;
+var DEFAULT_EDITOR_LANGUAGE = diagramTypes.PUML_EDITOR_LANGUAGE;
+
 if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
   DEFAULT_EDITOR_CONTENT = diagramTypes.PUML_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.PUML_EDITOR_LANGUAGE;
 } else if (SELECTED_DIAGRAM_TYPE === diagramTypes.C4PUML_ENDPOINT) {
   DEFAULT_EDITOR_CONTENT = diagramTypes.C4PUML_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.C4PUML_EDITOR_LANGUAGE;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.DITAA_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.DITAA_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.DITAA_EDITOR_LANGUAGE;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.BLOCKDIAG_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.BLOCKDIAG_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.BLOCKDIAG_EDITOR_LANGUAGE;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.ERD_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.ERD_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.ERD_EDITOR_LANGUAGE;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.RACKDIAG_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.RACKDIAG_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.RACKDIAG_EDITOR_LANGUAGE;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.MERMAID_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.MERMAID_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.MERMAID_EDITOR_LANGUAGE;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.STRUCTURIZR_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.STRUCTURIZR_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.STRUCTURIZR_EDITOR_LANGUAGE;
 }
 
 //
@@ -30,7 +52,7 @@ if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
 //
 const editor = monaco.editor.create(document.getElementById('editor'), {
   value: localStorage.getItem('editorContent') || DEFAULT_EDITOR_CONTENT,
-  language: diagramTypes.PUML_EDITOR_LANGUAGE,
+  language: DEFAULT_EDITOR_LANGUAGE,
   theme: 'vs-dark',
 });
 
@@ -41,6 +63,18 @@ if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
 } else if (SELECTED_DIAGRAM_TYPE === diagramTypes.C4PUML_ENDPOINT) {
   const extension = new PUmlExtension();
   const disposer = extension.active(editor);
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.DITAA_ENDPOINT) {
+  // nothing yet
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.BLOCKDIAG_ENDPOINT) {
+  // nothing yet
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.ERD_ENDPOINT) {
+  // nothing yet
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.RACKDIAG_ENDPOINT) {
+  // nothing yet
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.MERMAID_ENDPOINT) {
+  // nothing yet
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.STRUCTURIZR_ENDPOINT) {
+  // nothing yet
 }
 
 //
@@ -112,7 +146,7 @@ ReactDOM.createRoot(document.getElementById('actions-menu')).render(<ActionsMenu
 // Download the contents of the editor as text file.
 //
 function downloadCode() {
-  const fileName = 'code.puml';
+  const fileName = 'code.txt';
   const diagramCode = editor.getValue();
   const blob = new Blob([diagramCode], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
@@ -126,7 +160,7 @@ function downloadSvg() {
   const fileName = 'diagram.svg';
   const diagramCode = editor.getValue();
 
-  fetch(`${KROKI_URL}/plantuml/svg/${encodeDiagramCode(diagramCode)}`)
+  fetch(`${KROKI_URL}/${SELECTED_DIAGRAM_TYPE}/svg/${encodeDiagramCode(diagramCode)}`)
     .then((response) => response.text())
     .then((svgResult) => {
       const blob = new Blob([svgResult], { type: 'image/svg+xml' });
@@ -145,7 +179,7 @@ function downloadPng() {
   const fileName = 'diagram.png';
   const diagramCode = editor.getValue();
 
-  fetch(`${KROKI_URL}/plantuml/png/${encodeDiagramCode(diagramCode)}`)
+  fetch(`${KROKI_URL}/${SELECTED_DIAGRAM_TYPE}/png/${encodeDiagramCode(diagramCode)}`)
     .then((response) => response.blob())
     .then((pngResult) => {
       const url = URL.createObjectURL(pngResult);
@@ -183,8 +217,14 @@ document.addEventListener('keydown', function (event) {
 function DiagramTypeSelector() {
   return (
     <div>
-      <DiagramTypeRadio id="c4plantuml" label="C4 PlantUML" />
-      <DiagramTypeRadio id="plantuml" label="PlantUML" />
+      <DiagramTypeRadio id={`${diagramTypes.BLOCKDIAG_ENDPOINT}`} label="BlockDiag" />
+      <DiagramTypeRadio id={`${diagramTypes.C4PUML_ENDPOINT}`} label="C4 PlantUML" />
+      <DiagramTypeRadio id={`${diagramTypes.DITAA_ENDPOINT}`} label="Ditaa" />
+      <DiagramTypeRadio id={`${diagramTypes.ERD_ENDPOINT}`} label="Erd" />
+      <DiagramTypeRadio id={`${diagramTypes.MERMAID_ENDPOINT}`} label="Mermaid" />
+      <DiagramTypeRadio id={`${diagramTypes.PUML_ENDPOINT}`} label="PlantUML" />
+      <DiagramTypeRadio id={`${diagramTypes.RACKDIAG_ENDPOINT}`} label="RackDiag" />
+      <DiagramTypeRadio id={`${diagramTypes.STRUCTURIZR_ENDPOINT}`} label="Structurizr" />
     </div>
   );
 }

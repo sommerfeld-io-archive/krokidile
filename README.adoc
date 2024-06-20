@@ -28,8 +28,14 @@ Krokidile provides a web-based live editor for diagrams, enabling developers to 
 * Export diagrams as PNG or SVG image
 * Save the diagram code as a file
 * Supported diagram types
+** BlockDiag
+** Ditaa
 ** C4 with PlantUML
+** Erd (Entity-Relationship Diagram)
+** Mermaid
 ** PlantUML
+** RackDiag
+** Structurizr
 // (see https://kroki.io)
 // * Configure Krokidile to use your own Kroki instance (e.g., for self-hosting or to ensure your diagram data is kept private)
 
