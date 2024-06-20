@@ -53,8 +53,24 @@ export const BLOCKDIAG_EDITOR_LANGUAGE = 'plaintext';
 export const BLOCKDIAG_MARKUP = `blockdiag {
     blockdiag -> generates -> "block-diagrams";
     blockdiag -> is -> "very easy!";
-  
+
     blockdiag [color = "greenyellow"];
     "block-diagrams" [color = "pink"];
     "very easy!" [color = "orange"];
 }`;
+
+// ------------------------------------------------------------------------------------------------
+
+export const ERD_ENDPOINT = 'erd';
+export const ERD_EDITOR_LANGUAGE = 'plaintext';
+export const ERD_MARKUP = `[Person]
+*name
++birth_location_id
+
+[Location]
+*id
+city
+state
+country
+
+Person *--1 Location`;

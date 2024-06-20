@@ -31,6 +31,9 @@ if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
 } else if (SELECTED_DIAGRAM_TYPE === diagramTypes.BLOCKDIAG_ENDPOINT) {
   DEFAULT_EDITOR_CONTENT = diagramTypes.BLOCKDIAG_MARKUP;
   DEFAULT_EDITOR_LANGUAGE = diagramTypes.BLOCKDIAG_EDITOR_LANGUAGE;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.ERD_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.ERD_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.ERD_EDITOR_LANGUAGE;
 }
 
 //
@@ -54,6 +57,8 @@ if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
 } else if (SELECTED_DIAGRAM_TYPE === diagramTypes.DITAA_ENDPOINT) {
   // nothing yet
 } else if (SELECTED_DIAGRAM_TYPE === diagramTypes.BLOCKDIAG_ENDPOINT) {
+  // nothing yet
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.ERD_ENDPOINT) {
   // nothing yet
 }
 
@@ -200,6 +205,7 @@ function DiagramTypeSelector() {
       <DiagramTypeRadio id={`${diagramTypes.BLOCKDIAG_ENDPOINT}`} label="BlockDiag" />
       <DiagramTypeRadio id={`${diagramTypes.C4PUML_ENDPOINT}`} label="C4 PlantUML" />
       <DiagramTypeRadio id={`${diagramTypes.DITAA_ENDPOINT}`} label="Ditaa" />
+      <DiagramTypeRadio id={`${diagramTypes.ERD_ENDPOINT}`} label="Erd" />
       <DiagramTypeRadio id={`${diagramTypes.PUML_ENDPOINT}`} label="PlantUML" />
     </div>
   );
