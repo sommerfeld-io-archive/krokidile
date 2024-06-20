@@ -13,12 +13,12 @@
 services:
   app:
     container_name: ${COMPOSE_PROJECT_NAME}-app
-    image: sommerfeldio/krokidile:0.6.0
+    image: sommerfeldio/krokidile:0.8.1
     ports:
       - 3300:3000
 
   docs:
     container_name: ${COMPOSE_PROJECT_NAME}-docs
-    image: sommerfeldio/krokidile-docs:0.6.0
+    image: sommerfeldio/krokidile-docs:0.8.1
     ports:
       - 3380:3000
