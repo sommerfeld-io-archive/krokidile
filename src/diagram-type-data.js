@@ -88,7 +88,6 @@ export const RACKDIAG_MARKUP = `rackdiag {
   7: Load Balancer;
 }`;
 
-
 // ------------------------------------------------------------------------------------------------
 
 export const MERMAID_ENDPOINT = 'mermaid';
@@ -104,4 +103,28 @@ export const MERMAID_MARKUP = `sequenceDiagram
     John-->Alice: Great!
     John->Bob: How about you?
     Bob-->John: Jolly good!
+`;
+
+
+// ------------------------------------------------------------------------------------------------
+
+export const STRUCTURIZR_ENDPOINT = 'structurizr';
+export const STRUCTURIZR_EDITOR_LANGUAGE = 'plaintext';
+export const STRUCTURIZR_MARKUP = `workspace {
+
+    model {
+        u = person "User"
+        ss = softwareSystem "Software System"
+
+        u -> ss "Uses"
+    }
+
+    views {
+        systemContext ss {
+            include *
+            autolayout lr
+        }
+    }
+    
+}
 `;

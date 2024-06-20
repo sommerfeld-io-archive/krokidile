@@ -6,7 +6,8 @@
     "exitcode",
     "krokidile",
     "pako",
-    "sommerfeldio"
+    "sommerfeldio",
+    "Structurizr"
   ],
   "asciidoc.antora.enableAntoraSupport": true,
   "yaml.schemas": {

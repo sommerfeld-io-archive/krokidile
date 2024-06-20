@@ -40,6 +40,9 @@ if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
 } else if (SELECTED_DIAGRAM_TYPE === diagramTypes.MERMAID_ENDPOINT) {
   DEFAULT_EDITOR_CONTENT = diagramTypes.MERMAID_MARKUP;
   DEFAULT_EDITOR_LANGUAGE = diagramTypes.MERMAID_EDITOR_LANGUAGE;
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.STRUCTURIZR_ENDPOINT) {
+  DEFAULT_EDITOR_CONTENT = diagramTypes.STRUCTURIZR_MARKUP;
+  DEFAULT_EDITOR_LANGUAGE = diagramTypes.STRUCTURIZR_EDITOR_LANGUAGE;
 }
 
 //
@@ -69,6 +72,8 @@ if (SELECTED_DIAGRAM_TYPE === diagramTypes.PUML_ENDPOINT) {
 } else if (SELECTED_DIAGRAM_TYPE === diagramTypes.RACKDIAG_ENDPOINT) {
   // nothing yet
 } else if (SELECTED_DIAGRAM_TYPE === diagramTypes.MERMAID_ENDPOINT) {
+  // nothing yet
+} else if (SELECTED_DIAGRAM_TYPE === diagramTypes.STRUCTURIZR_ENDPOINT) {
   // nothing yet
 }
 
@@ -219,6 +224,7 @@ function DiagramTypeSelector() {
       <DiagramTypeRadio id={`${diagramTypes.MERMAID_ENDPOINT}`} label="Mermaid" />
       <DiagramTypeRadio id={`${diagramTypes.PUML_ENDPOINT}`} label="PlantUML" />
       <DiagramTypeRadio id={`${diagramTypes.RACKDIAG_ENDPOINT}`} label="RackDiag" />
+      <DiagramTypeRadio id={`${diagramTypes.STRUCTURIZR_ENDPOINT}`} label="Structurizr" />
     </div>
   );
 }
