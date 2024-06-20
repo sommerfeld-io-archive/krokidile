@@ -31,3 +31,13 @@ System(systemAlias, "Label", "Optional Description")
 Rel(personAlias, containerAlias, "Label", "Optional Technology")
 @enduml
 `;
+
+export const DITAA_ENDPOINT = 'ditaa';
+export const DITAA_EDITOR_LANGUAGE = 'plaintext';
+export const DITAA_MARKUP = `
++------+    +-------+
+|      |    |       |
+| Some +----+ Stuff |
+|      |    |       |
++------+    +-------+
+`;
