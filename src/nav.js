@@ -92,7 +92,6 @@ function ShortcutList() {
   return (
     <ul className={`nav nav-pills flex-column mb-auto`}>
       <Shortcut text="CTRL-S = Download Code" icon="keyboard" color="secondary" />
-      <Shortcut text="CTRL-Enter = Render Preview" icon="keyboard" color="secondary" />
     </ul>
   );
 }

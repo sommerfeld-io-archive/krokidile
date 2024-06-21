@@ -90,14 +90,15 @@ function encodeDiagramCode(diagramCode) {
 //
 // Get the diagram code from the editor and send it to the Kroki service. Send the code only when
 // there is no change in the editor content for a defined amount of seconds. This is to avoid
-//  sending too many requests to the Kroki service.
+// sending too many requests to the Kroki service.
 //
 // The editor content ist stored in the local storage to make sure the content survives a page
 // reload.
 //
 let debounceTimeout;
 let milliseconds = 1000;
-editor.onDidChangeModelContent(() => {
+
+function renderPreview() {
   const diagramCode = editor.getValue();
   localStorage.setItem('editorContent', diagramCode);
 
@@ -117,6 +118,14 @@ editor.onDidChangeModelContent(() => {
         console.error('Error:', error);
       });
   }, milliseconds);
+}
+
+editor.onDidChangeModelContent(() => {
+  renderPreview();
+});
+
+window.addEventListener('load', () => {
+  setTimeout(renderPreview, milliseconds);
 });
 
 //
