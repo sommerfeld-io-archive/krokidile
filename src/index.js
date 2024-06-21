@@ -145,7 +145,11 @@ function ActionsMenu() {
       <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => downloadPng()}>
         <i className={`bi ${saveImageStyle}`}></i> PNG
       </button>
-      <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => resetEditorToSampleCode()}>
+      <button
+        type={`button`}
+        className={`btn ${buttonStyle}`}
+        onClick={() => resetEditorToSampleCode()}
+      >
         <i className={`bi bi-arrow-clockwise`}></i>
       </button>
     </div>
