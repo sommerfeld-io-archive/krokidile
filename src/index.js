@@ -145,6 +145,9 @@ function ActionsMenu() {
       <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => downloadPng()}>
         <i className={`bi ${saveImageStyle}`}></i> PNG
       </button>
+      <button type={`button`} className={`btn ${buttonStyle}`} onClick={() => resetEditorToSampleCode()}>
+        <i className={`bi bi-arrow-clockwise`}></i>
+      </button>
     </div>
   );
 }
@@ -236,6 +239,10 @@ function DiagramTypeSelector() {
       <DiagramTypeRadio id={`${diagramTypes.STRUCTURIZR_ENDPOINT}`} label="Structurizr" />
     </div>
   );
+}
+
+function resetEditorToSampleCode() {
+  editor.setValue(DEFAULT_EDITOR_CONTENT);
 }
 
 //
