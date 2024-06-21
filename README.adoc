@@ -44,6 +44,8 @@ When the diagram type is changed the editor is populated with an example code of
 
 This conflicts with displaying the example code of the selected diagram type. The code written by the user is more important than the example code. Therefore, the example code is not displayed when the user has written code.
 
+To reset the editor content to the example code of the selected diagram type, the user can click the "Reset" button (the circle sign) next to the download buttons.
+
 == How to use
 === Krokidile Application
 The only way to use Krokidile is to use the Docker image. The Docker image is available on Docker Hub at https://hub.docker.com/r/sommerfeldio/krokidile.
