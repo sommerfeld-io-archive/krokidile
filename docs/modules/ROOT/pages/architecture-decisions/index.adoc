@@ -1,4 +1,5 @@
 = Architecture Decisions
+Sebastian Sommerfeld <sebastian@sommerfeld.io>
 
 * xref:architecture-decisions/adr-001-use-adr.adoc[]
 * xref:architecture-decisions/adr-002-pre-commit-hooks.adoc[]

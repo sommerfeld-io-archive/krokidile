@@ -1,4 +1,5 @@
 = Terms of Use and Privacy Policy
+Sebastian Sommerfeld <sebastian@sommerfeld.io>
 
 == Krokidile App
 The Krokidile App uses cookies or local browser storage to improve your experience. We'll assume you're ok with this. Krokidile does not work without cookies / local storage. There is not way to opt out. If you are not ok with this, please do not use the Krokidile app.
@@ -13,6 +14,8 @@ The following cookies  / local storage are used:
 |`editorContent`|Local Storage |Stores the content of the editor to make sure the diagram code is not lost when the page is reloaded.
 |`selectedDiagramType`|Local Storage |Stores the diagram type. Based on this cookie the Kroki endpoint and the syntax highlighting is set.
 |===
+
+The Krokidile App does not rely on any resources from third-party websites. All modules are shipped with the app itself.
 
 == Krokidile Documentation Website
 The Krokidile Documentation Website does not use any cookies or local storage.
