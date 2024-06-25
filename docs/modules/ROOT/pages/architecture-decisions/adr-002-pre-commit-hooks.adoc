@@ -4,8 +4,8 @@ Sebastian Sommerfeld <sebastian@sommerfeld.io>
 [cols="1,6"]
 |===
 |Status |Accepted
-|Decision Date |2024-05-31
-|Decision |-
+|Decision Date |2024-06-25
+|Decision |Husky
 |===
 
 Both Husky and Pre-commit are popular tools for managing Git hooks in software projects. Each has its strengths and weaknesses, and the choice between them depends on the specific requirements of your project. This ADR compares link:https://github.com/typicode/husky[Husky] and link:https://pre-commit.com   [pre-commit] based on various criteria relevant to managing pre-commit hooks in a Node.js application.
@@ -112,4 +112,4 @@ repos:
 Choosing between Husky and Pre-commit depends on your project requirements. If your project is primarily Node.js and you prefer to manage hooks using npm scripts, Husky is an excellent choice. If your project involves multiple languages or you prefer a centralized configuration file for hooks, Pre-commit offers greater flexibility and extensibility.
 
 == Decision
-
+We have decided to use Husky for managing Git hooks in our Node.js application. Husky integrates seamlessly with npm/Yarn and provides flexibility within the Node.js ecosystem. It allows us to define scripts in our `package.json` and run them as Git hooks. Additionally, Husky is widely used in JavaScript projects and has a strong community support with many resources and examples available.
