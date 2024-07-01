@@ -15,7 +15,7 @@ The following cookies  / local storage are used:
 |`selectedDiagramType`|Local Storage |Stores the diagram type. Based on this cookie the Kroki endpoint and the syntax highlighting is set.
 |===
 
-The Krokidile App does not rely on any resources from third-party websites. All modules are shipped with the app itself.
+The Krokidile App does rely on a CDN to download the Bootstrap Icon Font and the corresponding CSS file. The CDN is provided by link:https://www.jsdelivr.com/package/npm/bootstrap[jsDelivr] (see https://icons.getbootstrap.com).
 
 == Krokidile Documentation Website
 The Krokidile Documentation Website does not use any cookies or local storage.
