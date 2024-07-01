@@ -11,7 +11,7 @@ import * as diagramTypes from './diagram-type-data.js';
 const pako = require('pako');
 const Buffer = require('buffer/').Buffer; // note the trailing slash
 
-const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
+export const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
 const SELECTED_DIAGRAM_TYPE =
   localStorage.getItem('selectedDiagramType') || diagramTypes.PUML_ENDPOINT;
 
@@ -109,7 +109,9 @@ function renderPreview() {
 
   clearTimeout(debounceTimeout);
   debounceTimeout = setTimeout(() => {
-    fetch(`${KROKI_URL}/${SELECTED_DIAGRAM_TYPE}/svg/${encodeDiagramCode(diagramCode)}`)
+    fetch(`${KROKI_URL}/${SELECTED_DIAGRAM_TYPE}/svg/${encodeDiagramCode(diagramCode)}`, {
+      mode: 'cors',
+    })
       .then((response) => response.text())
       .then((imageResult) => {
         document.getElementById('preview').innerHTML = imageResult;

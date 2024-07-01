@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.scss';
-
-const KROKI_URL = 'https://kroki.io'; // todo https://github.com/sommerfeld-io/krokidile/issues/41
+import * as index from './index.js';
 
 //
 // The main navigation.
@@ -62,7 +61,7 @@ function ExternalNav() {
 function MetaNav() {
   return (
     <ul className={`nav nav-pills flex-column mb-auto`}>
-      <NavLink href={KROKI_URL} text={KROKI_URL} icon="info-circle" color="secondary" />
+      <NavLink href={index.KROKI_URL} text={index.KROKI_URL} icon="info-circle" color="secondary" />
     </ul>
   );
 }
