@@ -12,7 +12,8 @@
     ".vscode",
 
     "config",
-    "config/docker-stacks/release",
+    "config/dist",
+    "config/dist/helm",
 
     "docs",
     "docs/playbooks",
